@@ -7,6 +7,39 @@ products:
 date: 2025-05-16
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 You can now create [Durable Objects](/durable-objects/) using
@@ -42,27 +75,29 @@ class Default(WorkerEntrypoint):
 
 Define the Durable Object in your Wrangler configuration file:
 
-<WranglerConfig>
-
-```toml
-[[durable_objects.bindings]]
-name = "MY_DURABLE_OBJECT"
-class_name = "MyDurableObject"
+```yaml
+---
+$type: Worker
+$id: worker
+durable_objects:
+  bindings:
+    - name: MY_DURABLE_OBJECT
+      class_name: MyDurableObject
+---
 ```
-
-</WranglerConfig>
 
 Then define the storage backend for your Durable Object:
 
-<WranglerConfig>
-
-```toml
-[[migrations]]
-tag = "v1" # Should be unique for each entry
-new_sqlite_classes = ["MyDurableObject"] # Array of new classes
+```yaml
+---
+$type: Worker
+$id: worker
+migrations:
+  - tag: v1
+    new_sqlite_classes:
+      - MyDurableObject
+---
 ```
-
-</WranglerConfig>
 
 Then test your new Durable Object locally by running `wrangler dev`:
 

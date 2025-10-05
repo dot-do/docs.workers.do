@@ -18,6 +18,39 @@ This documentation has been adapted for the .do platform. Key differences:
 :::
 
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Render,
 	PackageManagers,
@@ -186,8 +219,6 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
 
     Configure it in your Wrangler configuration file:
 
-    <WranglerConfig>
-
     ```yaml
 ---
 $type: Worker
@@ -198,8 +229,6 @@ workflows:
     class_name: MyWorkflow
 ---
 ```
-
-    </WranglerConfig>
 
     And then use it in your application:
 

@@ -6,6 +6,39 @@ sidebar:
 description: Get started with the Vite plugin
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { PackageManagers, WranglerConfig } from "~/components";
 
 :::note
@@ -55,15 +88,15 @@ Refer to the [API reference](/workers/vite-plugin/reference/api/) for configurat
 
 ## Create your Worker config file
 
-<WranglerConfig>
-
-```toml
-name = "cloudflare-vite-get-started"
-compatibility_date = "2025-04-03"
-main = "./src/index.ts"
+```yaml
+---
+$type: Worker
+$id: cloudflare-vite-get-started
+name: cloudflare-vite-get-started
+compatibility_date: 2025-04-03
+main: ./src/index.ts
+---
 ```
-
-</WranglerConfig>
 
 The `name` field specifies the name of your Worker.
 By default, this is also used as the name of the Worker's Vite Environment (see [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information).

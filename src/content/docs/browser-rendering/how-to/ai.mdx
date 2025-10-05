@@ -7,6 +7,39 @@ sidebar:
   order: 2
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Aside, WranglerConfig } from "~/components";
 
 The ability to browse websites can be crucial when building workflows with AI. Here, we provide an example where we use Browser Rendering to visit
@@ -17,7 +50,7 @@ The ability to browse websites can be crucial when building workflows with AI. H
 1. Use the `create-cloudflare` CLI to generate a new Hello World Cloudflare Worker script:
 
 ```sh
-npm create cloudflare@latest -- browser-worker
+mdxe create worker.mdx -- browser-worker
 ```
 
 2. Install `@cloudflare/puppeteer`, which allows you to control the Browser Rendering instance:
@@ -35,18 +68,23 @@ npm i zod-to-json-schema
 
 3. Activate the nodejs compatibility flag and add your Browser Rendering binding to your new Wrangler configuration:
 
-<WranglerConfig>
-```toml
-compatibility_flags = [ "nodejs_compat" ]
+```yaml
+---
+$type: Worker
+$id: worker
+compatibility_flags:
+  - nodejs_compat
+---
 ```
-</WranglerConfig>
 
-<WranglerConfig>
-```toml
-[browser]
-binding = "MY_BROWSER"
+```yaml
+---
+$type: Worker
+$id: worker
+browser:
+  binding: MY_BROWSER
+---
 ```
-</WranglerConfig>
 
 4.  In order to use [Workers AI](/workers-ai/), you need to get your [Account ID and API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id).
 Once you have those, create a [`.dev.vars`](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) file and set them there:
@@ -262,7 +300,7 @@ async function getLLMResult(env, prompt: string, schema?: any) {
 You can run this script to test it via:
 
 ```sh
-npx wrangler dev
+pnpm --filter mdxe exec mdxe run worker.mdx --dev
 ```
 
 With your script now running, you can go to `http://localhost:8787/` and should see something like the following:

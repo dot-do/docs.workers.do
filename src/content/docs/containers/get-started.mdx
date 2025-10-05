@@ -5,6 +5,39 @@ sidebar:
   order: 2
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, PackageManagers } from "~/components";
 
 In this guide, you will deploy a Worker that can make requests to one or more Containers in response to end-user requests.
@@ -106,24 +139,24 @@ See the [documentation for Durable Object container methods](/durable-objects/ap
 
 Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the configuration for both your Worker and your container:
 
-<WranglerConfig>
-
-```toml
-[[containers]]
-max_instances = 10
-class_name = "MyContainer"
-image = "./Dockerfile"
-
-[[durable_objects.bindings]]
-name = "MY_CONTAINER"
-class_name = "MyContainer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyContainer"]
+```yaml
+---
+$type: Worker
+$id: worker
+containers:
+  - max_instances: 10
+    class_name: MyContainer
+    image: ./Dockerfile
+durable_objects:
+  bindings:
+    - name: MY_CONTAINER
+      class_name: MyContainer
+migrations:
+  - tag: v1
+    new_sqlite_classes:
+      - MyContainer
+---
 ```
-
-</WranglerConfig>
 
 Important points about this config:
 

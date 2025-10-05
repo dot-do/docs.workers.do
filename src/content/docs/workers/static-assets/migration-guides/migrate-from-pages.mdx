@@ -7,6 +7,39 @@ head: []
 description: A guide for migrating from Cloudflare Pages to Cloudflare Workers. Includes a compatibility matrix for comparing the features of Cloudflare Workers and Pages.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Badge,
 	Description,
@@ -52,8 +85,6 @@ Where you previously would configure a "build output directory" for Pages (in ei
 
 Before, with **Cloudflare Pages**:
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-pages-project",
@@ -61,11 +92,7 @@ Before, with **Cloudflare Pages**:
 }
 ```
 
-</WranglerConfig>
-
 Now, with **Cloudflare Workers**:
-
-<WranglerConfig>
 
 ```json
 {
@@ -76,8 +103,6 @@ Now, with **Cloudflare Workers**:
 	}
 }
 ```
-
-</WranglerConfig>
 
 :::note
 
@@ -93,8 +118,6 @@ In Workers, to prevent accidental misconfiguration, this behavior is explicit an
 
 For a Single Page Application (SPA):
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-worker",
@@ -106,11 +129,7 @@ For a Single Page Application (SPA):
 }
 ```
 
-</WranglerConfig>
-
 For custom 404 pages:
-
-<WranglerConfig>
 
 ```json
 {
@@ -122,8 +141,6 @@ For custom 404 pages:
 	}
 }
 ```
-
-</WranglerConfig>
 
 ##### Ignoring assets
 
@@ -151,8 +168,6 @@ _worker.js
 
 Then, update your configuration file's `main` field to point to the location of this Worker script:
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-worker",
@@ -163,8 +178,6 @@ Then, update your configuration file's `main` field to point to the location of 
 	}
 }
 ```
-
-</WranglerConfig>
 
 ##### Pages Functions with a `functions/` folder
 
@@ -180,8 +193,6 @@ Although this command will remain available to you to run at any time, we do rec
 
 Once the Worker script has been compiled, you can update your configuration file's `main` field to point to the location it was built to:
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-worker",
@@ -193,15 +204,11 @@ Once the Worker script has been compiled, you can update your configuration file
 }
 ```
 
-</WranglerConfig>
-
 ##### `_routes.json` and Pages Functions middleware
 
 If you authored [a `_routes.json` file](/pages/functions/routing/#create-a-_routesjson-file) in your Pages project, or used [middleware](/pages/functions/middleware/) in Pages Functions, you must pay close attention to the configuration of your Worker script. Pages would default to serving your Pages Functions ahead of static assets and `_routes.json` and Pages Functions middleware allowed you to customize this behavior.
 
 Workers, on the other hand, will default to serving static assets ahead of your Worker script, unless you have configured [`assets.run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first). This option is required if you are, for example, performing any authentication checks or logging requests before serving static assets.
-
-<WranglerConfig>
 
 ```json
 {
@@ -214,8 +221,6 @@ Workers, on the other hand, will default to serving static assets ahead of your 
 	}
 }
 ```
-
-</WranglerConfig>
 
 ##### Starting from scratch
 
@@ -235,8 +240,6 @@ export default class extends WorkerEntrypoint {
 
 </TypeScriptExample>
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-worker",
@@ -248,13 +251,9 @@ export default class extends WorkerEntrypoint {
 }
 ```
 
-</WranglerConfig>
-
 #### Assets binding
 
 Pages automatically provided [an `ASSETS` binding](/pages/functions/api-reference/#envassetsfetch) to access static assets from Pages Functions. In Workers, the name of this binding is customizable and it must be manually configured:
-
-<WranglerConfig>
 
 ```json
 {
@@ -268,13 +267,9 @@ Pages automatically provided [an `ASSETS` binding](/pages/functions/api-referenc
 }
 ```
 
-</WranglerConfig>
-
 #### Runtime
 
 If you had customized [placement](/workers/configuration/smart-placement/), or set a [compatibility date](/workers/configuration/compatibility-dates/) or any [compatibility flags](/workers/configuration/compatibility-flags/) in your Pages project, you can define the same in your Wrangler configuration file:
-
-<WranglerConfig>
 
 ```json
 {
@@ -291,8 +286,6 @@ If you had customized [placement](/workers/configuration/smart-placement/), or s
 	}
 }
 ```
-
-</WranglerConfig>
 
 ### Variables, secrets and bindings
 
@@ -323,8 +316,6 @@ To get a similar experience in Workers, you must:
 
 1. Ensure [preview URLs](/workers/configuration/previews/) are enabled (they are on by default).
 
-   <WranglerConfig>
-
    ```json
    {
    	"name": "my-worker",
@@ -336,8 +327,6 @@ To get a similar experience in Workers, you must:
    	"preview_urls": true
    }
    ```
-
-   </WranglerConfig>
 
 1. [Enable non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds) in Workers Builds.
 
@@ -357,8 +346,6 @@ Unlike Pages, Workers does not natively support defining different bindings in p
 
 Where previously you were offered a `pages.dev` subdomain for your Pages project, you can now configure a personalized `workers.dev` subdomain for all of your Worker projects. You can [configure this subdomain in the Cloudflare dashboard](/workers/configuration/routing/workers-dev/#configure-workersdev), and opt-in to using it with the [`workers_dev` option](/workers/configuration/routing/workers-dev/#disabling-workersdev-in-the-wrangler-configuration-file) in your configuration file.
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-worker",
@@ -367,8 +354,6 @@ Where previously you were offered a `pages.dev` subdomain for your Pages project
 	"workers_dev": true
 }
 ```
-
-</WranglerConfig>
 
 ### Custom domains
 

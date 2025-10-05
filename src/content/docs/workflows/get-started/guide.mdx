@@ -7,6 +7,39 @@ sidebar:
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components"
 
 Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
@@ -30,7 +63,7 @@ At the end of this guide, you should be able to author, deploy and debug your ow
 To create your first Workflow, use the `create cloudflare` (C3) CLI tool, specifying the Workflows starter template:
 
 ```sh
-npm create cloudflare@latest workflows-starter -- --template "cloudflare/workflows-starter"
+mdxe create worker.mdx workflows-starter -- --template "cloudflare/workflows-starter"
 ```
 
 This will create a new folder called `workflows-starter`.
@@ -176,8 +209,6 @@ Before you can deploy a Workflow, you need to configure it.
 
 Open the Wrangler file at the root of your `workflows-starter` folder, which contains the following `[[workflows]]` configuration:
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 #:schema node_modules/wrangler/config-schema.json
 name = "workflows-starter"
@@ -192,8 +223,6 @@ binding = "MY_WORKFLOW"
 # this is class that extends the Workflow class in src/index.ts
 class_name = "MyWorkflow"
 ```
-
-</WranglerConfig>
 
 :::note
 
@@ -357,7 +386,7 @@ export default {
 Deploying a Workflow is identical to deploying a Worker.
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 ```sh output
 # Note the "Workflows" binding mentioned here, showing that

@@ -6,6 +6,39 @@ sidebar:
 description: Vite environments and the Vite plugin
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 The [Vite Environment API](https://vite.dev/guide/api-environment), released in Vite 6, is the key feature that enables the Cloudflare Vite plugin to integrate Vite directly with the Workers runtime.
@@ -30,15 +63,15 @@ This enables you to reference the Worker consistently in your Vite config when u
 In the following example we have a Worker named `my-worker` that is associated with a Vite environment named `my_worker`.
 We use the Vite config to set global constant replacements for this environment:
 
-<WranglerConfig>
-
-```toml
-name = "my-worker"
-compatibility_date = "2025-04-03"
-main = "./src/index.ts"
+```yaml
+---
+$type: Worker
+$id: my-worker
+name: my-worker
+compatibility_date: 2025-04-03
+main: ./src/index.ts
+---
 ```
-
-</WranglerConfig>
 
 ```ts title="vite.config.ts"
 import { defineConfig } from "vite";

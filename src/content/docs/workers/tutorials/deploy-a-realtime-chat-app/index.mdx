@@ -9,6 +9,39 @@ tags:
   - JavaScript
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, WranglerConfig, DashButton } from "~/components";
 
 In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/durable-objects/).
@@ -30,7 +63,7 @@ git clone https://github.com/cloudflare/workers-chat-demo.git
 After you have cloned the repository, authenticate Wrangler by running:
 
 ```sh
-npx wrangler login
+npx mdxe login
 ```
 
 ## Deploy your project
@@ -38,7 +71,7 @@ npx wrangler login
 When you are ready to deploy your application, run:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 Your application will be deployed to your `*.workers.dev` subdomain.
@@ -49,29 +82,29 @@ To deploy your application to a custom domain using Wrangler, open your project'
 
 To configure a route in your Wrangler configuration file, add the following to your environment:
 
-<WranglerConfig>
-
-```toml
-[[routes]]
-pattern = "example.com/about"
-zone_id = "<YOUR_ZONE_ID>"
+```yaml
+---
+$type: Worker
+$id: worker
+routes:
+  - pattern: example.com/about
+    zone_id: "YOUR_ZONE_ID"
+---
 ```
-
-</WranglerConfig>
 
 If you have specified your zone ID in the environment of your Wrangler configuration file, you will not need to write it again in object form.
 
 To configure a subdomain in your Wrangler configuration file, add the following to your environment:
 
-<WranglerConfig>
-
-```toml
-[[routes]]
-pattern = "subdomain.example.com"
-custom_domain = true
+```yaml
+---
+$type: Worker
+$id: worker
+routes:
+  - pattern: subdomain.example.com
+    custom_domain: true
+---
 ```
-
-</WranglerConfig>
 
 To test your live application:
 
@@ -90,24 +123,23 @@ To uninstall your chat application, modify your Wrangler file to remove the `dur
 
 
 
-<WranglerConfig>
-
-```toml
-[durable_objects]
-bindings = [
-]
-
-# Indicate that you want the ChatRoom and RateLimiter classes to be callable as Durable Objects.
-[[migrations]]
-tag = "v1" # Should be unique for each entry
-new_sqlite_classes = ["ChatRoom", "RateLimiter"]
-
-[[migrations]]
-tag = "v2"
-deleted_classes = ["ChatRoom", "RateLimiter"]
+```yaml
+---
+$type: Worker
+$id: worker
+durable_objects:
+  bindings: []
+migrations:
+  - tag: v1
+    new_sqlite_classes:
+      - ChatRoom
+      - RateLimiter
+  - tag: v2
+    deleted_classes:
+      - ChatRoom
+      - RateLimiter
+---
 ```
-
-</WranglerConfig>
 
 Then run `npx wrangler deploy`.
 

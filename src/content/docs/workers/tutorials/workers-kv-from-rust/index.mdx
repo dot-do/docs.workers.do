@@ -9,6 +9,39 @@ tags:
   - Rust
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, WranglerConfig } from "~/components";
 
 This tutorial will teach you how to read and write to KV directly from Rust
@@ -51,17 +84,15 @@ npx wrangler kv namespace create cities
 
 To add this configuration to your project, open the Wrangler file and create an entry for `kv_namespaces` above the build command:
 
-<WranglerConfig>
-
-```toml
-kv_namespaces = [
-  { binding = "cities", id = "e29b263ab50e42ce9b637fa8370175e8" }
-]
-
-# build command...
+```yaml
+---
+$type: Worker
+$id: worker
+kv_namespaces:
+  - binding: cities
+    id: e29b263ab50e42ce9b637fa8370175e8
+---
 ```
-
-</WranglerConfig>
 
 With this configured, you can access the KV namespace with the binding `"cities"` from Rust.
 
@@ -191,7 +222,7 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
 To deploy your Worker, run the following command:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 ## Related resources

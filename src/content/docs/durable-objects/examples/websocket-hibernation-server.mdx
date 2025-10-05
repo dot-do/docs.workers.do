@@ -12,6 +12,39 @@ description: Build a WebSocket server using WebSocket Hibernation on Durable
   Objects and Workers.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { TabItem, Tabs, WranglerConfig, TypeScriptExample } from "~/components";
 
 This example is similar to the [Build a WebSocket server](/durable-objects/examples/websocket-server/) example, but uses the WebSocket Hibernation API. The WebSocket Hibernation API should be preferred for WebSocket server applications built on Durable Objects, since it significantly decreases duration charge, and provides additional features that pair well with WebSocket applications. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/best-practices/websockets/).
@@ -157,8 +190,6 @@ export class WebSocketHibernationServer extends DurableObject {
 
 Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 name = "websocket-hibernation-server"
 main = "src/index.ts"
@@ -171,8 +202,6 @@ class_name = "WebSocketHibernationServer"
 tag = "v1"
 new_sqlite_classes = ["WebSocketHibernationServer"]
 ```
-
-</WranglerConfig>
 
 ### Related resources
 

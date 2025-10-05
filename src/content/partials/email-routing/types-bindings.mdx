@@ -3,18 +3,54 @@
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 You can add one or more types of bindings to your Wrangler file. However, each attribute must be on its own line:
 
-<WranglerConfig>
-
-```toml
-send_email = [
-    {name = "<NAME_FOR_BINDING1>"},
-   	{name = "<NAME_FOR_BINDING2>", destination_address = "<YOUR_EMAIL>@example.com"},
-   	{name = "<NAME_FOR_BINDING3>", allowed_destination_addresses = ["<YOUR_EMAIL>@example.com", "<YOUR_EMAIL2>@example.com"]},
-]
+```yaml
+---
+$type: Worker
+$id: worker
+send_email:
+  - name: "NAME_FOR_BINDING1"
+  - name: "NAME_FOR_BINDING2"
+    destination_address: "YOUR_EMAIL"@example.com
+  - name: "NAME_FOR_BINDING3"
+    allowed_destination_addresses:
+      - <YOUR_EMAIL>@example.com
+      - <YOUR_EMAIL2>@example.com
+---
 ```
-
-</WranglerConfig>

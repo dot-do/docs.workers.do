@@ -11,6 +11,39 @@ tags:
   - SQL
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig, YouTube } from "~/components";
 
 In this tutorial, you will learn how to use D1 to add comments to a static blog site. To do this, you will construct a new D1 database, and build a JSON API that allows the creation and retrieval of comments.
@@ -82,16 +115,16 @@ npx wrangler d1 create d1-example
 
 Reference your created database in your Worker code by creating a [binding](/workers/runtime-apis/bindings/) inside of your [Wrangler configuration file](/workers/wrangler/configuration/). Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In the Wrangler configuration file, set up the binding `DB` and connect it to the `database_name` and `database_id`:
 
-<WranglerConfig>
-
-```toml
-[[ d1_databases ]]
-binding = "DB" # available in your Worker on `env.DB`
-database_name = "d1-example"
-database_id = "4e1c28a9-90e4-41da-8b4b-6cf36e5abb29"
+```yaml
+---
+$type: Worker
+$id: worker
+d1_databases:
+  - binding: DB
+    database_name: d1-example
+    database_id: 4e1c28a9-90e4-41da-8b4b-6cf36e5abb29
+---
 ```
-
-</WranglerConfig>
 
 With your binding configured in your Wrangler file, you can interact with your database from the command line, and inside your Workers function.
 
@@ -197,25 +230,24 @@ Begin by running `wrangler whoami` to confirm that you are logged in to your Clo
 
 After you have logged in, confirm that your Wrangler file is configured similarly to what is seen below. You can change the `name` field to a project name of your choice:
 
-<WranglerConfig>
-
-```toml
-name = "d1-example"
-main = "src/worker.js"
-compatibility_date = "2022-07-15"
-
-[[ d1_databases ]]
-binding = "DB" # available in your Worker on env.DB
-database_name = "<YOUR_DATABASE_NAME>"
-database_id = "<YOUR_DATABASE_UUID>"
+```yaml
+---
+$type: Worker
+$id: d1-example
+name: d1-example
+main: src/worker.js
+compatibility_date: 2022-07-15
+d1_databases:
+  - binding: DB
+    database_name: "YOUR_DATABASE_NAME"
+    database_id: "YOUR_DATABASE_UUID"
+---
 ```
-
-</WranglerConfig>
 
 Now, run `npx wrangler deploy` to deploy your project to Cloudflare.
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 When it has successfully deployed, test the API by making a `GET` request to retrieve comments for an associated post. Since you have no posts yet, this response will be empty, but it will still make a request to the D1 database regardless, which you can use to confirm that the application has deployed correctly:

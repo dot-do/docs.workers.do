@@ -7,6 +7,39 @@ sidebar:
   order: 3
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Badge,
 	Description,
@@ -22,14 +55,14 @@ Cloudflare’s serverless platform allows you to run code at the edge to build f
 
 To use your AI Search with Workers or Pages, create an AI binding either in the Cloudflare dashboard (refer to [AI bindings](/pages/functions/bindings/#workers-ai) for instructions), or you can update your [Wrangler file](/workers/wrangler/configuration/). To bind AI Search to your Worker, add the following to your Wrangler file:
 
-<WranglerConfig>
-
-```toml
-[ai]
-binding = "AI" # i.e. available in your Worker on env.AI
+```yaml
+---
+$type: Worker
+$id: worker
+ai:
+  binding: AI
+---
 ```
-
-</WranglerConfig>
 
 :::note[AI Search is the new name for AutoRAG]
 API endpoints may still reference `autorag` for the time being. Functionality remains the same, and support for the new naming will be introduced gradually.

@@ -5,6 +5,39 @@ sidebar:
   order: 5
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Tabs, TabItem, GlossaryTooltip, Type, WranglerConfig } from "~/components";
 
 This guide covers how to use Durable Objects as WebSocket servers that can connect thousands of clients (per instance), as well as a WebSocket client to connect to other servers or even Durable Objects.
@@ -140,19 +173,21 @@ export class WebSocketHibernationServer extends DurableObject {
 
 Similar to the [WebSocket Standard API example](/durable-objects/examples/websocket-server/), to execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
-<WranglerConfig>
-```toml
-name = "websocket-hibernation-server"
-
-[[durable_objects.bindings]]
-name = "WEBSOCKET_HIBERNATION_SERVER"
-class_name = "WebSocketHibernationServer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["WebSocketHibernationServer"]
+```yaml
+---
+$type: Worker
+$id: websocket-hibernation-server
+name: websocket-hibernation-server
+durable_objects:
+  bindings:
+    - name: WEBSOCKET_HIBERNATION_SERVER
+      class_name: WebSocketHibernationServer
+migrations:
+  - tag: v1
+    new_sqlite_classes:
+      - WebSocketHibernationServer
+---
 ```
-</WranglerConfig>
 
 A full example can be found in [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/).
 
@@ -368,19 +403,21 @@ export class WebSocketServer extends DurableObject {
 
 To execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
-<WranglerConfig>
-```toml
-name = "websocket-server"
-
-[[durable_objects.bindings]]
-name = "WEBSOCKET_SERVER"
-class_name = "WebSocketServer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["WebSocketServer"]
+```yaml
+---
+$type: Worker
+$id: websocket-server
+name: websocket-server
+durable_objects:
+  bindings:
+    - name: WEBSOCKET_SERVER
+      class_name: WebSocketServer
+migrations:
+  - tag: v1
+    new_sqlite_classes:
+      - WebSocketServer
+---
 ```
-</WranglerConfig>
 
 A full example can be found in [Build a WebSocket server](/durable-objects/examples/websocket-server/).
 

@@ -5,6 +5,39 @@ sidebar:
   order: 4
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { GlossaryTooltip, Example, WranglerConfig, DashButton } from "~/components";
 
 With Cloudflare Access, you can create Allow or Block policies which evaluate the user based on custom criteria. This is done by adding an **External Evaluation** rule to your policy. The **External Evaluation** selector requires two values:
@@ -30,7 +63,7 @@ You can set up External Evaluation rules using any API service, but to get start
 1. Open a terminal and clone our example project.
 
    ```sh
-   npm create cloudflare@latest my-worker -- --template https://github.com/cloudflare/workers-access-external-auth-example
+   mdxe create worker.mdx my-worker -- --template https://github.com/cloudflare/workers-access-external-auth-example
    ```
 
 2. Go to the project directory.
@@ -58,24 +91,22 @@ You can set up External Evaluation rules using any API service, but to get start
    - `[[kv_namespaces]]`: Add the output generated in the previous step.
    - `<TEAM_NAME>`: your Cloudflare Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
 
-  <WranglerConfig>
-
-   ```toml
-   name = "my-worker"
-   workers_dev = true
-   compatibility_date = "2024-08-06"
-   main = "index.js"
-
-
-   [[kv_namespaces]]
-   binding = "KV"
-   id = "YOUR_KV_NAMESPACE_ID"
-
-   [vars]
-   TEAM_DOMAIN="<TEAM_NAME>.cloudflareaccess.com"
-   DEBUG=false
-   ```
-	 </WranglerConfig>
+  ```yaml
+---
+$type: Worker
+$id: my-worker
+name: my-worker
+workers_dev: true
+compatibility_date: 2024-08-06
+main: index.js
+kv_namespaces:
+  - binding: KV
+    id: YOUR_KV_NAMESPACE_ID
+vars:
+  TEAM_DOMAIN: "TEAM_NAME".cloudflareaccess.com
+  DEBUG: false
+---
+```
 
 ### 2. Program your business logic
 
@@ -90,7 +121,7 @@ You can set up External Evaluation rules using any API service, but to get start
 2. Deploy the Worker to Cloudflare's global network.
 
    ```sh
-   npx wrangler deploy
+   pnpm --filter mdxe exec mdxe run worker.mdx --deploy
    ```
 
 The Worker will be deployed to your `*.workers.dev` subdomain at `my-worker.<YOUR_SUBDOMAIN>.workers.dev`.
@@ -145,13 +176,13 @@ To debug your External Evaluation rule:
 3. Deploy your changes.
 
    ```sh
-   npx wrangler deploy
+   pnpm --filter mdxe exec mdxe run worker.mdx --deploy
    ```
 
 4. Next, start a session to output realtime logs from your Worker.
 
    ```sh
-   wrangler tail -f pretty
+   mdxe tail worker.mdx -f pretty
    ```
 
 5. Log in to your Access application.

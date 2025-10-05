@@ -7,15 +7,51 @@ description: Connect to a Broker using a Rust-based MQTT client.
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 Below is an example using the [paho.mqtt.rust](https://github.com/eclipse/paho.mqtt.rust) crate with the TOKEN authentication mode configured on a Broker.
 
 The example below creates a simple subscriber, sends a message to the configured topic, and waits until the message is received before exiting.
 
 Make sure to set the `BROKER_URI` (e.g. `mqtts://YOUR-BROKER.YOUR-NAMESPACE.cloudflarepubsub.com`), `BROKER_TOKEN` (a valid auth token), and `BROKER_TOPIC` environmental variables before running the example program.
 
-```toml
-# in your Cargo.toml
-paho-mqtt = "0.11.1"
+```yaml
+---
+$type: Worker
+$id: worker
+paho-mqtt: 0.11.1
+---
 ```
 
 Create a file called `example.rs` with the following content, and use `cargo run` to build and run the example:

@@ -8,6 +8,39 @@ tags:
 description: Learn how to use the Llama 3.2 11B Vision Instruct model on Cloudflare Workers AI.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
 
 ## Prerequisites
@@ -102,13 +135,15 @@ export default {
 
 1. Open the [Wrangler configuration file](/workers/wrangler/configuration/) and add the following configuration:
 
-<WranglerConfig>
-```toml
-[env]
-[ai]
-binding="AI"
+```yaml
+---
+$type: Worker
+$id: worker
+env: {}
+ai:
+  binding: AI
+---
 ```
-</WranglerConfig>
 
 2. Save the file.
 

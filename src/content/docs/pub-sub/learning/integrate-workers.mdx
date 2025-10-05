@@ -5,6 +5,39 @@ sidebar:
   order: 2
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, Render } from "~/components";
 
 Once of the most powerful features of Pub/Sub is the ability to connect [Cloudflare Workers](/workers/) — powerful serverless functions that run on the edge — and filter, aggregate and mutate every message published to that broker. Workers can also mirror those messages to other sources, including writing to [Cloudflare R2 storage](/r2/), external databases, or other cloud services beyond Cloudflare, making it easy to persist or analyze incoming message payloads and data at scale.
@@ -90,44 +123,38 @@ Your public keys will be unique to your own Pub/Sub Broker: you should ensure yo
 
 :::
 
-<WranglerConfig>
-
-```toml
-name = "my-pubsub-worker"
-type = "javascript"
-
-account_id = "<YOUR ACCOUNT_ID>"
-workers_dev = true
-
-# Define top-level environment variables
-# under the `[vars]` block using
-# the `key = "value"` format
-[vars]
-# This will be accessible via env.BROKER_PUBLIC_KEYS in our Worker
-# Note that we use three single quotes (') around our raw JSON
-BROKER_PUBLIC_KEYS = '''{
-  "keys": [
+```yaml
+---
+$type: Worker
+$id: my-pubsub-worker
+name: my-pubsub-worker
+type: javascript
+account_id: "your-account_id"
+workers_dev: true
+vars:
+  BROKER_PUBLIC_KEYS: |-
     {
-      "use": "sig",
-      "kty": "OKP",
-      "kid": "JDPuYJqHOvqzlakkNFQ9kfN7WsYs5uHndp_ziRdmOCU",
-      "crv": "Ed25519",
-      "alg": "EdDSA",
-      "x": "Phf82R8tG1FdY475-AgtlaWIwH1lLFlfWu5LrsKhyjw"
-    },
-    {
-      "use": "sig",
-      "kty": "OKP",
-      "kid": "qk7Z4hbN738v-m2CKdVaKTav9pU32MAaQXB2tDaQ-_o",
-      "crv": "Ed25519",
-      "alg": "EdDSA",
-      "x": "Bt4kQWcK_XhZP1ZxEflsoYbqaBm9rEDk_jNWPdhxwTI"
+      "keys": [
+        {
+          "use": "sig",
+          "kty": "OKP",
+          "kid": "JDPuYJqHOvqzlakkNFQ9kfN7WsYs5uHndp_ziRdmOCU",
+          "crv": "Ed25519",
+          "alg": "EdDSA",
+          "x": "Phf82R8tG1FdY475-AgtlaWIwH1lLFlfWu5LrsKhyjw"
+        },
+        {
+          "use": "sig",
+          "kty": "OKP",
+          "kid": "qk7Z4hbN738v-m2CKdVaKTav9pU32MAaQXB2tDaQ-_o",
+          "crv": "Ed25519",
+          "alg": "EdDSA",
+          "x": "Bt4kQWcK_XhZP1ZxEflsoYbqaBm9rEDk_jNWPdhxwTI"
+        }
+      ]
     }
-  ]
-}'''
+---
 ```
-
-</WranglerConfig>
 
 <Render file="wrangler-typegen" product="workers" />
 

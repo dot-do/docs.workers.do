@@ -8,6 +8,39 @@ description: A set of programmatic APIs that can be integrated with local
   Cloudflare Workers-related workflows.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Render,
 	TabItem,
@@ -337,14 +370,14 @@ const platform = await getPlatformProxy(options);
 
 The `getPlatformProxy` function uses bindings found in the [Wrangler configuration file](/workers/wrangler/configuration/). For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in the Wrangler configuration file:
 
-<WranglerConfig>
-
-```toml
-[vars]
-MY_VARIABLE = "test"
+```yaml
+---
+$type: Worker
+$id: worker
+vars:
+  MY_VARIABLE: test
+---
 ```
-
-</WranglerConfig>
 
 You can access the bindings by importing `getPlatformProxy` like this:
 
@@ -399,16 +432,17 @@ The bindings supported by `getPlatformProxy` are:
 
     For example, you might have the following binding in a Wrangler configuration file read by `getPlatformProxy`.
 
-    <WranglerConfig>
-
-    ```toml
-    [[durable_objects.bindings]]
-    name = "MyDurableObject"
-    class_name = "MyDurableObject"
-    script_name = "external-do-worker"
-    ```
-
-    </WranglerConfig>
+    ```yaml
+---
+$type: Worker
+$id: worker
+durable_objects:
+  bindings:
+    - name: MyDurableObject
+      class_name: MyDurableObject
+      script_name: external-do-worker
+---
+```
 
     You will need to declare your Durable Object `"MyDurableObject"` in another Worker, called `external-do-worker` in this example.
 
@@ -426,7 +460,6 @@ The bindings supported by `getPlatformProxy` are:
         ```
         That Worker also needs a Wrangler configuration file that looks like this:
 
-        <WranglerConfig>
         ```json
         {
         	"name": "external-do-worker",
@@ -434,7 +467,6 @@ The bindings supported by `getPlatformProxy` are:
         	"compatibility_date": "XXXX-XX-XX"
         }
         ```
-        </WranglerConfig>
 
         If you are not using RPC with your Durable Object, you can run a separate Wrangler dev session alongside your framework development server.
 

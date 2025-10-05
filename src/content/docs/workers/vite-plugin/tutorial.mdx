@@ -6,6 +6,39 @@ sidebar:
 description: Create a React SPA with an API Worker using the Vite plugin
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { PackageManagers, WranglerConfig } from "~/components";
 
 This tutorial takes you through the steps needed to adapt a Vite project to use the Cloudflare Vite plugin.
@@ -58,15 +91,16 @@ Refer to the [API reference](/workers/vite-plugin/reference/api/) for configurat
 
 ### Create your Worker config file
 
-<WranglerConfig>
-
-```toml
-name = "cloudflare-vite-tutorial"
-compatibility_date = "2025-04-03"
-assets = { not_found_handling = "single-page-application" }
+```yaml
+---
+$type: Worker
+$id: cloudflare-vite-tutorial
+name: cloudflare-vite-tutorial
+compatibility_date: 2025-04-03
+assets:
+  not_found_handling: single-page-application
+---
 ```
-
-</WranglerConfig>
 
 The [`not_found_handling`](/workers/static-assets/routing/single-page-application/) value has been set to `single-page-application`.
 This means that all not found requests will serve the `index.html` file.
@@ -131,16 +165,17 @@ This tutorial, however, will show you how to go a step further and add an API Wo
 
 ### Add to your Worker configuration
 
-<WranglerConfig>
-
-```toml
-name = "cloudflare-vite-tutorial"
-compatibility_date = "2025-04-03"
-assets = { not_found_handling = "single-page-application" }
-main = "./worker/index.ts"
+```yaml
+---
+$type: Worker
+$id: cloudflare-vite-tutorial
+name: cloudflare-vite-tutorial
+compatibility_date: 2025-04-03
+assets:
+  not_found_handling: single-page-application
+main: ./worker/index.ts
+---
 ```
-
-</WranglerConfig>
 
 The `main` field specifies the entry file for your Worker code.
 
@@ -173,16 +208,19 @@ This implicit routing is the default behavior.
 If you would instead like to define the routes that invoke your Worker explicitly, you can provide an array of route patterns to [`run_worker_first`](/workers/static-assets/binding/#run_worker_first).
 This opts out of interpreting the `Sec-Fetch-Mode` header.
 
-<WranglerConfig>
-
-```toml
-name = "cloudflare-vite-tutorial"
-compatibility_date = "2025-04-03"
-assets = { not_found_handling = "single-page-application", run_worker_first = ["/api/*"] }
-main = "./worker/index.ts"
+```yaml
+---
+$type: Worker
+$id: cloudflare-vite-tutorial
+name: cloudflare-vite-tutorial
+compatibility_date: 2025-04-03
+assets:
+  not_found_handling: single-page-application
+  run_worker_first:
+    - /api/*
+main: ./worker/index.ts
+---
 ```
-
-</WranglerConfig>
 :::
 
 ### Call the API from the client
@@ -282,7 +320,7 @@ This command will run your build output locally in the Workers runtime, closely 
 Run `npm exec wrangler deploy` to deploy your application to Cloudflare.
 
 ```sh
-npm exec wrangler deploy
+npm exec mdxe run worker.mdx --deploy
 ```
 
 This command will automatically use the output `wrangler.json` that was included in the build output.

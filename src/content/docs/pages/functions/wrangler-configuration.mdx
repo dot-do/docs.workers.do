@@ -5,6 +5,39 @@ sidebar:
   order: 6
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Render,
 	TabItem,
@@ -41,26 +74,23 @@ Using the Wrangler configuration file to configure your Pages project allows you
 
 ## Example Wrangler file
 
-<WranglerConfig>
-
-```toml
-name = "my-pages-app"
-pages_build_output_dir = "./dist"
-
-[[kv_namespaces]]
-binding = "KV"
-id = "<NAMESPACE_ID>"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "northwind-demo"
-database_id = "<DATABASE_ID>"
-
-[vars]
-API_KEY = "1234567asdf"
+```yaml
+---
+$type: Worker
+$id: my-pages-app
+name: my-pages-app
+pages_build_output_dir: ./dist
+kv_namespaces:
+  - binding: KV
+    id: "NAMESPACE_ID"
+d1_databases:
+  - binding: DB
+    database_name: northwind-demo
+    database_id: "DATABASE_ID"
+vars:
+  API_KEY: 1234567asdf
+---
 ```
-
-</WranglerConfig>
 
 ## Requirements
 
@@ -82,15 +112,15 @@ Before you could use the Wrangler configuration file to define your preview and 
 
 If you have been using a Wrangler configuration file for local development, you may already have a file in your Pages project that looks like this:
 
-<WranglerConfig>
-
-```toml
-[[kv_namespaces]]
-binding = "KV"
-id = "<NAMESPACE_ID>"
+```yaml
+---
+$type: Worker
+$id: worker
+kv_namespaces:
+  - binding: KV
+    id: "NAMESPACE_ID"
+---
 ```
-
-</WranglerConfig>
 
 If you would like to use your existing Wrangler file for your Pages project configuration, you must:
 
@@ -158,20 +188,20 @@ With a Wrangler configuration file, you can quickly set configuration across you
 
 The Wrangler configuration file applies locally when using `wrangler pages dev`. This means that you can test out configuration changes quickly without a need to login to the Cloudflare dashboard. Refer to the following config file for an example:
 
-<WranglerConfig>
-
-```toml
-name = "my-pages-app"
-pages_build_output_dir = "./dist"
-compatibility_date = "2023-10-12"
-compatibility_flags = ["nodejs_compat"]
-
-[[kv_namespaces]]
-binding = "KV"
-id = "<NAMESPACE_ID>"
+```yaml
+---
+$type: Worker
+$id: my-pages-app
+name: my-pages-app
+pages_build_output_dir: ./dist
+compatibility_date: 2023-10-12
+compatibility_flags:
+  - nodejs_compat
+kv_namespaces:
+  - binding: KV
+    id: "NAMESPACE_ID"
+---
 ```
-
-</WranglerConfig>
 
 This Wrangler configuration file adds the `nodejs_compat` compatibility flag and a KV namespace binding to your Pages project. Running `wrangler pages dev` in a Pages project directory with this Wrangler configuration file will apply the `nodejs_compat` compatibility flag locally, and expose the `KV` binding in your Pages Function code at `context.env.KV`.
 
@@ -223,87 +253,80 @@ Unlike [Workers Environments](/workers/wrangler/configuration/#environments), `p
 
 Refer to the following Wrangler configuration file for an example of how to override preview deployment configuration:
 
-<WranglerConfig>
-
-```toml
-name = "my-pages-site"
-pages_build_output_dir = "./dist"
-
-[[kv_namespaces]]
-binding = "KV"
-id = "<NAMESPACE_ID>"
-
-[vars]
-API_KEY = "1234567asdf"
-
-[[env.preview.kv_namespaces]]
-binding = "KV"
-id = "<PREVIEW_NAMESPACE_ID>"
-
-[env.preview.vars]
-API_KEY = "8901234bfgd"
+```yaml
+---
+$type: Worker
+$id: my-pages-site
+name: my-pages-site
+pages_build_output_dir: ./dist
+kv_namespaces:
+  - binding: KV
+    id: "NAMESPACE_ID"
+vars:
+  API_KEY: 1234567asdf
+env:
+  preview:
+    kv_namespaces:
+      - binding: KV
+        id: "PREVIEW_NAMESPACE_ID"
+    vars:
+      API_KEY: 8901234bfgd
+---
 ```
-
-</WranglerConfig>
 
 If you deployed this file via `wrangler pages deploy`, `name`, `pages_build_output_dir`, `kv_namespaces`, and `vars` would apply the configuration to local and production, while `env.preview` would override `kv_namespaces` and `vars` for preview deployments.
 
 If you wanted to have configuration values apply to local and preview, but override production, your file would look like this:
 
-<WranglerConfig>
-
-```toml
-name = "my-pages-site"
-pages_build_output_dir = "./dist"
-
-[[kv_namespaces]]
-binding = "KV"
-id = "<NAMESPACE_ID>"
-
-[vars]
-API_KEY = "1234567asdf"
-
-[[env.production.kv_namespaces]]
-binding = "KV"
-id = "<PRODUCTION_NAMESPACE_ID>"
-
-[env.production.vars]
-API_KEY = "8901234bfgd"
+```yaml
+---
+$type: Worker
+$id: my-pages-site
+name: my-pages-site
+pages_build_output_dir: ./dist
+kv_namespaces:
+  - binding: KV
+    id: "NAMESPACE_ID"
+vars:
+  API_KEY: 1234567asdf
+env:
+  production:
+    kv_namespaces:
+      - binding: KV
+        id: "PRODUCTION_NAMESPACE_ID"
+    vars:
+      API_KEY: 8901234bfgd
+---
 ```
-
-</WranglerConfig>
 
 You can always be explicit and override both preview and production:
 
-<WranglerConfig>
-
-```toml
-name = "my-pages-site"
-pages_build_output_dir = "./dist"
-
-[[kv_namespaces]]
-binding = "KV"
-id = "<NAMESPACE_ID>"
-
-[vars]
-API_KEY = "1234567asdf"
-
-[[env.preview.kv_namespaces]]
-binding = "KV"
-id = "<PREVIEW_NAMESPACE_ID>"
-
-[env.preview.vars]
-API_KEY = "8901234bfgd"
-
-[[env.production.kv_namespaces]]
-binding = "KV"
-id = "<PRODUCTION_NAMESPACE_ID>"
-
-[env.production.vars]
-API_KEY = "6567875fvgt"
+```yaml
+---
+$type: Worker
+$id: my-pages-site
+name: my-pages-site
+pages_build_output_dir: ./dist
+kv_namespaces:
+  - binding: KV
+    id: "NAMESPACE_ID"
+vars:
+  API_KEY: 1234567asdf
+env:
+  preview:
+    kv_namespaces:
+      - binding: KV
+        id: "PREVIEW_NAMESPACE_ID"
+    vars:
+      API_KEY: 8901234bfgd
+  production:
+    kv_namespaces:
+      - binding: KV
+        id: "PRODUCTION_NAMESPACE_ID"
+    vars:
+      API_KEY: 6567875fvgt
+---
 ```
-
-</WranglerConfig>
 
 ## Inheritable keys
 
@@ -347,24 +370,23 @@ Non-inheritable keys are configurable at the top-level, but, if any one non-inhe
 
 For example, this configuration will not work:
 
-<WranglerConfig>
-
-```toml
-name = "my-pages-site"
-pages_build_output_dir = "./dist"
-
-[[kv_namespaces]]
-binding = "KV"
-id = "<NAMESPACE_ID>"
-
-[vars]
-API_KEY = "1234567asdf"
-
-[env.production.vars]
-API_KEY = "8901234bfgd"
+```yaml
+---
+$type: Worker
+$id: my-pages-site
+name: my-pages-site
+pages_build_output_dir: ./dist
+kv_namespaces:
+  - binding: KV
+    id: "NAMESPACE_ID"
+vars:
+  API_KEY: 1234567asdf
+env:
+  production:
+    vars:
+      API_KEY: 8901234bfgd
+---
 ```
-
-</WranglerConfig>
 
 `[[env.production.vars]]` is set to override `[vars]`. Because of this `[[kv_namespaces]]` must also be overridden by defining `[[env.production.kv_namespaces]]`.
 

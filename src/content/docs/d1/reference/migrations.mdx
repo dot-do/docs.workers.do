@@ -6,6 +6,39 @@ sidebar:
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 Database migrations are a way of versioning your database. Each migration is stored as an `.sql` file in your `migrations` folder. The `migrations` folder is created in your project directory when you create your first migration. This enables you to store and track changes throughout database development.
@@ -32,19 +65,19 @@ By default, migrations are created in the `migrations/` folder in your Worker pr
 
 This location and table name can be customized in your Wrangler file, inside the D1 binding.
 
-<WranglerConfig>
-
-```toml
-[[ d1_databases ]]
-binding = "<BINDING_NAME>" # i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
-database_name = "<DATABASE_NAME>"
-database_id = "<UUID>"
-preview_database_id = "<UUID>"
-migrations_table = "<d1_migrations>" # Customize this value to change your applied migrations table name
-migrations_dir = "<FOLDER_NAME>" # Specify your custom migration directory
+```yaml
+---
+$type: Worker
+$id: worker
+d1_databases:
+  - binding: "BINDING_NAME"
+    database_name: "DATABASE_NAME"
+    database_id: "UUID"
+    preview_database_id: "UUID"
+    migrations_table: "d1_migrations"
+    migrations_dir: "FOLDER_NAME"
+---
 ```
-
-</WranglerConfig>
 
 ## Foreign key constraints
 

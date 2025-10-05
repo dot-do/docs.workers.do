@@ -3,17 +3,51 @@
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
-<WranglerConfig>
-
-```toml
-name = "my-worker-dev"
-
-[vars]
-API_HOST = "example.com"
-API_ACCOUNT_ID = "example_user"
-SERVICE_X_DATA = { URL = "service-x-api.dev.example", MY_ID = 123 }
+```yaml
+---
+$type: Worker
+$id: my-worker-dev
+name: my-worker-dev
+vars:
+  API_HOST: example.com
+  API_ACCOUNT_ID: example_user
+  SERVICE_X_DATA:
+    URL: service-x-api.dev.example
+    MY_ID: 123
+---
 ```
-
-</WranglerConfig>

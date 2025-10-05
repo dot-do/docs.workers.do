@@ -5,6 +5,39 @@ sidebar:
   order: 3
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 <Render file="vectorize-ga" product="vectorize" />
@@ -111,15 +144,15 @@ You must create a binding for your Worker to connect to your Vectorize index. [B
 
 To bind your index to your Worker, add the following to the end of your Wrangler file:
 
-<WranglerConfig>
-
-```toml
-[[vectorize]]
-binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
-index_name = "embeddings-index"
+```yaml
+---
+$type: Worker
+$id: worker
+vectorize:
+  - binding: VECTORIZE
+    index_name: embeddings-index
+---
 ```
-
-</WranglerConfig>
 
 Specifically:
 
@@ -133,18 +166,17 @@ Before you deploy your embedding example, ensure your Worker uses your model cat
 
 From within the `embeddings-tutorial` directory, open your Wrangler file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
 
-<WranglerConfig>
-
-```toml
-[[vectorize]]
-binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
-index_name = "embeddings-index"
-
-[ai]
-binding = "AI" # available in your Worker on env.AI
+```yaml
+---
+$type: Worker
+$id: worker
+vectorize:
+  - binding: VECTORIZE
+    index_name: embeddings-index
+ai:
+  binding: AI
+---
 ```
-
-</WranglerConfig>
 
 With Workers AI ready, you can write code in your Worker.
 
@@ -231,7 +263,7 @@ export default {
 Before deploying your Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-npx wrangler login
+npx mdxe login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
@@ -239,7 +271,7 @@ You will be directed to a web page asking you to log in to the Cloudflare dashbo
 From here, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 Preview your Worker at `https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev`.

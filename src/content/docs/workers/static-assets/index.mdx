@@ -7,6 +7,39 @@ head: []
 description: Create full-stack applications deployed to Cloudflare Workers.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Aside,
 	Badge,
@@ -58,9 +91,7 @@ When you deploy your project, Cloudflare deploys both your Worker code and your 
 
 The **assets directory** specified in your [Wrangler configuration file](/workers/wrangler/configuration/#assets) is central to this design. During deployment, Wrangler automatically uploads the files from this directory to Cloudflare's infrastructure. Once deployed, requests for these assets are routed efficiently to locations closest to your users.
 
-<WranglerConfig>
-
-    ```toml {3-4}
+```toml {3-4}
     	name = "my-spa"
     	main = "src/index.js"
     	compatibility_date = "2025-01-01"
@@ -68,8 +99,6 @@ The **assets directory** specified in your [Wrangler configuration file](/worker
     	directory = "./dist"
     	binding = "ASSETS"
     	```
-
-</WranglerConfig>
 
 :::note
 If you are using the [Cloudflare Vite plugin](/workers/vite-plugin/), you do not need to specify `assets.directory`. For more information about using static assets with the Vite plugin, refer to the [plugin documentation](/workers/vite-plugin/reference/static-assets/).
@@ -104,22 +133,19 @@ The default behavior for requests which don't match a static asset can be change
 - [`not_found_handling = "single-page-application"`](/workers/static-assets/routing/single-page-application/): Sets your application to return a `200 OK` response with `index.html` for requests which don't match a static asset. Use this if you have a Single Page Application. We recommend pairing this with selective routing using `run_worker_first` for [advanced routing control](/workers/static-assets/routing/single-page-application/#advanced-routing-control).
 - [`not_found_handling = "404-page"`](/workers/static-assets/routing/static-site-generation/#custom-404-pages): Sets your application to return a `404 Not Found` response with the nearest `404.html` for requests which don't match a static asset.
 
-<WranglerConfig>
-
-    ```toml
-    	[assets]
-    	directory = "./dist"
-    	not_found_handling = "single-page-application"
-
-    	```
-
-</WranglerConfig>
+```yaml
+---
+$type: Worker
+$id: worker
+assets:
+  directory: ./dist
+  not_found_handling: single-page-application
+---
+```
 
 If you want the Worker code to execute before serving assets, you can use the `run_worker_first` option. This can be set to `true` to invoke the Worker script for all requests, or configured as an array of route patterns for selective Worker-script-first routing:
 
 **Invoking your Worker script on specific paths:**
-
-<WranglerConfig>
 
 ```json
 {
@@ -134,8 +160,6 @@ If you want the Worker code to execute before serving assets, you can use the `r
 	}
 }
 ```
-
-</WranglerConfig>
 
 <LinkCard
 	title="Routing options"

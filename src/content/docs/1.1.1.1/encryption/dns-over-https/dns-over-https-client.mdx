@@ -5,6 +5,39 @@ slug: 1.1.1.1/encryption/dns-over-https/dns-over-https-client
 description: Learn how to connect to Cloudflare's 1.1.1.1 using DNS over HTTPS (DoH) clients.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 Several DoH clients are available for connecting to 1.1.1.1.
 
 ## Cloudflare WARP client
@@ -29,9 +62,15 @@ The [DNSCrypt-Proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It
 
 3. Set up the configuration file using the [official instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation#setting-up-dnscrypt-proxy), and add `cloudflare` and `cloudflare-ipv6` to the server list in `dnscrypt-proxy.toml`:
 
-   ```toml
-   server_names = ['cloudflare', 'cloudflare-ipv6']
-   ```
+   ```yaml
+---
+$type: Worker
+$id: worker
+server_names:
+  - cloudflare
+  - cloudflare-ipv6
+---
+```
 
 4. Make sure that nothing else is running on `localhost:53`, and check that everything works as expected:
 

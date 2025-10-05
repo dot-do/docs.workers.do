@@ -4,6 +4,39 @@ title: Serving a subdirectory
 description: How to configure a Worker with static assets on a subpath.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { FileTree, WranglerConfig } from "~/components";
 
 :::note
@@ -28,18 +61,17 @@ For example, to serve assets from `example.com/blog/*`, create a `blog` director
 
 With a [Wrangler configuration file](/workers/wrangler/configuration/) like so:
 
-<WranglerConfig>
-
-```toml
-name = "assets-on-a-path-example"
-main = "src/index.js"
-route = "example.com/blog/*"
-
-[assets]
-directory = "dist"
+```yaml
+---
+$type: Worker
+$id: assets-on-a-path-example
+name: assets-on-a-path-example
+main: src/index.js
+route: example.com/blog/*
+assets:
+  directory: dist
+---
 ```
-
-</WranglerConfig>
 
 In this example, requests to `example.com/blog/` will serve the `index.html` file, and requests to `example.com/blog/posts/post1` will serve the `post1.html` file.
 

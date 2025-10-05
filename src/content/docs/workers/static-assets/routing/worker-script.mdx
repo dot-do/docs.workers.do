@@ -6,6 +6,39 @@ sidebar:
   order: 4
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, TypeScriptExample } from "~/components";
 
 If you have both static assets and a Worker script configured, Cloudflare will first attempt to serve static assets if one matches the incoming request. You can read more about how we match assets in the [HTML handling docs](/workers/static-assets/routing/advanced/html-handling/).
@@ -26,8 +59,6 @@ If you are using [Smart Placement](/workers/configuration/smart-placement/) in c
 
 If you need to always run your Worker script before serving static assets (for example, you wish to log requests, perform some authentication checks, use [HTMLRewriter](/workers/runtime-apis/html-rewriter/), or otherwise transform assets before serving), set `run_worker_first` to `true`:
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-worker",
@@ -40,8 +71,6 @@ If you need to always run your Worker script before serving static assets (for e
 	}
 }
 ```
-
-</WranglerConfig>
 
 <TypeScriptExample filename="./worker/index.ts">
 
@@ -77,8 +106,6 @@ export default class extends WorkerEntrypoint<Env> {
 
 You can also configure selective Worker-first routing using an array of route patterns, often paired with the [`single-page-application` setting](/workers/static-assets/routing/single-page-application/#advanced-routing-control). This allows you to run the Worker first only for specific routes while letting other requests follow the default asset-first behavior:
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-worker",
@@ -92,8 +119,6 @@ You can also configure selective Worker-first routing using an array of route pa
 	}
 }
 ```
-
-</WranglerConfig>
 
 <TypeScriptExample filename="./worker/index.ts">
 

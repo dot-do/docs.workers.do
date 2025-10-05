@@ -15,6 +15,39 @@ This documentation has been adapted for the .do platform. Key differences:
 :::
 
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { TabItem, Tabs, WranglerConfig } from "~/components"
 
 The Rate Limiting API lets you define rate limits and write code around them in your Worker.
@@ -36,8 +69,6 @@ You must use version 3.45.0 or later of the [Wrangler CLI](/workers/wrangler).
 
 First, add a [binding](/workers/runtime-apis/bindings) to your Worker that gives it access to the Rate Limiting API:
 
-<WranglerConfig>
-
 ```yaml
 ---
 $type: Worker
@@ -51,8 +82,6 @@ ratelimits:
       period: 60
 ---
 ```
-
-</WranglerConfig>
 
 This binding makes the `MY_RATE_LIMITER` binding available, which provides a `limit()` method:
 
@@ -107,8 +136,6 @@ For example, here is how you can define two rate limiting configurations for fre
 
 
 
-<WranglerConfig>
-
 ```yaml
 ---
 $type: Worker
@@ -128,8 +155,6 @@ ratelimits:
 ---
 ```
 
-</WranglerConfig>
-
 ## Configuration
 
 A rate limiting binding has three settings:
@@ -139,8 +164,6 @@ A rate limiting binding has three settings:
 3. `period` (seconds) - must be `10` or `60`. The period to measure increments to the `limit` over, in seconds.
 
 For example, to apply a rate limit of 1500 requests per minute, you would define a rate limiting configuration as follows:
-
-<WranglerConfig>
 
 ```yaml
 ---
@@ -154,8 +177,6 @@ ratelimits:
       period: 60
 ---
 ```
-
-</WranglerConfig>
 
 ## Best practices
 

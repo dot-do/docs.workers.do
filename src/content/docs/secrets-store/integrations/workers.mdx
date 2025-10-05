@@ -6,6 +6,39 @@ sidebar:
   label: Workers
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, Tabs, TabItem, APIRequest, DashButton } from "~/components";
 
 [Cloudflare Secrets Store](/secrets-store/) is a secure, centralized location in which account-level secrets are stored and managed. The secrets are securely encrypted and stored across all Cloudflare data centers.
@@ -109,16 +142,17 @@ To bind an account secret to your Worker, you must have one of the following [ro
     - `store_id`: the corresponding Secrets Store ID where your account secret was created.
     - `secret_name`: the unique secret name, defined when your account secret was created.
 
-<WranglerConfig>
-
-```toml
-main = "./src/index.js"
-secrets_store_secrets = [
-  { binding = "<BINDING_VARIABLE>", store_id= "<STORE_ID>", secret_name = "<MY_SECRET_NAME>" }
-]
+```yaml
+---
+$type: Worker
+$id: worker
+main: ./src/index.js
+secrets_store_secrets:
+  - binding: "BINDING_VARIABLE"
+    store_id: "STORE_ID"
+    secret_name: "MY_SECRET_NAME"
+---
 ```
-
-</WranglerConfig>
 
 
 ### Via Dashboard

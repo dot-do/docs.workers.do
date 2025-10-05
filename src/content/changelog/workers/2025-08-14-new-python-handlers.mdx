@@ -6,6 +6,39 @@ products:
 date: 2025-08-14
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 We are changing how Python Workers are structured by default. Previously, handlers were defined at the top-level of a module as `on_fetch`, `on_scheduled`, etc. methods, but now they live in an entrypoint class.
@@ -22,12 +55,13 @@ class Default(WorkerEntrypoint):
 
 To keep using the old-style handlers, you can specify the `disable_python_no_global_handlers` compatibility flag in your wrangler file:
 
-<WranglerConfig>
-
-```toml
-compatibility_flags = [ "disable_python_no_global_handlers" ]
+```yaml
+---
+$type: Worker
+$id: worker
+compatibility_flags:
+  - disable_python_no_global_handlers
+---
 ```
-
-</WranglerConfig>
 
 Consult the [Python Workers documentation](/workers/languages/python/) for more details.

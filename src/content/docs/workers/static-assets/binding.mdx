@@ -9,6 +9,39 @@ head: []
 description: Details on how to configure Workers static assets and its binding.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Badge,
 	Description,
@@ -28,15 +61,11 @@ Only one collection of static assets can be configured in each Worker.
 
 The folder of static assets to be served. For many frameworks, this is the `./public/`, `./dist/`, or `./build/` folder.
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 name = "my-worker"
 compatibility_date = "2024-09-19"
 assets = { directory = "./public/" }
 ```
-
-</WranglerConfig>
 
 ### Ignoring assets
 
@@ -65,8 +94,6 @@ Now Wrangler will not upload these files as client-side assets when deploying th
 
 Controls whether to invoke the Worker script regardless of a request which would have otherwise matched an asset. `run_worker_first = false` (default) will serve any static asset matching a request, while `run_worker_first = true` will unconditionally [invoke your Worker script](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 name = "my-worker"
 compatibility_date = "2024-09-19"
@@ -79,8 +106,6 @@ binding = "ASSETS"
 run_worker_first = true
 ```
 
-</WranglerConfig>
-
 You can also specify `run_worker_first` as an array of route patterns to selectively run the Worker script first only for specific routes.
 
 The array supports glob patterns with `*` for deep matching and negative patterns with `!` prefix.
@@ -90,8 +115,6 @@ Negative patterns have precedence over non-negative patterns. The Worker will ru
 The order in which the patterns are listed is not significant.
 
 `run_worker_first` is often paired with the [`not_found_handling = "single-page-application"` setting](/workers/static-assets/routing/single-page-application/#advanced-routing-control):
-
-<WranglerConfig>
 
 ```json
 {
@@ -107,15 +130,11 @@ The order in which the patterns are listed is not significant.
 }
 ```
 
-</WranglerConfig>
-
 In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
 
 ## `binding`
 
 Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
-
-<WranglerConfig>
 
 ```toml title="wrangler.toml"
 name = "my-worker"
@@ -126,8 +145,6 @@ compatibility_date = "2024-09-19"
 directory = "./public/"
 binding = "ASSETS"
 ```
-
-</WranglerConfig>
 
 In the example above, assets would be available through `env.ASSETS`.
 

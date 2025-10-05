@@ -14,6 +14,39 @@ sidebar:
 description: In this tutorial, you will use the OpenAI API and Cloudflare R2 to create a fine-tuned model.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will use the [OpenAI](https://openai.com) API and [Cloudflare R2](/r2) to create a [fine-tuned model](https://platform.openai.com/docs/guides/fine-tuning).
@@ -92,15 +125,15 @@ A binding is how your Worker interacts with external resources such as the R2 bu
 
 To bind the R2 bucket to your Worker, add the following to your Wrangler file. Update the binding property to a valid JavaScript variable identifier. Replace `<YOUR_BUCKET_NAME>` with the name of the bucket you created in [step 2](#2-upload-a-fine-tune-document-to-r2):
 
-<WranglerConfig>
-
-```toml
-[[r2_buckets]]
-binding = 'MY_BUCKET' # <~ valid JavaScript variable name
-bucket_name = '<YOUR_BUCKET_NAME>'
+```yaml
+---
+$type: Worker
+$id: worker
+r2_buckets:
+  - binding: MY_BUCKET
+    bucket_name: "YOUR_BUCKET_NAME"
+---
 ```
-
-</WranglerConfig>
 
 ## 4. Initialize your Worker application
 
@@ -243,7 +276,7 @@ To deploy your Worker application to the Cloudflare global network:
 1. Make sure you are in your Worker project's directory, then run the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 2. Wrangler will package and upload your code.

@@ -8,6 +8,39 @@ tags:
   - SSO
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, GlossaryTooltip, PackageManagers, WranglerConfig } from "~/components"
 
 This tutorial will walk you through extending the single-sign-on (SSO) capabilities of [Cloudflare Access](/cloudflare-one/policies/access/) with our serverless computing platform, [Cloudflare Workers](/workers/). Specifically, this guide will demonstrate how to modify requests sent to your secured origin to include additional information from the Cloudflare Access authentication event.
@@ -189,18 +222,20 @@ Below is an example of a user identity that includes the `disk_encryption` and `
 
 In the [Wrangler configuration file](/workers/wrangler/configuration/), [set up a route](/workers/configuration/routing/routes/) that maps the Worker to your Access application domain:
 
-<WranglerConfig>
-
-```toml
-route = { pattern= "app.example.com/*", zone_name="example.com"}
+```yaml
+---
+$type: Worker
+$id: worker
+route:
+  pattern: app.example.com/*
+  zone_name: example.com
+---
 ```
-
-</WranglerConfig>
 
 ## 4. Deploy the Worker
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 The Worker will now insert the **Cf-Access-Firewall-Activated** and **Cf-Access-Disk-Encrypted** headers into requests that pass your application's Access policies.

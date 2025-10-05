@@ -7,6 +7,39 @@ sidebar:
 description: Connect Hyperdrive to a Fly Postgres database instance.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, Steps } from "~/components";
 
 This example shows you how to connect Hyperdrive to a Fly Postgres database instance.
@@ -39,15 +72,19 @@ You can connect Hyperdrive to any existing Fly database by:
 
     Then, replace the `services` and `services.ports` section of the file with the following `toml` snippet:
 
-    ```toml
-    [[services]]
-    	internal_port = 5432 # Postgres instance
-    	protocol = "tcp"
-
-    [[services.ports]]
-    	handlers = ["pg_tls"]
-    	port = 5432
-    ```
+    ```yaml
+---
+$type: Worker
+$id: worker
+services:
+  - internal_port: 5432
+    protocol: tcp
+    ports:
+      - handlers:
+          - pg_tls
+        port: 5432
+---
+```
 
 3.  [Deploy the new configuration](https://fly.io/docs/postgres/connecting/connecting-external/#deploy-with-the-new-configuration).
 4.  [Obtain the connection string](https://fly.io/docs/postgres/connecting/connecting-external/#adapting-the-connection-string), which is in the form of:

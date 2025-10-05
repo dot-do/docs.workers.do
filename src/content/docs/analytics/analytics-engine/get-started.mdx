@@ -9,6 +9,39 @@ head:
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { DirectoryListing, WranglerConfig } from "~/components"
 
 ## 1. Name your dataset and add it to your Worker
@@ -19,15 +52,15 @@ Add the following to your [Wrangler configuration file](/workers/wrangler/config
 You do not need to manually create a dataset in the Cloudflare dashboard. Workers Analytics Engine datasets are created automatically the first time you write to them after defining the binding in your Wrangler configuration.
 :::
 
-<WranglerConfig>
-
-```toml
-[[analytics_engine_datasets]]
-binding = "<BINDING_NAME>"
-dataset = "<DATASET_NAME>"
+```yaml
+---
+$type: Worker
+$id: worker
+analytics_engine_datasets:
+  - binding: "BINDING_NAME"
+    dataset: "DATASET_NAME"
+---
 ```
-
-</WranglerConfig>
 
 ## 2. Write data points from your Worker
 

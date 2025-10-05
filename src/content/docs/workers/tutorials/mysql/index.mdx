@@ -11,6 +11,39 @@ tags:
   - SQL
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a MySQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/) and [Hyperdrive](/hyperdrive/). The Workers application you create in this tutorial will interact with a product database inside of MySQL.
@@ -77,8 +110,6 @@ npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="
 
 This command outputs the Hyperdrive configuration `id` that will be used for your Hyperdrive [binding](/workers/runtime-apis/bindings/). Set up your binding by specifying the `id` in the Wrangler file.
 
-<WranglerConfig>
-
 ```toml {7-9}
 name = "hyperdrive-example"
 main = "src/index.ts"
@@ -91,8 +122,6 @@ binding = "HYPERDRIVE"
 id = "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
 ```
 
-</WranglerConfig>
-
 ## 4. Query your database from your Worker
 
 <Render file="use-mysql2-to-make-query" product="hyperdrive" />
@@ -102,7 +131,7 @@ id = "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
 Run the following command to deploy your Worker:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.

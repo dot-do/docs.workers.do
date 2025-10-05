@@ -11,6 +11,39 @@ tags:
   - TypeScript
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, Details, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to use [event notifications](/r2/buckets/event-notifications/) to process a PDF file when it is uploaded to an R2 bucket. You will use [Workers AI](/workers-ai/) to summarize the PDF and store the summary as a text file in the same bucket.
@@ -62,14 +95,14 @@ cd pdf-summarizer
 
 Using Static Assets, you can serve the front-end of your application from your Worker. To use Static Assets, you need to add the required bindings to your Wrangler file.
 
-<WranglerConfig>
-
-```toml
-[assets]
-directory = "public"
+```yaml
+---
+$type: Worker
+$id: worker
+assets:
+  directory: public
+---
 ```
-
-</WranglerConfig>
 
 Next, create a `public` directory and add an `index.html` file. The `index.html` file should contain the following HTML code:
 
@@ -236,15 +269,15 @@ When you open the URL in your browser, you will see that there is a file upload 
 
 To handle the file upload, you will first need to add the R2 binding. In the Wrangler file, add the following code:
 
-<WranglerConfig>
-
-```toml
-[[r2_buckets]]
-binding = "MY_BUCKET"
-bucket_name = "<R2_BUCKET_NAME>"
+```yaml
+---
+$type: Worker
+$id: worker
+r2_buckets:
+  - binding: MY_BUCKET
+    bucket_name: "R2_BUCKET_NAME"
+---
 ```
-
-</WranglerConfig>
 
 Replace `<R2_BUCKET_NAME>` with the name of your R2 bucket.
 
@@ -306,14 +339,10 @@ npx wrangler queues create pdf-summarizer
 
 Add the binding to the Wrangler file:
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 [[queues.consumers]]
 queue = "pdf-summarizer"
 ```
-
-</WranglerConfig>
 
 ## 5. Handle event notifications
 
@@ -386,14 +415,10 @@ The above code does the following:
 
 To use Workers AI, you will need to add the Workers AI binding to the Wrangler file. The Wrangler file should contain the following code:
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 [ai]
 binding = "AI"
 ```
-
-</WranglerConfig>
 
 Execute the following command to add the AI type definition:
 
@@ -467,7 +492,7 @@ An event notification is created for the `pdf` suffix. When a new file with the 
 To deploy your Worker, run the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 In the output of the `wrangler deploy` command, copy the URL. This is the URL of your deployed application.
@@ -479,7 +504,7 @@ To test the application, navigate to the URL of your deployed application and up
 To view the logs, you can use the [`wrangler tail`](/workers/wrangler/commands/#tail) command.
 
 ```sh
-npx wrangler tail
+npx mdxe tail worker.mdx
 ```
 
 You will see the logs in your terminal. You can also navigate to the Cloudflare dashboard and view the logs in the Workers Logs section.

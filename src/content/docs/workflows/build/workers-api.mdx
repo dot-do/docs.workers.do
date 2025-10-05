@@ -5,6 +5,39 @@ sidebar:
   order: 2
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	MetaInfo,
 	Render,
@@ -167,8 +200,6 @@ You can bind to a Workflow by defining a `[[workflows]]` binding within your Wra
 
 For example, to bind to a Workflow called `workflows-starter` and to make it available on the `MY_WORKFLOW` variable to your Worker script, you would configure the following fields within the `[[workflows]]` binding definition:
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 #:schema node_modules/wrangler/config-schema.json
 name = "workflows-starter"
@@ -184,8 +215,6 @@ binding = "MY_WORKFLOW"
 class_name = "MyWorkflow"
 ```
 
-</WranglerConfig>
-
 ### Bind from Pages
 
 You can bind and trigger Workflows from [Pages Functions](/pages/functions/) by deploying a Workers project with your Workflow definition and then invoking that Worker using [service bindings](/pages/functions/bindings/#service-bindings) or a standard `fetch()` call.
@@ -197,8 +226,6 @@ Visit the documentation on [calling Workflows from Pages](/workflows/build/call-
 You can also bind to a Workflow that is defined in a different Worker script from the script your Workflow definition is in. To do this, provide the `script_name` key with the name of the script to the `[[workflows]]` binding definition in your Wrangler configuration.
 
 For example, if your Workflow is defined in a Worker script named `billing-worker`, but you are calling it from your `web-api-worker` script, your [Wrangler configuration file](/workers/wrangler/configuration/) would resemble the following:
-
-<WranglerConfig>
 
 ```toml title="wrangler.toml"
 #:schema node_modules/wrangler/config-schema.json
@@ -217,8 +244,6 @@ class_name = "MyWorkflow"
 # required if the Workflow is defined in another script.
 script_name = "billing-worker"
 ```
-
-</WranglerConfig>
 
 <Render file="wrangler-typegen" product="workers" />
 

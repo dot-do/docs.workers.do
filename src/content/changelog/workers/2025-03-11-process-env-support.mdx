@@ -6,6 +6,39 @@ products:
 date: 2025-03-11
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 You can now access [environment variables](/workers/configuration/environment-variables/) and
@@ -31,8 +64,6 @@ can all be accessed on `process.env`.
 To opt-in to the new `process.env` behaviour now, add the [`nodejs_compat_populate_process_env`](/workers/configuration/compatibility-flags/#enable-auto-populating-processenv) compatibility flag to your
 `wrangler.json` configuration:
 
-<WranglerConfig>
-
 ```jsonc
 {
 	// Rest of your configuration
@@ -40,8 +71,6 @@ To opt-in to the new `process.env` behaviour now, add the [`nodejs_compat_popula
 	"compatibility_flags": ["nodejs_compat", "nodejs_compat_populate_process_env"],
 	// Rest of your configuration
 ```
-
-</WranglerConfig>
 
 After April 1, 2025, populating `process.env` will become the default behavior when both `nodejs_compat` is enabled and
 your Worker's `compatibility_date` is after "2025-04-01".

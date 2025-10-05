@@ -5,6 +5,39 @@ sidebar:
   order: 3
 
 ---
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 A [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) is a specialized routing Worker that directs incoming requests to the appropriate user Workers in your dispatch namespace. Instead of using [Workers Routes](/workers/configuration/routing/routes/), dispatch Workers let you programmatically control request routing through code.
@@ -24,15 +57,15 @@ A [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/refe
 ### Configure the dispatch namespace binding
 To allow your dynamic dispatch Worker to dynamically route requests to Workers in a namespace, you need to configure a dispatch namespace [binding](/workers/runtime-apis/bindings/). This binding enables your dynamic dispatch Worker to call any user Worker within that namespace using `env.dispatcher.get()`. 
 
-<WranglerConfig>
-
-```toml
-[[dispatch_namespaces]]
-binding = "DISPATCHER"
-namespace = "my-dispatch-namespace"
+```yaml
+---
+$type: Worker
+$id: worker
+dispatch_namespaces:
+  - binding: DISPATCHER
+    namespace: my-dispatch-namespace
+---
 ```
-
-</WranglerConfig>
 
 Once the binding is configured, your dynamic dispatch Worker can route requests to any Worker in the namespace. Below are common routing patterns you can implement in your dispatcher. 
 

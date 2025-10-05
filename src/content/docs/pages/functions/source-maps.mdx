@@ -5,6 +5,39 @@ head: []
 description: Adding source maps and generating stack traces for Pages.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, WranglerConfig } from "~/components";
 
 <Render file="source-maps" product="workers" />
@@ -19,13 +52,13 @@ Support for uploading source maps for Pages is available now in open beta. Minim
 
 To enable source maps, provide the `--upload-source-maps` flag to [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) or add the following to your Pages application's [Wrangler configuration file](/pages/functions/wrangler-configuration/) if you are using the Pages build environment:
 
-<WranglerConfig>
-
-```toml
-upload_source_maps = true
+```yaml
+---
+$type: Worker
+$id: worker
+upload_source_maps: true
+---
 ```
-
-</WranglerConfig>
 
 When uploading source maps is enabled, Wrangler will automatically generate and upload source map files when you run [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1).
 

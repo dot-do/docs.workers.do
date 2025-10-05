@@ -9,6 +9,39 @@ head:
 noindex: true
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, Type, MetaInfo, WranglerConfig, DashButton } from "~/components";
 
 <Render file="wrangler-v1-deprecation" product="workers" />
@@ -46,7 +79,7 @@ Default values indicated by =value.
 Create a skeleton [Wrangler configuration file](/workers/wrangler/configuration/) in an existing directory. This command can be used as an alternative to `generate` if you prefer to clone a template repository yourself or you already have a JavaScript project and would like to use Wrangler.
 
 ```sh
-wrangler init [$NAME] [--type=$TYPE] [--site]
+mdxe create worker.mdx [$NAME] [--type=$TYPE] [--site]
 ```
 
 Default values indicated by =value.
@@ -82,7 +115,7 @@ wrangler build [--env $ENVIRONMENT_NAME]
 Authorize Wrangler with your Cloudflare account. This will open a login page in your browser and request your account access permissions. This command is the alternative to `wrangler config` and it uses OAuth tokens.
 
 ```sh
-wrangler login [--scopes-list] [--scopes $SCOPES]
+mdxe login [--scopes-list] [--scopes $SCOPES]
 ```
 
 All of the arguments and flags to this command are optional:
@@ -138,7 +171,7 @@ You can also use environment variables to authenticate, or `wrangler login` to a
 Publish your Worker to Cloudflare. Several keys in your Wrangler file determine whether you are publishing to a `*.workers.dev` subdomain or a custom domain. However, custom domains must be proxied (orange-clouded) through Cloudflare. Refer to the [Get started guide](/workers/configuration/routing/custom-domains/) for more information.
 
 ```sh
-wrangler publish [--env $ENVIRONMENT_NAME]
+mdxe run worker.mdx --deploy [--env $ENVIRONMENT_NAME]
 ```
 
 - `--env` optional
@@ -198,7 +231,7 @@ To publish your code to multiple domains, refer to the [documentation for enviro
 `wrangler dev` is a command that establishes a connection between `localhost` and a global network server that operates your Worker in development. A `cloudflared` tunnel forwards all requests to the global network server, which continuously updates as your Worker code changes. This allows full access to Workers KV, Durable Objects and other Cloudflare developer platform products. The `dev` command is a way to test your Worker while developing.
 
 ```sh
-wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <host>] [--local-protocol <http|https>] [--upstream-protocol <http|https>]
+mdxe run worker.mdx --dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <host>] [--local-protocol <http|https>] [--upstream-protocol <http|https>]
 ```
 
 - `--env` optional
@@ -226,7 +259,7 @@ These arguments can also be set in your Wrangler file. Refer to the [`wrangler d
 You should run `wrangler dev` from your Worker directory. Wrangler will run a local server accepting requests, executing your Worker, and forwarding them to a host. If you want to use another host other than your zone or `tutorials.cloudflare.com`, you can specify with `--host example.com`.
 
 ```sh
-wrangler dev
+mdxe run worker.mdx --dev
 ```
 
 ```sh output
@@ -244,7 +277,7 @@ With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and 
 Start a session to livestream logs from a deployed Worker.
 
 ```sh
-wrangler tail [--format $FORMAT] [--status $STATUS] [OPTIONS]
+mdxe tail worker.mdx [--format $FORMAT] [--status $STATUS] [OPTIONS]
 ```
 
 - `--format $FORMAT` json|pretty
@@ -480,21 +513,21 @@ one for staging and one for production).
 
 A Wrangler file with two environments:
 
-<WranglerConfig>
-
-```toml
-[env.staging]
-kv_namespaces = [
-  { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
-]
-
-[env.production]
-kv_namespaces = [
-  { binding = "MY_KV", id = "a825455ce00f4f7282403da85269f8ea" }
-]
+```yaml
+---
+$type: Worker
+$id: worker
+env:
+  staging:
+    kv_namespaces:
+      - binding: MY_KV
+        id: e29b263ab50e42ce9b637fa8370175e8
+  production:
+    kv_namespaces:
+      - binding: MY_KV
+        id: a825455ce00f4f7282403da85269f8ea
+---
 ```
-
-</WranglerConfig>
 
 To insert a value into a specific KV namespace, you can use:
 
@@ -528,27 +561,26 @@ Most `kv` commands require you to specify a namespace. A namespace can be specif
 
 Most `kv` subcommands also allow you to specify an environment with the optional `--env` flag. This allows you to publish Workers running the same code but with different namespaces. For example, you could use separate staging and production namespaces for KV data in your Wrangler file:
 
-<WranglerConfig>
-
-```toml
-type = "webpack"
-name = "my-worker"
-account_id = "<account id here>"
-route = "staging.example.com/*"
-workers_dev = false
-
-kv_namespaces = [
-  { binding = "MY_KV", id = "06779da6940b431db6e566b4846d64db" }
-]
-
-[env.production]
-route = "example.com/*"
-kv_namespaces = [
-  { binding = "MY_KV", id = "07bc1f3d1f2a4fd8a45a7e026e2681c6" }
-]
+```yaml
+---
+$type: Worker
+$id: my-worker
+type: webpack
+name: my-worker
+account_id: "account-id-here"
+route: staging.example.com/*
+workers_dev: false
+kv_namespaces:
+  - binding: MY_KV
+    id: 06779da6940b431db6e566b4846d64db
+env:
+  production:
+    route: example.com/*
+    kv_namespaces:
+      - binding: MY_KV
+        id: 07bc1f3d1f2a4fd8a45a7e026e2681c6
+---
 ```
-
-</WranglerConfig>
 
 With the Wrangler file above, you can specify `--env production` when you want to perform a KV action on the namespace `MY_KV` under `env.production`. For example, with the Wrangler file above, you can get a value out of a production KV instance with:
 

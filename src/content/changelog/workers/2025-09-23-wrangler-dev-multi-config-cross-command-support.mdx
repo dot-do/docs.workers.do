@@ -6,10 +6,43 @@ products:
 date: 2025-09-23
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 You can run multiple Workers in a single dev command by passing multiple config files to `wrangler dev`:
 
 ```sh
-wrangler dev --config ./web/wrangler.jsonc --config ./api/wrangler.jsonc
+mdxe run worker.mdx --dev --config ./web/wrangler.jsonc --config ./api/wrangler.jsonc
 ```
 
 Previously, if you ran the command above and then also ran wrangler dev for a different Worker, the Workers running in separate wrangler dev sessions could not communicate with each other. This prevented you from being able to use [Service Bindings](https://developers.cloudflare.com/workers/runtime-apis/bindings/service-bindings/) and [Tail Workers](https://developers.cloudflare.com/workers/observability/logs/tail-workers/) in local development, when running separate wrangler dev sessions.
@@ -18,10 +51,10 @@ Now, the following works as expected:
 
 ```sh
 # Terminal 1: Run your application that includes both Web and API workers
-wrangler dev --config ./web/wrangler.jsonc --config ./api/wrangler.jsonc
+mdxe run worker.mdx --dev --config ./web/wrangler.jsonc --config ./api/wrangler.jsonc
 
 # Terminal 2: Run your auth worker separately
-wrangler dev --config ./auth/wrangler.jsonc
+mdxe run worker.mdx --dev --config ./auth/wrangler.jsonc
 ```
 
 These Workers can now communicate with each other across separate dev commands, regardless of your development setup.

@@ -9,6 +9,39 @@ head:
 ---
 
 
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
 import { WranglerConfig } from "~/components";
 
 If you want to access Analytics Engine data from within a Worker you can use `fetch` to access the SQL API. The API can return JSON data that is easy to interact with in JavaScript.
@@ -51,14 +84,14 @@ First the environment variables are set up with the account ID and API token.
 
 The account ID is set in the [Wrangler configuration file](/workers/wrangler/configuration/):
 
-<WranglerConfig>
-
-```toml
-[vars]
-ACCOUNT_ID = "<account_id>"
+```yaml
+---
+$type: Worker
+$id: worker
+vars:
+  ACCOUNT_ID: "account_id"
+---
 ```
-
-</WranglerConfig>
 
 The API_TOKEN can be set as a secret, using the wrangler command line tool, by running the following and entering your token string:
 

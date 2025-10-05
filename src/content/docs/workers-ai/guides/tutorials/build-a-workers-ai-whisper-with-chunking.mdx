@@ -8,6 +8,39 @@ tags:
 description: Learn how to transcribe large audio files using Workers AI.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 In this tutorial you will learn how to:
 
 - **Transcribe large audio files:** Use the [Whisper-large-v3-turbo](/workers-ai/models/whisper-large-v3-turbo/) model from Cloudflare Workers AI to perform automatic speech recognition (ASR) or translation.
@@ -59,14 +92,14 @@ You must create an AI binding for your Worker to connect to Workers AI. [Binding
 
 To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
 
-<WranglerConfig>
-
-```toml
-[ai]
-binding = "AI"
+```yaml
+---
+$type: Worker
+$id: worker
+ai:
+  binding: AI
+---
 ```
-
-</WranglerConfig>
 
 Your binding is [available in your Worker code](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) on [`env.AI`](/workers/runtime-apis/handlers/fetch/).
 
@@ -74,14 +107,10 @@ Your binding is [available in your Worker code](/workers/reference/migrate-to-mo
 
 In your wrangler file, add or update the following settings to enable Node.js APIs and polyfills (with a compatibility date of 2024‑09‑23 or later):
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]
 compatibility_date = "2024-09-23"
 ```
-
-</WranglerConfig>
 
 ## 4. Handle large audio files with chunking
 
@@ -203,7 +232,7 @@ export default {
    Use wrangler's development mode to test your Worker locally:
 
 ```sh
-npx wrangler dev
+pnpm --filter mdxe exec mdxe run worker.mdx --dev
 ```
 
 Open your browser and go to [http://localhost:8787](http://localhost:8787), or use curl:
@@ -219,7 +248,7 @@ Replace the URL query parameter with the direct link to your audio file. (For Gi
    Once testing is complete, deploy your Worker with:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 3. **Test the deployed Worker:**

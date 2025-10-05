@@ -5,6 +5,39 @@ sidebar:
   order: 3
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, TypeScriptExample, WranglerConfig } from "~/components";
 
 The best way to improve the performance of your browser rendering Worker is to reuse sessions. One way to do that is via [Durable Objects](/browser-rendering/workers-bindings/browser-rendering-with-do/), which allows you to keep a long running connection from a Worker to a browser. Another way is to keep the browser open after you've finished with it, and connect to that session each time you have a new request.
@@ -41,19 +74,19 @@ In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/br
 
 ## 3. Configure the [Wrangler configuration file](/workers/wrangler/configuration/)
 
-<WranglerConfig>
-
-```toml
-name = "browser-worker"
-main = "src/index.ts"
-compatibility_date = "2023-03-14"
-compatibility_flags = [ "nodejs_compat" ]
-
-browser = { binding = "MYBROWSER" }
-
+```yaml
+---
+$type: Worker
+$id: browser-worker
+name: browser-worker
+main: src/index.ts
+compatibility_date: 2023-03-14
+compatibility_flags:
+  - nodejs_compat
+browser:
+  binding: MYBROWSER
+---
 ```
-
-</WranglerConfig>
 
 ## 4. Code
 

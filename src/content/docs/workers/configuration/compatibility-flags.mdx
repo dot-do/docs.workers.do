@@ -17,6 +17,39 @@ This documentation has been adapted for the .do platform. Key differences:
 :::
 
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { CompatibilityFlags, WranglerConfig, Render } from "~/components";
 
 Compatibility flags enable specific features. They can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
@@ -33,8 +66,6 @@ Compatibility flags can be set in a Worker's [Wrangler configuration file](/work
 
 This example enables the specific flag `formdata_parser_supports_files`, which is described [below](/workers/configuration/compatibility-flags/#formdata-parsing-supports-file). As of the specified date, `2021-09-14`, this particular flag was not yet enabled by default, but, by specifying it in `compatibility_flags`, we can enable it anyway. `compatibility_flags` can also be used to disable changes that became the default in the past.
 
-<WranglerConfig>
-
 ```yaml
 ---
 $type: Worker
@@ -44,8 +75,6 @@ compatibility_flags:
   - formdata_parser_supports_files
 ---
 ```
-
-</WranglerConfig>
 
 #### Via the Cloudflare Dashboard
 
@@ -68,25 +97,17 @@ A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available 
 
 <Render file="nodejs_compat" product="workers" />
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]
 ```
-
-</WranglerConfig>
 
 As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
 
 The Node.js `AsyncLocalStorage` API is a particularly useful feature for Workers. To enable only the `AsyncLocalStorage` API, use the `nodejs_als` compatibility flag.
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_als" ]
 ```
-
-</WranglerConfig>
 
 ## Flags history
 

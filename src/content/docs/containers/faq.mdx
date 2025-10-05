@@ -5,6 +5,39 @@ sidebar:
   order: 10
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 Frequently Asked Questions:
@@ -14,8 +47,6 @@ Frequently Asked Questions:
 To get logs in the Dashboard, including live tailing of logs, toggle `observability` to true
 in your Worker's wrangler config:
 
-<WranglerConfig>
-
 ```json
 {
 	"observability": {
@@ -23,8 +54,6 @@ in your Worker's wrangler config:
 	}
 }
 ```
-
-</WranglerConfig>
 
 Logs are subject to the same [limits as Worker logs](/workers/observability/logs/workers-logs/#limits), which means that they are
 retained for 3 days on Free plans and 7 days on Paid plans.

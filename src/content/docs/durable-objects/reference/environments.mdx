@@ -6,6 +6,39 @@ sidebar:
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, DashButton } from "~/components";
 
 Environments provide isolated spaces where your code runs with specific dependencies and configurations. This can be useful for a number of reasons, such as compatibility testing or version management. Using different environments can help with code consistency, testing, and production segregation, which reduces the risk of errors when deploying code.
@@ -18,31 +51,36 @@ If you are using Wrangler environments, you must specify any [Durable Object bin
 
 Durable Object bindings are not inherited. For example, you can define an environment named `staging` as below:
 
-<WranglerConfig>
-
-```toml
-[env.staging]
-durable_objects.bindings = [
-  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample"}
-]
+```yaml
+---
+$type: Worker
+$id: worker
+env:
+  staging:
+    durable_objects:
+      bindings:
+        - name: EXAMPLE_CLASS
+          class_name: DurableObjectExample
+---
 ```
-
-</WranglerConfig>
 
 Because Wrangler appends the [environment name](/workers/wrangler/environments/) to the top-level name when publishing, for a Worker named `worker-name` the above example is equivalent to:
 
 
 
-<WranglerConfig>
-
-```toml
-[env.staging]
-durable_objects.bindings = [
-  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name-staging"}
-]
+```yaml
+---
+$type: Worker
+$id: worker
+env:
+  staging:
+    durable_objects:
+      bindings:
+        - name: EXAMPLE_CLASS
+          class_name: DurableObjectExample
+          script_name: worker-name-staging
+---
 ```
-
-</WranglerConfig>
 
 `"EXAMPLE_CLASS"` in the staging environment is bound to a different Worker code name compared to the top-level `"EXAMPLE_CLASS"` binding, and will therefore access different Durable Objects with different persistent storage.
 
@@ -50,16 +88,19 @@ If you want an environment-specific binding that accesses the same Objects as th
 
 
 
-<WranglerConfig>
-
-```toml
-[env.another]
-durable_objects.bindings = [
-  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name"}
-]
+```yaml
+---
+$type: Worker
+$id: worker
+env:
+  another:
+    durable_objects:
+      bindings:
+        - name: EXAMPLE_CLASS
+          class_name: DurableObjectExample
+          script_name: worker-name
+---
 ```
-
-</WranglerConfig>
 
 ### Migration environments
 

@@ -8,6 +8,39 @@ tags:
   - JavaScript
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will use [Cloudflare Workers](/workers/) and [Airtable](https://airtable.com) to persist form submissions from a front-end user interface. Airtable is a free-to-use spreadsheet solution that has an approachable API for developers. Workers will handle incoming form submissions and use Airtable's [REST API](https://airtable.com/api) to asynchronously persist the data in an Airtable base (Airtable's term for a spreadsheet) for later reference.
@@ -238,8 +271,6 @@ To make an authenticated request to Airtable, you need to provide four constants
 
 Add a `vars` table at the end of your Wrangler file:
 
-<WranglerConfig>
-
 ```toml null {7}
 name = "workers-airtable-form"
 main = "src/index.js"
@@ -249,8 +280,6 @@ compatibility_date = "2023-06-13"
 AIRTABLE_BASE_ID = "exampleBaseId"
 AIRTABLE_TABLE_NAME = "Form Submissions"
 ```
-
-</WranglerConfig>
 
 With all these fields submitted, it is time to deploy your Workers serverless function and get your form communicating with it. First, publish your Worker:
 

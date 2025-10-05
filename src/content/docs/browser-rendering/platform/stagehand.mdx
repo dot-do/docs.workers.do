@@ -7,6 +7,39 @@ sidebar:
   badge: Beta
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Render,
 	WranglerConfig,
@@ -45,25 +78,23 @@ Install the necessary dependencies:
 ### 2. Configure your Worker
 
 Update your wrangler configuration file to include the bindings for Browser Rendering and [Workers AI](/workers-ai/):
-	<WranglerConfig>
-		```jsonc
-			{
-				"name": "stagehand-example",
-				"main": "src/index.ts",
-				"compatibility_flags": ["nodejs_compat"],
-				"compatibility_date": "2025-09-17",
-				"observability": {
-					"enabled": true
-				},
-				"browser": {
-					"binding": "BROWSER"
-				},
-				"ai": {
-					"binding": "AI"
-				}
-			}
-		```
-	</WranglerConfig>
+	```yaml
+---
+$type: Worker
+$id: stagehand-example
+name: stagehand-example
+main: src/index.ts
+compatibility_flags:
+  - nodejs_compat
+compatibility_date: 2025-09-17
+observability:
+  enabled: true
+browser:
+  binding: BROWSER
+ai:
+  binding: AI
+---
+```
 
 If you are using the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/), you need to include the following [alias](https://vite.dev/config/shared-options.html#resolve-alias) in `vite.config.ts`:
 
@@ -81,13 +112,13 @@ export default defineConfig({
 
 If you are not using the Cloudflare Vite plugin, you need to include the following [module alias](https://developers.cloudflare.com/workers/wrangler/configuration/#module-aliasing) to the wrangler configuration:
 
-```jsonc
-{
-	// ...
-	"alias": {
-		"playwright": "@cloudflare/playwright"
-	}
-}
+```yaml
+---
+$type: Worker
+$id: worker
+alias:
+  playwright: "@cloudflare/playwright"
+---
 ```
 
 ### 3. Write the Worker code

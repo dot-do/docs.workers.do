@@ -2,18 +2,51 @@
 {}
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, TypeScriptExample, TabItem, Tabs } from "~/components";
 
 For example, if Worker B implements the public method `add(a, b)`:
 
-<WranglerConfig>
-
-```toml
-name = "worker_b"
-main = "./src/workerB.js"
+```yaml
+---
+$type: Worker
+$id: worker_b
+name: worker_b
+main: ./src/workerB.js
+---
 ```
-
-</WranglerConfig>
 
 <Tabs syncKey="workersExamples">
 
@@ -54,17 +87,17 @@ class Default(WorkerEntrypoint):
 
 Worker A can declare a [binding](/workers/runtime-apis/bindings) to Worker B:
 
-<WranglerConfig>
-
-```toml
-name = "worker_a"
-main = "./src/workerA.js"
-services = [
-  { binding = "WORKER_B", service = "worker_b" }
-]
+```yaml
+---
+$type: Worker
+$id: worker_a
+name: worker_a
+main: ./src/workerA.js
+services:
+  - binding: WORKER_B
+    service: worker_b
+---
 ```
-
-</WranglerConfig>
 
 Making it possible for Worker A to call the `add()` method from Worker B:
 

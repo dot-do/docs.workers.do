@@ -6,6 +6,39 @@ sidebar:
 description: Static assets and the Vite plugin
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 This guide focuses on the areas of working with static assets that are unique to the Vite plugin.
@@ -27,13 +60,14 @@ It is therefore not necessary to provide the `assets.directory` field in your in
 The `assets` configuration should be used, however, if you wish to set [routing configuration](/workers/static-assets/routing/) or enable the [assets binding](/workers/static-assets/binding/#binding).
 The following example configures the `not_found_handling` for a single-page application so that the fallback will always be the root `index.html` file.
 
-<WranglerConfig>
-
-```toml
-assets = { not_found_handling = "single-page-application" }
+```yaml
+---
+$type: Worker
+$id: worker
+assets:
+  not_found_handling: single-page-application
+---
 ```
-
-</WranglerConfig>
 
 ## Features
 

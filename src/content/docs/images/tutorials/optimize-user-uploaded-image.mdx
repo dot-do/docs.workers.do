@@ -6,6 +6,39 @@ sidebar:
   order: 1
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, Render } from "~/components"
 
 
@@ -43,21 +76,20 @@ To start, you will need to set up your project to use the following resources on
 
 Configure your `wrangler.toml` file to add the Images, R2, and Assets bindings:
 
-<WranglerConfig>
-```toml
-[images]
-binding = "IMAGES"
-
-[[r2_buckets]]
-binding = "R2"
-bucket_name = "<BUCKET>"
-
-[assets]
-directory = "./<DIRECTORY>"
-binding = "ASSETS"
+```yaml
+---
+$type: Worker
+$id: worker
+images:
+  binding: IMAGES
+r2_buckets:
+  - binding: R2
+    bucket_name: "BUCKET"
+assets:
+  directory: ./<DIRECTORY>
+  binding: ASSETS
+---
 ```
-
-</WranglerConfig>
 Replace `<BUCKET>` with the name of the R2 bucket where you will upload the images after they are transformed. In your Worker code, you will be able to refer to this bucket using `env.R2.`
 
 Replace `./<DIRECTORY>` with the name of the project's directory where the overlay image will be stored. In your Worker code, you will be able to refer to these assets using `env.ASSETS`.

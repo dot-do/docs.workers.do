@@ -5,6 +5,39 @@ description: Host static assets on Cloudflare's global network and deliver faste
 ---
 
 
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
 
 Workers for Platforms lets you deploy front-end applications at scale. By hosting static assets on Cloudflare's global network, you can deliver faster load times worldwide and eliminate the need for external infrastructure. You can also combine these static assets with dynamic logic in Cloudflare Workers, providing a full-stack experience for your customers.
 
@@ -242,19 +275,18 @@ Create or update your [Wrangler configuration file](/workers/wrangler/configurat
 
 import { WranglerConfig } from "~/components";
 
-<WranglerConfig>
-
-```toml
-name = "my-static-site"
-main = "./src/index.js"
-compatibility_date = "2025-01-29"
-
-[assets]
-directory = "./public"
-binding = "ASSETS"
+```yaml
+---
+$type: Worker
+$id: my-static-site
+name: my-static-site
+main: ./src/index.js
+compatibility_date: 2025-01-29
+assets:
+  directory: ./public
+  binding: ASSETS
+---
 ```
-
-</WranglerConfig>
 
 - `directory`: The local folder containing your static files (for example, `./public`).
 - `binding`: The binding name used to reference these assets within your Worker code.

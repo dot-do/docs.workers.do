@@ -17,6 +17,39 @@ head:
 description: Example of how to use Queues to handle rate limits of external APIs.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This tutorial explains how to use Queues to handle rate limits of external APIs by building an application that sends email notifications using [Resend](https://www.resend.com/). However, you can use this pattern to handle rate limits of any external API.
@@ -76,27 +109,25 @@ Created queue rate-limit-queue.
 
 In your Wrangler file, add the following:
 
-<WranglerConfig>
-
-```toml
-[[queues.producers]]
-binding = "EMAIL_QUEUE"
-queue = "rate-limit-queue"
-
-[[queues.consumers]]
-queue = "rate-limit-queue"
-max_batch_size = 2
-max_batch_timeout = 10
-max_retries = 3
+```yaml
+---
+$type: Worker
+$id: worker
+queues:
+  producers:
+    - binding: EMAIL_QUEUE
+      queue: rate-limit-queue
+  consumers:
+    - queue: rate-limit-queue
+      max_batch_size: 2
+      max_batch_timeout: 10
+      max_retries: 3
+---
 ```
-
-</WranglerConfig>
 
 It is important to include the `max_batch_size` of two to the consumer queue is important because the Resend API has a default rate limit of two requests per second. This batch size allows the queue to process the message in the batch size of two. If the batch size is less than two, the queue will wait for 10 seconds to collect the next message. If no more messages are available, the queue will process the message in the batch. For more information, refer to the [Batching, Retries and Delays documentation](/queues/configuration/batching-retries)
 
 Your final Wrangler file should look similar to the example below.
-
-<WranglerConfig>
 
 ```toml title="wrangler.toml"
 #:schema node_modules/wrangler/config-schema.json
@@ -115,8 +146,6 @@ max_batch_size = 2
 max_batch_timeout = 10
 max_retries = 3
 ```
-
-</WranglerConfig>
 
 ## 3. Add bindings to environment
 

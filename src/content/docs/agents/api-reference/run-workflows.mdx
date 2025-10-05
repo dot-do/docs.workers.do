@@ -6,6 +6,39 @@ sidebar:
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
 Agents can trigger asynchronous [Workflows](/workflows/), allowing your Agent to run complex, multi-step tasks in the background. This can include post-processing files that a user has uploaded, updating the embeddings in a [vector database](/vectorize/), and/or managing long-running user-lifecycle email or SMS notification workflows.
@@ -64,8 +97,6 @@ export class MyWorkflow extends WorkflowEntrypoint<Env> {
 
 You'll also need to make sure your Agent [has a binding to your Workflow](/workflows/build/trigger-workflows/#workers-api-bindings) so that it can call it:
 
-<WranglerConfig>
-
 ```jsonc
 {
 	// ...
@@ -84,25 +115,18 @@ You'll also need to make sure your Agent [has a binding to your Workflow](/workf
 }
 ```
 
-</WranglerConfig>
-
 ## Trigger a Workflow from another project
 
 You can also call a Workflow that is defined in a different Workers script from your Agent by setting the `script_name` property in the `workflows` binding of your Agent:
 
-<WranglerConfig>
-
-```jsonc
-{
-		// Required:
-		"name": "EMAIL_WORKFLOW",
-		"class_name": "MyWorkflow",
-		// Optional: set the script_name field if your Workflow is defined in a
-		// different project from your Agent
-		"script_name": "email-workflows"
-}
+```yaml
+---
+$type: Worker
+$id: EMAIL_WORKFLOW
+name: EMAIL_WORKFLOW
+class_name: MyWorkflow
+script_name: email-workflows
+---
 ```
-
-</WranglerConfig>
 
 Refer to the [cross-script calls](/workflows/build/workers-api/#cross-script-calls) section of the Workflows documentation for more examples.

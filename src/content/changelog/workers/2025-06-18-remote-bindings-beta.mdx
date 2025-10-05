@@ -6,6 +6,39 @@ products:
 date: 2025-06-18
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, Aside } from "~/components";
 
 Today [we announced the public beta](https://github.com/cloudflare/workers-sdk/discussions/9660) of [remote bindings](/workers/development-testing/#remote-bindings) for local development. With remote bindings, you can now connect to deployed resources like [R2 buckets](/r2/) and [D1 databases](/d1/) while running Worker code on your local machine. This means you can test your local code changes against real data and services, without the overhead of deploying for each iteration.
@@ -13,8 +46,6 @@ Today [we announced the public beta](https://github.com/cloudflare/workers-sdk/d
 ## Example configuration
 
 To enable remote mode, add `"experimental_remote" : true` to each binding that you want to rely on a remote resource running on Cloudflare:
-
-<WranglerConfig>
 
 ```jsonc title="wrangler.jsonc"
 {
@@ -30,8 +61,6 @@ To enable remote mode, add `"experimental_remote" : true` to each binding that y
 	],
 }
 ```
-
-</WranglerConfig>
 
 When remote bindings are configured, your Worker **still executes locally**, but all binding calls are proxied to the deployed resource that runs on Cloudflare's network.
 

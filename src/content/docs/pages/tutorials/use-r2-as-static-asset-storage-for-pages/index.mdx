@@ -10,6 +10,39 @@ tags:
   - JavaScript
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 This tutorial will teach you how to use [R2](/r2/) as a static asset storage bucket for your [Pages](/pages/) app. This is especially helpful if you're hitting the [file limit](/pages/platform/limits/#files) or the [max file size limit](/pages/platform/limits/#file-size) on Pages.
@@ -69,15 +102,15 @@ To bind the R2 bucket we have created to the cat blog, we need to update the Wra
 
 Open the [Wrangler configuration file](/pages/functions/wrangler-configuration/), and add the following binding to the file. `bucket_name` should be the exact name of the bucket created earlier, while `binding` can be any custom name referring to the R2 resource:
 
-<WranglerConfig>
-
-```toml
-[[r2_buckets]]
-binding = "MEDIA"
-bucket_name = "cat-media"
+```yaml
+---
+$type: Worker
+$id: worker
+r2_buckets:
+  - binding: MEDIA
+    bucket_name: cat-media
+---
 ```
-
-</WranglerConfig>
 
 :::note
 
@@ -146,7 +179,7 @@ Before deploying the changes made so far to our cat blog, let us add a few new p
 With all the files saved, open a new terminal window to deploy the app:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 Once deployed, media assets are fetched and served from the R2 bucket.

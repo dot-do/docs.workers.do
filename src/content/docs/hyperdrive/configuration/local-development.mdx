@@ -5,6 +5,39 @@ sidebar:
   order: 6
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 Hyperdrive can be used when developing and testing your Workers locally by connecting to a local database instance running on your machine directly, or a remote database instance. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
@@ -32,21 +65,21 @@ For example, to use the environmental variable, export the environmental variabl
 # Your configured Hyperdrive binding is "TEST_DB"
 export CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
 # Start a local development session referencing this local instance
-npx wrangler dev
+pnpm --filter mdxe exec mdxe run worker.mdx --dev
 ```
 
 To configure a `localConnectionString` in the [Wrangler configuration file](/workers/wrangler/configuration/), ensure your Hyperdrive bindings have a `localConnectionString` property set:
 
-<WranglerConfig>
-
-```toml
-[[hyperdrive]]
-binding = "TEST_DB"
-id = "c020574a-5623-407b-be0c-cd192bab9545"
-localConnectionString = "postgres://user:password@localhost:5432/databasename"
+```yaml
+---
+$type: Worker
+$id: worker
+hyperdrive:
+  - binding: TEST_DB
+    id: c020574a-5623-407b-be0c-cd192bab9545
+    localConnectionString: postgres://user:password@localhost:5432/databasename
+---
 ```
-
-</WranglerConfig>
 
 ## Use `wrangler dev`
 
@@ -68,7 +101,7 @@ export CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:pa
 
 ```sh
 # Start a local dev session:
-npx wrangler dev
+pnpm --filter mdxe exec mdxe run worker.mdx --dev
 ```
 
 ```sh output

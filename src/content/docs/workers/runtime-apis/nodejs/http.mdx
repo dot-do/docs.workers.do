@@ -3,6 +3,39 @@ pcx_content_type: configuration
 title: http
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render } from "~/components";
 
 <Render file="nodejs-compat-howto" product="workers" />
@@ -15,8 +48,14 @@ To use the HTTP client-side methods (`http.get`, `http.request`, etc.), you must
 
 This flag is automatically enabled for Workers using a [compatibility date](/workers/configuration/compatibility-dates/) of `2025-08-15` or later when `nodejs_compat` is enabled. For Workers using an earlier compatibility date, you can manually enable it by adding the flag to your `wrangler.toml`:
 
-```toml
-compatibility_flags = ["nodejs_compat", "enable_nodejs_http_modules"]
+```yaml
+---
+$type: Worker
+$id: worker
+compatibility_flags:
+  - nodejs_compat
+  - enable_nodejs_http_modules
+---
 ```
 
 ### Server-side methods
@@ -25,14 +64,27 @@ To use the HTTP server-side methods (`http.createServer`, `http.Server`, `http.S
 
 This flag is automatically enabled for Workers using a [compatibility date](/workers/configuration/compatibility-dates/) of `2025-09-01` or later when `nodejs_compat` is enabled. For Workers using an earlier compatibility date, you can manually enable it by adding the flag to your `wrangler.toml`:
 
-```toml
-compatibility_flags = ["nodejs_compat", "enable_nodejs_http_server_modules"]
+```yaml
+---
+$type: Worker
+$id: worker
+compatibility_flags:
+  - nodejs_compat
+  - enable_nodejs_http_server_modules
+---
 ```
 
 To use both client-side and server-side methods, enable both flags:
 
-```toml
-compatibility_flags = ["nodejs_compat", "enable_nodejs_http_modules", "enable_nodejs_http_server_modules"]
+```yaml
+---
+$type: Worker
+$id: worker
+compatibility_flags:
+  - nodejs_compat
+  - enable_nodejs_http_modules
+  - enable_nodejs_http_server_modules
+---
 ```
 
 ## get

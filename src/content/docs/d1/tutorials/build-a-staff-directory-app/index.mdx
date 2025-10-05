@@ -12,6 +12,39 @@ tags:
 description: Build a staff directory using D1. Users access employee info; admins add new employees within the app.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to use D1 to build a staff directory. This application will allow users to access information about an organization's employees and give admins the ability to add new employees directly within the app.
@@ -73,29 +106,29 @@ After creating your database, you will need to set up a [binding](/workers/runti
 
 This binding enables your application to interact with Cloudflare resources such as D1 databases, KV namespaces, and R2 buckets. To configure this, create a Wrangler file in your project's root directory and input the basic setup information:
 
-<WranglerConfig>
-
-```toml
-name = "staff-directory"
-compatibility_date = "2023-12-01"
+```yaml
+---
+$type: Worker
+$id: staff-directory
+name: staff-directory
+compatibility_date: 2023-12-01
+---
 ```
-
-</WranglerConfig>
 
 Next, add the database binding details to your Wrangler file. This involves specifying a binding name (in this case, `DB`), which will be used to reference the database within your application, along with the `database_name` and `database_id` provided when you created the database:
 
 
 
-<WranglerConfig>
-
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "staff-directory"
-database_id = "f495af5f-dd71-4554-9974-97bdda7137b3"
+```yaml
+---
+$type: Worker
+$id: worker
+d1_databases:
+  - binding: DB
+    database_name: staff-directory
+    database_id: f495af5f-dd71-4554-9974-97bdda7137b3
+---
 ```
-
-</WranglerConfig>
 
 You have now configured your application to access and interact with your D1 database, either through the command line or directly within your codebase.
 
@@ -380,15 +413,15 @@ Once the bucket is created, add the R2 bucket binding to your Wrangler file:
 
 
 
-<WranglerConfig>
-
-```toml
-[[r2_buckets]]
-binding = "MY_BUCKET"
-bucket_name = "employee-avatars"
+```yaml
+---
+$type: Worker
+$id: worker
+r2_buckets:
+  - binding: MY_BUCKET
+    bucket_name: employee-avatars
+---
 ```
-
-</WranglerConfig>
 
 Pass the R2 binding to the `global.d.ts` file:
 
@@ -431,23 +464,21 @@ After successful login, confirm that your Wrangler file is configured similarly 
 
 
 
-<WranglerConfig>
-
-```toml
-name = "staff-directory"
-compatibility_date = "2023-12-01"
-
-[[r2_buckets]]
-binding = "MY_BUCKET"
-bucket_name = "employee-avatars"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "staff-directory"
-database_id = "f495af5f-dd71-4554-9974-97bdda7137b3"
+```yaml
+---
+$type: Worker
+$id: staff-directory
+name: staff-directory
+compatibility_date: 2023-12-01
+r2_buckets:
+  - binding: MY_BUCKET
+    bucket_name: employee-avatars
+d1_databases:
+  - binding: DB
+    database_name: staff-directory
+    database_id: f495af5f-dd71-4554-9974-97bdda7137b3
+---
 ```
-
-</WranglerConfig>
 
 Run `wrangler deploy` to deploy your project to Cloudflare. After deployment you can test your application is working by accessing the deployed URL provided for you. Your browser should display your application with the base frontend you created. If you do not have any data populated in your database, go to the `/admin` page to add a new employee, and this should return a new employee in your home page.
 

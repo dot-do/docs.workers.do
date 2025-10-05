@@ -5,6 +5,39 @@ sidebar:
   order: 100
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { MetaInfo, Render, Type, WranglerConfig } from "~/components";
 
 An Agent is configured like any other Cloudflare Workers project, and uses [a wrangler configuration](/workers/wrangler/configuration/) file to define where your code is and what services (bindings) it will use.
@@ -33,8 +66,6 @@ The typical file structure for an Agent project created from `npm create cloudfl
 ### Example configuration
 
 Below is a minimal `wrangler.jsonc` file that defines the configuration for an Agent, including the entry point, `durable_object` namespace, and code `migrations`:
-
-<WranglerConfig>
 
 ```jsonc
 {
@@ -66,8 +97,6 @@ Below is a minimal `wrangler.jsonc` file that defines the configuration for an A
 	},
 }
 ```
-
-</WranglerConfig>
 
 The configuration includes:
 

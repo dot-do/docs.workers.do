@@ -7,6 +7,39 @@ sidebar:
   order: 7
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 KV [bindings](/workers/runtime-apis/bindings/) allow for communication between a Worker and a KV namespace.
@@ -27,19 +60,16 @@ To execute your Worker, define the binding.
 
 In the following example, the binding is called `TODO`. In the `kv_namespaces` portion of your Wrangler configuration file, add:
 
-<WranglerConfig>
-
-```toml
-name = "worker"
-
-# ...
-
-kv_namespaces = [
-  { binding = "TODO", id = "06779da6940b431db6e566b4846d64db" }
-]
+```yaml
+---
+$type: Worker
+$id: worker
+name: worker
+kv_namespaces:
+  - binding: TODO
+    id: 06779da6940b431db6e566b4846d64db
+---
 ```
-
-</WranglerConfig>
 
 With this, the deployed Worker will have a `TODO` field in their environment object (the second parameter of the `fetch()` request handler). Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
 
@@ -62,8 +92,6 @@ When you use Wrangler to develop locally with the `wrangler dev` command, Wrangl
 
 To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, set `"remote" : true` in the KV binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information.
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 name = "worker"
 
@@ -73,8 +101,6 @@ kv_namespaces = [
   { binding = "TODO", id = "06779da6940b431db6e566b4846d64db" }
 ]
 ```
-
-</WranglerConfig>
 
 ## Access KV from Durable Objects and Workers using ES modules format
 

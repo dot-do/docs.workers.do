@@ -8,6 +8,39 @@ head:
     content: Getting started
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 Cloudflare Queues is a flexible messaging queue that allows you to queue messages for asynchronous processing. By following this guide, you will create your first queue, a Worker to publish messages to that queue, and a consumer Worker to consume messages from that queue.
@@ -70,15 +103,16 @@ To expose your queue to the code inside your Worker, you need to connect your qu
 
 To create a binding, open your newly generated `wrangler.jsonc` file and add the following:
 
-<WranglerConfig>
-
-```toml
-[[queues.producers]]
- queue = "MY-QUEUE-NAME"
- binding = "MY_QUEUE"
+```yaml
+---
+$type: Worker
+$id: worker
+queues:
+  producers:
+    - queue: MY-QUEUE-NAME
+      binding: MY_QUEUE
+---
 ```
-
-</WranglerConfig>
 
 Replace `MY-QUEUE-NAME` with the name of the queue you created in [step 2](/queues/get-started/#2-create-a-queue). Next, replace `MY_QUEUE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
 
@@ -125,7 +159,7 @@ In a production application, you would likely use a [`try...catch`](https://deve
 With your Wrangler file and `index.ts` file configured, you are ready to publish your producer Worker. To publish your producer Worker, run:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 You should see output that resembles the below, with a `*.workers.dev` URL by default.
@@ -188,18 +222,17 @@ Each queue can only have one consumer Worker connected to it. If you try to conn
 
 To connect your queue to your consumer Worker, open your Wrangler file and add this to the bottom:
 
-<WranglerConfig>
-
-```toml
-[[queues.consumers]]
- queue = "<MY-QUEUE-NAME>"
- # Required: this should match the name of the queue you created in step 3.
- # If you misspell the name, you will receive an error when attempting to publish your Worker.
- max_batch_size = 10 # optional: defaults to 10
- max_batch_timeout = 5 # optional: defaults to 5 seconds
+```yaml
+---
+$type: Worker
+$id: worker
+queues:
+  consumers:
+    - queue: "MY-QUEUE-NAME"
+      max_batch_size: 10
+      max_batch_timeout: 5
+---
 ```
-
-</WranglerConfig>
 
 Replace `MY-QUEUE-NAME` with the queue you created in [step 2](/queues/get-started/#2-create-a-queue).
 
@@ -214,7 +247,7 @@ In your consumer Worker, you are using queues to auto batch messages using the `
 With your Wrangler file and `index.ts` file configured, publish your consumer Worker by running:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 ## 5. Read messages from your queue
@@ -224,7 +257,7 @@ After you set up consumer Worker, you can read messages from the queue.
 Run `wrangler tail` to start waiting for our consumer to log the messages it receives:
 
 ```sh
-npx wrangler tail
+npx mdxe tail worker.mdx
 ```
 
 With `wrangler tail` running, open the Worker URL you opened in [step 3](/queues/get-started/#3-set-up-your-producer-worker).

@@ -11,6 +11,39 @@ head:
     content: Agents
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	CardGrid,
 	Description,
@@ -35,7 +68,7 @@ To use the Agent starter template and create your first Agent with the Agents SD
 
 ```sh
 # install it
-npm create cloudflare@latest agents-starter -- --template=cloudflare/agents-starter
+mdxe create worker.mdx agents-starter -- --template=cloudflare/agents-starter
 # and deploy it
 npx wrangler@latest deploy
 ```
@@ -70,18 +103,20 @@ export class MyAgent extends Agent {
 
 Lastly, add the [Durable Objects](/durable-objects/) binding to your wrangler file:
 
-<WranglerConfig>
-```toml
-[[durable_objects.bindings]]
-name = "MyAgent"
-class_name = "MyAgent"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyAgent"]
-
+```yaml
+---
+$type: Worker
+$id: worker
+durable_objects:
+  bindings:
+    - name: MyAgent
+      class_name: MyAgent
+migrations:
+  - tag: v1
+    new_sqlite_classes:
+      - MyAgent
+---
 ```
-</WranglerConfig>
 
 Dive into the [Agent SDK reference](/agents/api-reference/agents-api/) to learn more about how to use the Agents SDK package and defining an `Agent`.
 

@@ -8,6 +8,39 @@ tags:
   - SQL
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This tutorial will guide you on how to build globally distributed applications with Cloudflare Workers, and [Turso](https://chiselstrike.com/), an edge-hosted distributed database based on libSQL. By using Workers and Turso, you can create applications that are close to your end users without having to maintain or operate infrastructure in tens or hundreds of regions.
@@ -155,14 +188,14 @@ libsql://my-db-<your-github-username>.turso.io
 
 Open the [Wrangler configuration file](/workers/wrangler/configuration/) in your editor and at the bottom of the file, create a new `[vars]` section representing the [environment variables](/workers/configuration/environment-variables/) for your project:
 
-<WranglerConfig>
-
-```toml
-[vars]
-LIBSQL_DB_URL = "paste-your-url-here"
+```yaml
+---
+$type: Worker
+$id: worker
+vars:
+  LIBSQL_DB_URL: paste-your-url-here
+---
 ```
-
-</WranglerConfig>
 
 Save the changes to the [Wrangler configuration file](/workers/wrangler/configuration/).
 
@@ -313,7 +346,7 @@ With your environment configured and your code ready, you will now test your Wor
 To run a local instance of our Worker (entirely on your machine), run the following command:
 
 ```sh
-npx wrangler dev
+pnpm --filter mdxe exec mdxe run worker.mdx --dev
 ```
 
 You should be able to review output similar to the following:
@@ -371,7 +404,7 @@ Quit Wrangler by typing `q` into the shell where it was started.
 After you have validated that your Worker can connect to your Turso database, deploy your Worker. Run the following Wrangler command to deploy your Worker to the Cloudflare global network:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 The first time you run this command, it will launch a browser, ask you to sign in with your Cloudflare account, and grant permissions to Wrangler.

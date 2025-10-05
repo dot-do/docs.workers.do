@@ -16,6 +16,39 @@ This documentation has been adapted for the .do platform. Key differences:
 :::
 
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, TabItem, Tabs, WranglerConfig, DashButton } from "~/components";
 
 ## Background
@@ -65,8 +98,6 @@ As `vars` is a [non-inheritable key](/workers/wrangler/configuration/#non-inheri
 
 The example below sets up two environments, `staging` and `production`, with different values for `API_HOST`.
 
-<WranglerConfig>
-
 ```yaml
 ---
 $type: Worker
@@ -83,8 +114,6 @@ env:
       API_HOST: production.example.com
 ---
 ```
-
-</WranglerConfig>
 
 To run Wrangler commands in specific environments, you can pass in the `--env` or `-e` flag. For example, you can develop the Worker in an environment called `staging` by running `npx wrangler dev --env staging`, and deploy it with `npx wrangler deploy --env staging`.
 

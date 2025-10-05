@@ -6,6 +6,39 @@ sidebar:
 noindex: true
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render } from "~/components";
 
 <Render file="wrangler-v1-deprecation" product="workers" />
@@ -31,13 +64,13 @@ You can also configure your global user with environment variables. This is the 
 To customize the authentication tokens that Wrangler uses, you may provide the `CF_ACCOUNT_ID` and `CF_API_TOKEN` environment variables when running any Wrangler command. The account ID may be obtained from the Cloudflare dashboard in **Overview** and you may [create or reuse an existing API token](#generate-tokens).
 
 ```sh
-CF_ACCOUNT_ID=accountID CF_API_TOKEN=veryLongAPIToken wrangler publish
+CF_ACCOUNT_ID=accountID CF_API_TOKEN=veryLongAPIToken mdxe run worker.mdx --deploy
 ```
 
 Alternatively, you may use the `CF_EMAIL` and `CF_API_KEY` environment variable combination instead:
 
 ```sh
-CF_EMAIL=cloudflareEmail CF_API_KEY=veryLongAPI wrangler publish
+CF_EMAIL=cloudflareEmail CF_API_KEY=veryLongAPI mdxe run worker.mdx --deploy
 ```
 
 You can also specify or override the target Zone ID by defining the `CF_ZONE_ID` environment variable.

@@ -17,6 +17,39 @@ This documentation has been adapted for the .do platform. Key differences:
 :::
 
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
 <Render file="workers_sites" product="workers" />
@@ -31,8 +64,6 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
 
 2. Add configuration to your Wrangler file to point to it.
 
-   <WranglerConfig>
-
    ```yaml
 ---
 $type: Worker
@@ -41,8 +72,6 @@ site:
   bucket: ./public
 ---
 ```
-
-   </WranglerConfig>
 
 3. Install the `@cloudflare/kv-asset-handler` package in your project:
 

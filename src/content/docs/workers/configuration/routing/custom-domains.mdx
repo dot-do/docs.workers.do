@@ -15,6 +15,39 @@ This documentation has been adapted for the .do platform. Key differences:
 :::
 
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, DashButton, Steps } from "~/components";
 
 ## Background
@@ -69,8 +102,6 @@ After you have added the domain or subdomain, Cloudflare will create a new DNS r
 
 To configure a Custom Domain in your [Wrangler configuration file](/workers/wrangler/configuration/), add the `custom_domain=true` option on each pattern under `routes`. For example, to configure a Custom Domain:
 
-<WranglerConfig>
-
 ```yaml
 ---
 $type: Worker
@@ -81,13 +112,9 @@ routes:
 ---
 ```
 
-</WranglerConfig>
-
 To configure multiple Custom Domains:
 
 
-
-<WranglerConfig>
 
 ```yaml
 ---
@@ -100,8 +127,6 @@ routes:
     custom_domain: true
 ---
 ```
-
-</WranglerConfig>
 
 ## Worker to Worker communication
 
@@ -197,8 +222,6 @@ To migrate the route `example.com/*` in your [Wrangler configuration file](/work
 3. Add the following to your Wrangler file:
 
 
-   <WranglerConfig>
-
    ```yaml
 ---
 $type: Worker
@@ -208,8 +231,6 @@ routes:
     custom_domain: true
 ---
 ```
-
-   </WranglerConfig>
 
 4. Run `npx  wrangler deploy` to create the Custom Domain your Worker will run on.
 </Steps>

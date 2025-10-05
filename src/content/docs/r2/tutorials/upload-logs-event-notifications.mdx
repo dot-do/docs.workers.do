@@ -10,6 +10,39 @@ tags:
   - TypeScript
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This example provides a step-by-step guide on using [event notifications](/r2/buckets/event-notifications/) to capture and store R2 upload logs in a separate bucket.
@@ -86,25 +119,25 @@ cd consumer-worker
 
 In your Worker project's [[Wrangler configuration file](/workers/wrangler/configuration/)](/workers/wrangler/configuration/), add a [queue consumer](/workers/wrangler/configuration/#queues) and [R2 bucket binding](/workers/wrangler/configuration/#r2-buckets). The queues consumer bindings will register your Worker as a consumer of your future event notifications and the R2 bucket bindings will allow your Worker to access your R2 bucket.
 
-<WranglerConfig>
-
-```toml
-name = "event-notification-writer"
-main = "src/index.ts"
-compatibility_date = "2024-03-29"
-compatibility_flags = ["nodejs_compat"]
-
-[[queues.consumers]]
-queue = "example-event-notification-queue"
-max_batch_size = 100
-max_batch_timeout = 5
-
-[[r2_buckets]]
-binding = "LOG_SINK"
-bucket_name = "example-log-sink-bucket"
+```yaml
+---
+$type: Worker
+$id: event-notification-writer
+name: event-notification-writer
+main: src/index.ts
+compatibility_date: 2024-03-29
+compatibility_flags:
+  - nodejs_compat
+queues:
+  consumers:
+    - queue: example-event-notification-queue
+      max_batch_size: 100
+      max_batch_timeout: 5
+r2_buckets:
+  - binding: LOG_SINK
+    bucket_name: example-log-sink-bucket
+---
 ```
-
-</WranglerConfig>
 
 ## 6. Write event notification messages to R2
 
@@ -140,7 +173,7 @@ export default {
 To deploy your consumer Worker, run the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 ## 8. Enable event notifications

@@ -9,6 +9,39 @@ head:
 description: Deploy your first Cloudflare Workers AI project using the CLI.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig, TypeScriptExample } from "~/components";
 
 This guide will instruct you through setting up and deploying your first Workers AI project. You will use [Workers](/workers/), a Workers AI binding, and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network.
@@ -52,14 +85,14 @@ You must create an AI binding for your Worker to connect to Workers AI. [Binding
 
 To bind Workers AI to your Worker, add the following to the end of your Wrangler file:
 
-<WranglerConfig>
-
-```toml
-[ai]
-binding = "AI"
+```yaml
+---
+$type: Worker
+$id: worker
+ai:
+  binding: AI
+---
 ```
-
-</WranglerConfig>
 
 Your binding is [available in your Worker code](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) on [`env.AI`](/workers/runtime-apis/handlers/fetch/).
 
@@ -101,7 +134,7 @@ Up to this point, you have created an AI binding for your Worker and configured 
 While in your project directory, test Workers AI locally by running [`wrangler dev`](/workers/wrangler/commands/#dev):
 
 ```sh
-npx wrangler dev
+pnpm --filter mdxe exec mdxe run worker.mdx --dev
 ```
 
 <Render file="ai-local-usage-charges" product="workers" />
@@ -119,7 +152,7 @@ You will be prompted to log in after you run the `wrangler dev`. When you run `n
 Before deploying your AI Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-npx wrangler login
+npx mdxe login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
@@ -127,7 +160,7 @@ You will be directed to a web page asking you to log in to the Cloudflare dashbo
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 ```sh output

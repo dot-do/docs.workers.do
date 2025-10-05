@@ -9,6 +9,39 @@ head:
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, Type } from "~/components";
 
 Cloudflare Queues can be configured using [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Cloudflare's Developer Platform, which includes [Workers](/workers/), [R2](/r2/), and other developer products.
@@ -49,15 +82,16 @@ A producer is a [Cloudflare Worker](/workers/) that writes to one or more queues
 
 To produce to a queue, set up a binding in your Wrangler file. These options should be used when a Worker wants to send messages to a queue.
 
-<WranglerConfig>
-
-```toml
-[[queues.producers]]
-  queue = "my-queue"
-  binding = "MY_QUEUE"
+```yaml
+---
+$type: Worker
+$id: worker
+queues:
+  producers:
+    - queue: my-queue
+      binding: MY_QUEUE
+---
 ```
-
-</WranglerConfig>
 
 
 
@@ -77,18 +111,19 @@ To consume messages from one or more queues, set up a binding in your Wrangler f
 
 
 
-<WranglerConfig>
-
-```toml
-[[queues.consumers]]
-  queue = "my-queue"
-  max_batch_size = 10
-  max_batch_timeout = 30
-  max_retries = 10
-  dead_letter_queue = "my-queue-dlq"
+```yaml
+---
+$type: Worker
+$id: worker
+queues:
+  consumers:
+    - queue: my-queue
+      max_batch_size: 10
+      max_batch_timeout: 30
+      max_retries: 10
+      dead_letter_queue: my-queue-dlq
+---
 ```
-
-</WranglerConfig>
 
 Refer to [Limits](/queues/platform/limits) to review the maximum values for each of these options.
 

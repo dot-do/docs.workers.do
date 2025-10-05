@@ -9,6 +9,39 @@ tags:
   - TypeScript
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This tutorial explains how to create a TypeScript-based Cloudflare Workers project that can securely access files from and upload files to a [Cloudflare R2](/r2/) bucket. Cloudflare R2 allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
@@ -67,15 +100,15 @@ After your new R2 bucket is ready, use it inside your Worker application.
 
 Use your R2 bucket inside your Worker project by modifying the [Wrangler configuration file](/workers/wrangler/configuration/) to include an R2 bucket [binding](/workers/runtime-apis/bindings/). Add the following R2 bucket binding to your Wrangler file:
 
-<WranglerConfig>
-
-```toml
-[[r2_buckets]]
-binding = 'MY_BUCKET'
-bucket_name = '<YOUR_BUCKET_NAME>'
+```yaml
+---
+$type: Worker
+$id: worker
+r2_buckets:
+  - binding: MY_BUCKET
+    bucket_name: "YOUR_BUCKET_NAME"
+---
 ```
-
-</WranglerConfig>
 
 Give your R2 bucket binding name. Replace `<YOUR_BUCKET_NAME>` with the name of the R2 bucket you created earlier.
 
@@ -163,7 +196,7 @@ This approach ensures that only clients who provide a valid bearer token, via th
 After completing your Cloudflare Worker project, deploy it to Cloudflare. Make sure you are in your Worker application directory that you created for this tutorial, then run:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.

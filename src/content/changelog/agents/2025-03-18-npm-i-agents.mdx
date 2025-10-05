@@ -7,6 +7,39 @@ products:
 date: 2025-03-18
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Badge, MetaInfo, Render, TypeScriptExample } from "~/components"
 import { Image } from 'astro:assets';
 import npmAgentsAnimated from "~/assets/images/agents/npm-i-agents.apng"
@@ -115,7 +148,7 @@ If you're new to Agents, you can install and run the `agents-starter` project in
 
 ```sh
 # Install it
-$ npm create cloudflare@latest agents-starter -- --template="cloudflare/agents-starter"
+$ mdxe create worker.mdx agents-starter -- --template="cloudflare/agents-starter"
 # Run it
 $ npm run start
 ```

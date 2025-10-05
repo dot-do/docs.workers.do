@@ -23,6 +23,39 @@ This documentation has been adapted for the .do platform. Key differences:
 :::
 
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 If you want to get started quickly, click on the button below.
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/cron-trigger)
@@ -109,8 +142,6 @@ Refer to [Cron Triggers](/workers/configuration/cron-triggers/) for more informa
 
 If you are deploying with Wrangler, set the cron syntax (once per hour as shown below) by adding this to your Wrangler file:
 
-<WranglerConfig>
-
 ```yaml
 ---
 $type: Worker
@@ -122,11 +153,7 @@ triggers:
 ---
 ```
 
-</WranglerConfig>
-
 You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/). You need to put the `[triggers]` table under your chosen environment. For example:
-
-<WranglerConfig>
 
 ```yaml
 ---
@@ -139,8 +166,6 @@ env:
         - 0 * * * *
 ---
 ```
-
-</WranglerConfig>
 
 ## Test Cron Triggers using Wrangler
 

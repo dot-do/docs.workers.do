@@ -4,6 +4,39 @@ title: HTML handling
 description: How to configure a HTML handling and trailing slashes for the static assets of your Worker.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { FileTree, WranglerConfig } from "~/components";
 
 Forcing or dropping trailing slashes on request paths (for example, `example.com/page/` vs. `example.com/page`) is often something that developers wish to control for cosmetic reasons. Additionally, it can impact SEO because search engines often treat URLs with and without trailing slashes as different, separate pages. This distinction can lead to duplicate content issues, indexing problems, and overall confusion about the correct canonical version of a page.
@@ -25,8 +58,6 @@ Take the following directory structure:
 
 This will usually give you the desired behavior automatically: individual files (e.g. `foo.html`) will be served _without_ a trailing slash and folder index files (e.g. `foo/index.html`) will be served _with_ a trailing slash.
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-worker",
@@ -37,8 +68,6 @@ This will usually give you the desired behavior automatically: individual files 
 	}
 }
 ```
-
-</WranglerConfig>
 
 Based on the incoming requests, the following assets would be served:
 
@@ -59,8 +88,6 @@ Based on the incoming requests, the following assets would be served:
 
 Alternatively, you can force trailing slashes (`force-trailing-slash`).
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-worker",
@@ -71,8 +98,6 @@ Alternatively, you can force trailing slashes (`force-trailing-slash`).
 	}
 }
 ```
-
-</WranglerConfig>
 
 Based on the incoming requests, the following assets would be served:
 
@@ -93,8 +118,6 @@ Based on the incoming requests, the following assets would be served:
 
 Or you can drop trailing slashes (`drop-trailing-slash`).
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-worker",
@@ -105,8 +128,6 @@ Or you can drop trailing slashes (`drop-trailing-slash`).
 	}
 }
 ```
-
-</WranglerConfig>
 
 Based on the incoming requests, the following assets would be served:
 
@@ -127,8 +148,6 @@ Based on the incoming requests, the following assets would be served:
 
 Alternatively, if you have bespoke needs, you can disable the built-in HTML handling entirely (`none`).
 
-<WranglerConfig>
-
 ```json
 {
 	"name": "my-worker",
@@ -139,8 +158,6 @@ Alternatively, if you have bespoke needs, you can disable the built-in HTML hand
 	}
 }
 ```
-
-</WranglerConfig>
 
 Based on the incoming requests, the following assets would be served:
 

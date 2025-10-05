@@ -10,6 +10,39 @@ tags:
   - PostgreSQL
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { PackageManagers, DashButton } from "~/components";
 
 [Prisma Postgres](https://www.prisma.io/postgres) is a managed, serverless PostgreSQL database. It supports features like connection pooling, caching, real-time subscriptions, and query optimization recommendations.
@@ -35,7 +68,7 @@ To follow this guide, ensure you have the following:
 Begin by using [C3](/pages/get-started/c3/) to create a Worker project in the command line:
 
 ```sh
-npm create cloudflare@latest prisma-postgres-worker -- --type=hello-world --ts=true --git=true --deploy=false
+mdxe create worker.mdx prisma-postgres-worker -- --type=hello-world --ts=true --git=true --deploy=false
 ```
 
 Then navigate into your project:

@@ -11,30 +11,61 @@ description: Example of how to use Queues to batch data and store it in an R2 bu
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 The following Worker will catch JavaScript errors and send them to a queue. The same Worker will receive those errors in batches and store them to a log file in an R2 bucket.
 
-<WranglerConfig>
-
-```toml
-name = "my-worker"
-
-[[queues.producers]]
-  queue = "my-queue"
-  binding = "ERROR_QUEUE"
-
-[[queues.consumers]]
-  queue = "my-queue"
-  max_batch_size = 100
-  max_batch_timeout = 30
-
-[[r2_buckets]]
-  bucket_name = "my-bucket"
-  binding = "ERROR_BUCKET"
+```yaml
+---
+$type: Worker
+$id: my-worker
+name: my-worker
+queues:
+  producers:
+    - queue: my-queue
+      binding: ERROR_QUEUE
+  consumers:
+    - queue: my-queue
+      max_batch_size: 100
+      max_batch_timeout: 30
+r2_buckets:
+  - bucket_name: my-bucket
+    binding: ERROR_BUCKET
+---
 ```
-
-</WranglerConfig>
 
 ```ts
 type Environment = {

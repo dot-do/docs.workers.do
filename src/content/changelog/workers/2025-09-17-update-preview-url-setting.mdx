@@ -3,6 +3,39 @@ title: Preview URLs now default to opt-in
 description: We performed a one-time update to disable preview URLs on Workers with workers.dev disabled to require an explicit opt-in. 
 date: 2025-09-17
 ---
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
 import { WranglerConfig, Aside } from "~/components";
 
 To prevent the accidental exposure of applications, we've updated how [Worker preview URLs](/workers/configuration/previews/) (`<PREVIEW>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev`) are handled. We made this change to ensure preview URLs are only active when intentionally configured, improving the default security posture of your Workers. 
@@ -20,12 +53,10 @@ If your preview URL was disabled, you can re-enable it [via the Cloudflare dashb
 
 Alternatively, you can use Wrangler by adding the `preview_urls = true` setting to your Wrangler file and redeploying the Worker.
 
-<WranglerConfig>
 ```jsonc title="wrangler.jsonc"
 {
   "preview_urls": true
 }
 ```
-</WranglerConfig>
 
 **Note:** You can set `preview_urls = true` with any Wrangler version that supports the preview URL flag (v3.91.0+). However, we recommend updating to v4.34.0 or newer, as this version defaults `preview_urls` to false, ensuring preview URLs are always enabled by explicit choice.

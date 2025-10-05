@@ -13,6 +13,39 @@ sidebar:
   order: 2
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 By following this guide, you will create a Worker that uses the Browser Rendering API along with [Durable Objects](/durable-objects/) to take screenshots from web pages and store them in [R2](/r2/).
@@ -64,37 +97,32 @@ Configure your `browser-worker` project's [Wrangler configuration file](/workers
 
 Update your Wrangler configuration file with the Browser Rendering API binding, the R2 bucket you created and a Durable Object:
 
-<WranglerConfig>
-
-```toml
-name = "rendering-api-demo"
-main = "src/index.js"
-compatibility_date = "2023-09-04"
-compatibility_flags = [ "nodejs_compat"]
-account_id = "<ACCOUNT_ID>"
-
-
-# Browser Rendering API binding
-browser = { binding = "MYBROWSER" }
-
-# Bind an R2 Bucket
-[[r2_buckets]]
-binding = "BUCKET"
-bucket_name = "screenshots"
-preview_bucket_name = "screenshots-test"
-
-# Binding to a Durable Object
-[[durable_objects.bindings]]
-name = "BROWSER"
-class_name = "Browser"
-
-[[migrations]]
-tag = "v1" # Should be unique for each entry
-new_sqlite_classes = ["Browser"] # Array of new classes
-
+```yaml
+---
+$type: Worker
+$id: rendering-api-demo
+name: rendering-api-demo
+main: src/index.js
+compatibility_date: 2023-09-04
+compatibility_flags:
+  - nodejs_compat
+account_id: "ACCOUNT_ID"
+browser:
+  binding: MYBROWSER
+r2_buckets:
+  - binding: BUCKET
+    bucket_name: screenshots
+    preview_bucket_name: screenshots-test
+durable_objects:
+  bindings:
+    - name: BROWSER
+      class_name: Browser
+migrations:
+  - tag: v1
+    new_sqlite_classes:
+      - Browser
+---
 ```
-
-</WranglerConfig>
 
 ## 5. Code
 

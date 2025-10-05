@@ -7,6 +7,39 @@ description: The Context API in Cloudflare Workers, including props, exports, wa
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
   Tabs,
   TabItem,
@@ -28,17 +61,21 @@ Note that the Context API is available strictly in stateless contexts, that is, 
 
 For example, imagine that you are configuring a Worker called "frontend-worker", which must talk to another Worker called "doc-worker" in order to manipulate documents. You might configure "frontend-worker" with a [Service Binding](/workers/runtime-apis/bindings/service-bindings) like:
 
-<WranglerConfig>
-
-```toml
-[[services]]
-binding = "DOC_SERVICE"
-service = "doc-worker"
-entrypoint = "DocServiceApi"
-props = { clientId = "frontend-worker", permissions = ["read", "write"] }
+```yaml
+---
+$type: Worker
+$id: worker
+services:
+  - binding: DOC_SERVICE
+    service: doc-worker
+    entrypoint: DocServiceApi
+    props:
+      clientId: frontend-worker
+      permissions:
+        - read
+        - write
+---
 ```
-
-</WranglerConfig>
 
 Now frontend-worker can make calls to doc-worker with code like `env.DOC_SERVICE.getDoc(id)`. This will make a [Remote Procedure Call](/workers/runtime-apis/rpc/) invoking the method `getDoc()` of the class `DocServiceApi`, a [`WorkerEntrypoint` class](/workers/runtime-apis/bindings/service-bindings/rpc) exported by doc-worker.
 
@@ -48,17 +85,21 @@ The Workers platform is designed to ensure that `ctx.props` can only be set by s
 
 `ctx.props` can also be used to configure an RPC interface to represent a _specific_ resource, thus creating a "custom binding". For example, we could configure a Service Binding to our "doc-worker" which grants access only to a specific document:
 
-<WranglerConfig>
-
-```toml
-[[services]]
-binding = "FOO_DOCUMENT"
-service = "doc-worker"
-entrypoint = "DocumentApi"
-props = { docId = "e366592caec1d88dff724f74136b58b5", permissions = ["read", "write"] }
+```yaml
+---
+$type: Worker
+$id: worker
+services:
+  - binding: FOO_DOCUMENT
+    service: doc-worker
+    entrypoint: DocumentApi
+    props:
+      docId: e366592caec1d88dff724f74136b58b5
+      permissions:
+        - read
+        - write
+---
 ```
-
-</WranglerConfig>
 
 Here, we've placed a `docId` property in `ctx.props`. The `DocumentApi` class could be designed to provide an API to the specific document identified by `ctx.props.docId`, and enforcing the given permissions.
 

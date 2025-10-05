@@ -21,6 +21,39 @@ This documentation has been adapted for the .do platform. Key differences:
 :::
 
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { DirectoryListing, Render, WranglerConfig } from "~/components"
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings) allow one Worker to call into another, without going through a publicly-accessible URL.
@@ -62,8 +95,6 @@ The [`env`](/workers/runtime-apis/bindings) object is exposed as a class propert
 
 For example, a Worker that declares a binding to the [environment variable](/workers/configuration/environment-variables/) `GREETING`:
 
-<WranglerConfig>
-
 ```yaml
 ---
 $type: Worker
@@ -73,8 +104,6 @@ vars:
   GREETING: Hello
 ---
 ```
-
-</WranglerConfig>
 
 Can access it by calling `this.env.GREETING`:
 
@@ -125,8 +154,6 @@ You can use this to group multiple pieces of compute together. For example, you 
 
 
 
-<WranglerConfig>
-
 ```yaml
 ---
 $type: Worker
@@ -135,11 +162,9 @@ name: todo-app
 d1_databases:
   - binding: D1
     database_name: todo-app-db
-    database_id: <unique-ID-for-your-database>
+    database_id: "unique-ID-for-your-database"
 ---
 ```
-
-</WranglerConfig>
 
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -187,8 +212,6 @@ You can then declare a Service binding directly to `AdminEntrypoint` in another 
 
 
 
-<WranglerConfig>
-
 ```yaml
 ---
 $type: Worker
@@ -200,8 +223,6 @@ services:
     entrypoint: AdminEntrypoint
 ---
 ```
-
-</WranglerConfig>
 
 ```js
 export default {

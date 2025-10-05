@@ -10,6 +10,39 @@ head:
 description: Publish to a Queue directly from your Worker.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 The following example shows you how to publish messages to a Queue from a Worker. The example uses a Worker that receives a JSON payload from the request body and writes it as-is to the Queue, but in a real application you might have more logic before you queue a message.
@@ -21,18 +54,17 @@ The following example shows you how to publish messages to a Queue from a Worker
 
 Configure your Wrangler file as follows:
 
-<WranglerConfig>
-
-```toml
-name = "my-worker"
-
-[[queues.producers]]
-  queue = "my-queue"
-  binding = "YOUR_QUEUE"
-
+```yaml
+---
+$type: Worker
+$id: my-worker
+name: my-worker
+queues:
+  producers:
+    - queue: my-queue
+      binding: YOUR_QUEUE
+---
 ```
-
-</WranglerConfig>
 
 ### 1. Create the Worker
 
@@ -77,7 +109,7 @@ export default {
 To deploy this Worker:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 ### 2. Send a test message

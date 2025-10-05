@@ -8,6 +8,39 @@ sidebar:
   label: Secure MCP servers with Access for SaaS
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, GlossaryTooltip, Tabs, TabItem, APIRequest } from "~/components"
 
 You can secure [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) by using Cloudflare Access as an OAuth Single Sign-On (SSO) provider.
@@ -27,7 +60,7 @@ To deploy our [example MCP server](https://github.com/cloudflare/ai/tree/main/de
 1. Open a terminal and clone our example project:
 
 		```sh
-		npm create cloudflare@latest -- mcp-server-cf-access --template=cloudflare/ai/demos/remote-mcp-cf-access
+		mdxe create worker.mdx -- mcp-server-cf-access --template=cloudflare/ai/demos/remote-mcp-cf-access
 		```
 
 		When asked if you want to deploy to Cloudflare, select **No**.
@@ -72,7 +105,7 @@ To deploy our [example MCP server](https://github.com/cloudflare/ai/tree/main/de
 5. You can now deploy the Worker to Cloudflare's global network:
 
    ```sh
-   npx wrangler deploy
+   pnpm --filter mdxe exec mdxe run worker.mdx --deploy
    ```
 
 The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev`.

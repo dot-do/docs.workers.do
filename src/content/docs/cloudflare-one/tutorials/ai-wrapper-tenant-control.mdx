@@ -7,6 +7,39 @@ tags:
   - AI
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { TabItem, Tabs, Details, Render, DashButton } from "~/components";
 
 This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure website wrapper for an AI agent. Cloudflare Zero Trust administrators can protect access to the wrapper with [Cloudflare Access](/cloudflare-one/policies/access/). Additionally, you can enforce [Gateway policies](/cloudflare-one/policies/gateway/) to control how your users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/policies/browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) profiles to prevent your users from sharing sensitive data, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan for a specific AI provider, such as ChatGPT Enterprise.
@@ -79,14 +112,16 @@ In order to build the Worker, you will need to choose if you want to build it lo
 
 3. Create a `wrangler.toml` configuration file:
 
-   ```toml
-   name = "ai-agent-wrapper"
-   main = "src/index.js"
-   compatibility_date = "2023-10-30"
-
-   [vars]
-   # Add any environment variables here
-   ```
+   ```yaml
+---
+$type: Worker
+$id: ai-agent-wrapper
+name: ai-agent-wrapper
+main: src/index.js
+compatibility_date: 2023-10-30
+vars: {}
+---
+```
 
 4. Add your AI provider's API key as a [secret](/workers/configuration/secrets/):
 

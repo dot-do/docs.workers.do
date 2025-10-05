@@ -6,6 +6,39 @@ products:
 date: 2025-04-24
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 You can now create Python Workers which are executed via a cron trigger.
@@ -23,24 +56,23 @@ async def on_scheduled(event, env, ctx):
 
 Define a cron trigger configuration in your Wrangler configuration file:
 
-<WranglerConfig>
-
-```toml
-[triggers]
-# Schedule cron triggers:
-# - At every 3rd minute
-# - At 15:00 (UTC) on first day of the month
-# - At 23:59 (UTC) on the last weekday of the month
-crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
+```yaml
+---
+$type: Worker
+$id: worker
+triggers:
+  crons:
+    - "*/3 * * * *"
+    - 0 15 1 * *
+    - 59 23 LW * *
+---
 ```
-
-</WranglerConfig>
 
 Then test your new handler by using Wrangler with the `--test-scheduled` flag and
 making a request to `/cdn-cgi/handler/scheduled?cron=*+*+*+*+*`:
 
 ```sh
-npx wrangler dev --test-scheduled
+pnpm --filter mdxe exec mdxe run worker.mdx --dev --test-scheduled
 
 curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
 ```

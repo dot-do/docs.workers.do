@@ -10,6 +10,39 @@ sidebar:
 description: Build a WebSocket server using Durable Objects and Workers.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { TabItem, Tabs, GlossaryTooltip, WranglerConfig, TypeScriptExample } from "~/components";
 
 This example shows how to build a WebSocket server using <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> and Workers. The example exposes an endpoint to create a new WebSocket connection. This WebSocket connection echos any message while including the total number of WebSocket connections currently established. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/best-practices/websockets/).
@@ -135,8 +168,6 @@ export class WebSocketServer extends DurableObject {
 
 Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
-<WranglerConfig>
-
 ```toml title="wrangler.toml"
 name = "websocket-server"
 main = "src/index.ts"
@@ -149,8 +180,6 @@ class_name = "WebSocketServer"
 tag = "v1"
 new_sqlite_classes = ["WebSocketServer"]
 ```
-
-</WranglerConfig>
 
 ### Related resources
 

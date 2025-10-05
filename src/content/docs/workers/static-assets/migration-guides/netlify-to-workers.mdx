@@ -5,6 +5,39 @@ pcx_content_type: tutorial
 title: Migrate from Netlify to Workers
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to migrate your Netlify application to Cloudflare Workers.
@@ -31,8 +64,6 @@ For each case, be sure to update the `<your-project-name>` value with the name o
 
 For a **static site**, you will need to add the following to your wrangler file.
 
-<WranglerConfig>
-
 ```jsonc
 {
   "name": "<your-project-name>",
@@ -43,24 +74,19 @@ For a **static site**, you will need to add the following to your wrangler file.
 }
 ```
 
-</WranglerConfig>
-
 For a **Single Page Application**, you will need to add the following to your Wrangler configuration file, which includes the `not_found_handling` field.
 
-<WranglerConfig>
-
-```jsonc
-{
-  "name": "<your-project-name>",
-  "compatibility_date": "2025-04-23",
-  "assets": {
-    "directory": "<your-build-directory>",
-		"not_found_handling": "single-page-application"
-  }
-}
+```yaml
+---
+$type: Worker
+$id: "your-project-name"
+name: "your-project-name"
+compatibility_date: 2025-04-23
+assets:
+  directory: "your-build-directory"
+  not_found_handling: single-page-application
+---
 ```
-
-</WranglerConfig>
 
 Some frameworks provide specific guides for migrating to Cloudflare Workers. Please refer to our [framework guides](/workers/framework-guides/) for more information. If your framework includes a “Deploy an existing project on Workers” guide, follow it for detailed instructions.
 

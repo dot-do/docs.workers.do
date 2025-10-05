@@ -19,6 +19,39 @@ This documentation has been adapted for the .do platform. Key differences:
 :::
 
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { DirectoryListing, WranglerConfig } from "~/components";
 
 Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform. Bindings provide better performance and less restrictions when accessing resources from Workers than the [REST APIs](/api/) which are intended for non-Workers applications.
@@ -31,8 +64,6 @@ The following bindings available today:
 
 When you declare a binding on your Worker, you grant it a specific capability, such as being able to read and write files to an [R2](/r2/) bucket. For example:
 
-<WranglerConfig>
-
 ```yaml
 ---
 $type: Worker
@@ -40,11 +71,9 @@ $id: worker
 main: ./src/index.js
 r2_buckets:
   - binding: MY_BUCKET
-    bucket_name: <MY_BUCKET_NAME>
+    bucket_name: "MY_BUCKET_NAME"
 ---
 ```
-
-</WranglerConfig>
 
 ```js
 export default {

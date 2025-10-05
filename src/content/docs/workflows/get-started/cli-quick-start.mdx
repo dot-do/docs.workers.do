@@ -7,6 +7,39 @@ sidebar:
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components"
 
 Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
@@ -31,7 +64,7 @@ Workflows are defined as part of a Worker script.
 To create a Workflow, use the `create cloudflare` (C3) CLI tool, specifying the Workflows starter template:
 
 ```sh
-npm create cloudflare@latest workflows-starter -- --template "cloudflare/workflows-starter"
+mdxe create worker.mdx workflows-starter -- --template "cloudflare/workflows-starter"
 ```
 
 This will create a new folder called `workflows-tutorial`, which contains two files:
@@ -163,19 +196,16 @@ You can [bind to a Workflow](/workers/runtime-apis/bindings/#what-is-a-binding) 
 
 To bind a Workflow to a Worker, you need to define a `[[workflows]]` binding in your Wrangler configuration:
 
-<WranglerConfig>
-
-```toml
-[[workflows]]
-# name of your workflow
-name = "workflows-starter"
-# binding name env.MY_WORKFLOW
-binding = "MY_WORKFLOW"
-# this is class that extends the Workflow class in src/index.ts
-class_name = "MyWorkflow"
+```yaml
+---
+$type: Worker
+$id: worker
+workflows:
+  - name: workflows-starter
+    binding: MY_WORKFLOW
+    class_name: MyWorkflow
+---
 ```
-
-</WranglerConfig>
 
 You can then invoke the methods on this binding directly from your Worker script's `env` parameter. The `Workflow` type has methods for:
 

@@ -17,6 +17,39 @@ This documentation has been adapted for the .do platform. Key differences:
 :::
 
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, WranglerConfig } from "~/components";
 
 <Render file="workers_sites" product="workers" />
@@ -62,8 +95,6 @@ The template project contains the following files and directories:
 
 - Change the `name` property to the name of your project:
 
-  <WranglerConfig>
-
   ```yaml
 ---
 $type: Worker
@@ -72,11 +103,7 @@ name: my-site
 ---
 ```
 
-  </WranglerConfig>
-
 - Consider updating`compatibility_date` to today's date to get access to the most recent Workers features:
-
-  <WranglerConfig>
 
   ```yaml
 ---
@@ -86,11 +113,7 @@ compatibility_date: yyyy-mm-dd
 ---
 ```
 
-  </WranglerConfig>
-
 - Deploy your site to a [custom domain](/workers/configuration/routing/custom-domains/) that you own and have already attached as a Cloudflare zone:
-
-  <WranglerConfig>
 
   ```yaml
 ---
@@ -99,8 +122,6 @@ $id: worker
 route: https://example.com/*
 ---
 ```
-
-  </WranglerConfig>
 
   :::note
 

@@ -18,6 +18,39 @@ head:
 description: Example of how to use Queues and Browser Rendering to power a web crawler.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This tutorial explains how to build and deploy a web crawler with Queues, [Browser Rendering](/browser-rendering/), and [Puppeteer](/browser-rendering/platform/puppeteer/).
@@ -92,16 +125,17 @@ id = "<GENERATED_NAMESPACE_ID>"
 
 Then, in your Wrangler file, add the following with the values generated in the terminal:
 
-<WranglerConfig>
-
-```toml
-kv_namespaces = [
-  { binding = "CRAWLER_SCREENSHOTS_KV", id = "<GENERATED_NAMESPACE_ID>" },
-  { binding = "CRAWLER_LINKS_KV", id = "<GENERATED_NAMESPACE_ID>" }
-]
+```yaml
+---
+$type: Worker
+$id: worker
+kv_namespaces:
+  - binding: CRAWLER_SCREENSHOTS_KV
+    id: "GENERATED_NAMESPACE_ID"
+  - binding: CRAWLER_LINKS_KV
+    id: "GENERATED_NAMESPACE_ID"
+---
 ```
-
-</WranglerConfig>
 
 ## 3. Set up Browser Rendering
 
@@ -115,13 +149,14 @@ In your current directory, install Cloudflare’s [fork of Puppeteer](/browser-r
 
 Then, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer.
 
-<WranglerConfig>
-
-```toml
-browser = { binding = "CRAWLER_BROWSER" }
+```yaml
+---
+$type: Worker
+$id: worker
+browser:
+  binding: CRAWLER_BROWSER
+---
 ```
-
-</WranglerConfig>
 
 ## 4. Set up a Queue
 
@@ -142,50 +177,49 @@ Created queue queues-web-crawler.
 
 Then, in your Wrangler file, add the following:
 
-<WranglerConfig>
-
-```toml
-[[queues.consumers]]
-queue = "queues-web-crawler"
-max_batch_timeout = 60
-
-[[queues.producers]]
-queue = "queues-web-crawler"
-binding = "CRAWLER_QUEUE"
+```yaml
+---
+$type: Worker
+$id: worker
+queues:
+  consumers:
+    - queue: queues-web-crawler
+      max_batch_timeout: 60
+  producers:
+    - queue: queues-web-crawler
+      binding: CRAWLER_QUEUE
+---
 ```
-
-</WranglerConfig>
 
 Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
 
 Your final Wrangler file should look similar to the one below.
 
-<WranglerConfig>
-
-```toml
-#:schema node_modules/wrangler/config-schema.json
-name = "web-crawler"
-main = "src/index.ts"
-compatibility_date = "2024-07-25"
-compatibility_flags = ["nodejs_compat"]
-
-kv_namespaces = [
-  { binding = "CRAWLER_SCREENSHOTS_KV", id = "<GENERATED_NAMESPACE_ID>" },
-  { binding = "CRAWLER_LINKS_KV", id = "<GENERATED_NAMESPACE_ID>" }
-]
-
-browser = { binding = "CRAWLER_BROWSER" }
-
-[[queues.consumers]]
-queue = "queues-web-crawler"
-max_batch_timeout = 60
-
-[[queues.producers]]
-queue = "queues-web-crawler"
-binding = "CRAWLER_QUEUE"
+```yaml
+---
+$type: Worker
+$id: web-crawler
+name: web-crawler
+main: src/index.ts
+compatibility_date: 2024-07-25
+compatibility_flags:
+  - nodejs_compat
+kv_namespaces:
+  - binding: CRAWLER_SCREENSHOTS_KV
+    id: "GENERATED_NAMESPACE_ID"
+  - binding: CRAWLER_LINKS_KV
+    id: "GENERATED_NAMESPACE_ID"
+browser:
+  binding: CRAWLER_BROWSER
+queues:
+  consumers:
+    - queue: queues-web-crawler
+      max_batch_timeout: 60
+  producers:
+    - queue: queues-web-crawler
+      binding: CRAWLER_QUEUE
+---
 ```
-
-</WranglerConfig>
 
 ## 5. Add bindings to environment
 

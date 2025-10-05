@@ -9,6 +9,39 @@ sidebar:
   badge: Beta
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Render,
 	WranglerConfig,
@@ -50,27 +83,27 @@ Follow these steps to deploy `@cloudflare/playwright-mcp`:
 
 2. Make sure you have the [browser rendering](/browser-rendering/) and [durable object](/durable-objects/) bindings and [migrations](/durable-objects/reference/durable-objects-migrations/) in your wrangler configuration file.
 
-<WranglerConfig>
-
-```toml
-name = "playwright-mcp-example"
-main = "src/index.ts"
-compatibility_date = "2025-03-10"
-compatibility_flags = ["nodejs_compat"]
-
-[browser]
-binding = "BROWSER"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["PlaywrightMCP"]
-
-[[durable_objects.bindings]]
-name = "MCP_OBJECT"
-class_name = "PlaywrightMCP"
+```yaml
+---
+$type: Worker
+$id: playwright-mcp-example
+name: playwright-mcp-example
+main: src/index.ts
+compatibility_date: 2025-03-10
+compatibility_flags:
+  - nodejs_compat
+browser:
+  binding: BROWSER
+migrations:
+  - tag: v1
+    new_sqlite_classes:
+      - PlaywrightMCP
+durable_objects:
+  bindings:
+    - name: MCP_OBJECT
+      class_name: PlaywrightMCP
+---
 ```
-
-</WranglerConfig>
 
 3. Edit the code.
 

@@ -7,6 +7,39 @@ tags:
   - JavaScript
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 In this tutorial, you will learn how to send transactional emails from Workers using [Postmark](https://postmarkapp.com/). At the end of this tutorial, you’ll be able to:
 
 - Create a Worker to send emails.
@@ -28,13 +61,13 @@ To continue with this tutorial, you’ll need:
 Start by using [C3](/pages/get-started/c3/) to create a Worker project in the command line, then, answer the prompts:
 
 ```sh
-npm create cloudflare@latest
+mdxe create worker.mdx
 ```
 
 Alternatively, you can use CLI arguments to speed things up:
 
 ```sh
-npm create cloudflare@latest email-with-postmark -- --type=hello-world --ts=false --git=true --deploy=false
+mdxe create worker.mdx email-with-postmark -- --type=hello-world --ts=false --git=true --deploy=false
 ```
 
 This creates a simple hello-world Worker having the following content:

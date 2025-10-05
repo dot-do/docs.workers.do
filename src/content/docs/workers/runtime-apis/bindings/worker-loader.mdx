@@ -6,6 +6,39 @@ description: The Dynamic Worker Loader API, which allows dynamically spawning is
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Type,
   MetaInfo,
@@ -83,14 +116,14 @@ let someEntrypoint = worker.getEntrypoint("SomeEntrypointClass", {
 
 To add a dynamic worker loader binding to your worker, add it to your Wrangler config like so:
 
-<WranglerConfig>
-
-```toml
-[[worker_loaders]]
-binding = "LOADER"
+```yaml
+---
+$type: Worker
+$id: worker
+worker_loaders:
+  - binding: LOADER
+---
 ```
-
-</WranglerConfig>
 
 ## API Reference
 

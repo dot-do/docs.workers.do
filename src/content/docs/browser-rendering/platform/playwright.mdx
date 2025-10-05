@@ -6,6 +6,39 @@ sidebar:
   order: 5
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Render,
 	WranglerConfig,
@@ -40,21 +73,21 @@ Make sure you have the [browser binding](/browser-rendering/platform/wrangler/#b
 To use the latest version of `@cloudflare/playwright`, your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later. This change is necessary because the library's functionality requires the native `node.fs` API.
 :::
 
-<WranglerConfig>
-
-```toml
-name = "cloudflare-playwright-example"
-main = "src/index.ts"
-workers_dev = true
-compatibility_flags = ["nodejs_compat"]
-compatibility_date = "2025-09-17"
-upload_source_maps = true
-
-[browser]
-binding = "MYBROWSER"
+```yaml
+---
+$type: Worker
+$id: cloudflare-playwright-example
+name: cloudflare-playwright-example
+main: src/index.ts
+workers_dev: true
+compatibility_flags:
+  - nodejs_compat
+compatibility_date: 2025-09-17
+upload_source_maps: true
+browser:
+  binding: MYBROWSER
+---
 ```
-
-</WranglerConfig>
 
 Install the npm package:
 
@@ -198,27 +231,22 @@ npx wrangler kv namespace create KV
 
 Then, add the KV namespace to your `wrangler.toml` file:
 
-<WranglerConfig>
-
-```jsonc
-{
-	"name": "storage-state-examples",
-	"main": "src/index.ts",
-	"compatibility_flags": ["nodejs_compat"],
-	"compatibility_date": "2025-09-17",
-	"browser": {
-		"binding": "MYBROWSER"
-	},
-	"kv_namespaces": [
-		{
-			"binding": "KV",
-			"id": "<YOUR-KV-NAMESPACE-ID>"
-		}
-	]
-}
+```yaml
+---
+$type: Worker
+$id: storage-state-examples
+name: storage-state-examples
+main: src/index.ts
+compatibility_flags:
+  - nodejs_compat
+compatibility_date: 2025-09-17
+browser:
+  binding: MYBROWSER
+kv_namespaces:
+  - binding: KV
+    id: "YOUR-KV-NAMESPACE-ID"
+---
 ```
-
-</WranglerConfig>
 
 Now, you can use the storage state to persist cookies and other storage data in KV:
 

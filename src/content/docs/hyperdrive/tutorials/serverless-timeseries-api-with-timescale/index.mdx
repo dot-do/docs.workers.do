@@ -11,6 +11,39 @@ tags:
   - SQL
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale](https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
@@ -140,20 +173,20 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 This command outputs your Hyperdrive ID. You can now bind your Hyperdrive configuration to your Worker in your Wrangler configuration by replacing the content with the following:
 
-<WranglerConfig>
-
-```toml
-name = "timescale-api"
-main = "src/index.ts"
-compatibility_date = "2024-09-23"
-compatibility_flags = [ "nodejs_compat"]
-
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "your-id-here"
+```yaml
+---
+$type: Worker
+$id: timescale-api
+name: timescale-api
+main: src/index.ts
+compatibility_date: 2024-09-23
+compatibility_flags:
+  - nodejs_compat
+hyperdrive:
+  - binding: HYPERDRIVE
+    id: your-id-here
+---
 ```
-
-</WranglerConfig>
 
 Install the Postgres driver into your Worker project:
 
@@ -231,7 +264,7 @@ export default {
 Run the following command to redeploy your Worker:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 Your application is now live and accessible at `timescale-api.<YOUR_SUBDOMAIN>.workers.dev`. The exact URI will be shown in the output of the wrangler command you just ran.

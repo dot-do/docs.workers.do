@@ -8,6 +8,39 @@ head:
     content: Use R2 from Workers
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 ## 1. Create a new application with C3
@@ -64,15 +97,15 @@ A binding is defined in the Wrangler file of your Worker project's directory.
 
 To bind your R2 bucket to your Worker, add the following to your Wrangler file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 2](#2-create-your-bucket):
 
-<WranglerConfig>
-
-```toml
-[[r2_buckets]]
-binding = 'MY_BUCKET' # <~ valid JavaScript variable name
-bucket_name = '<YOUR_BUCKET_NAME>'
+```yaml
+---
+$type: Worker
+$id: worker
+r2_buckets:
+  - binding: MY_BUCKET
+    bucket_name: "YOUR_BUCKET_NAME"
+---
 ```
-
-</WranglerConfig>
 
 For more detailed information on configuring your Worker (for example, if you are using [jurisdictions](/r2/reference/data-location/#jurisdictional-restrictions)), refer to the [Wrangler Configuration documentation](/workers/wrangler/configuration/).
 
@@ -274,7 +307,7 @@ This secret is now available as `AUTH_KEY_SECRET` on the `env` parameter in your
 With your Worker and bucket set up, run the `npx wrangler deploy` [command](/workers/wrangler/commands/#deploy) to deploy to Cloudflare's global network:
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 You can verify your authorization logic is working through the following commands, using your deployed Worker endpoint:

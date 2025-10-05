@@ -7,6 +7,39 @@ sidebar:
 description: Run front-end websites — static or dynamic — directly on Cloudflare's global network.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Badge,
 	Description,
@@ -62,7 +95,7 @@ cd my-static-site
 After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) in the project directory to start a local server. This will allow you to preview your project locally during development.
 
 ```sh
-npx wrangler dev
+pnpm --filter mdxe exec mdxe run worker.mdx --dev
 ```
 
 ### 3. Deploy your project
@@ -72,7 +105,7 @@ Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain]
 The [`wrangler deploy`](/workers/wrangler/commands/#deploy) will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 :::note
@@ -120,7 +153,7 @@ cd my-dynamic-site
 After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) in the project directory to start a local server. This will allow you to preview your project locally during development.
 
 ```sh
-npx wrangler dev
+pnpm --filter mdxe exec mdxe run worker.mdx --dev
 ```
 
 ### 3. Modify your Project
@@ -139,7 +172,7 @@ Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain]
 The [`wrangler deploy`](/workers/wrangler/commands/#deploy) will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 :::note
