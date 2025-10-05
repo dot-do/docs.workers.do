@@ -3,6 +3,17 @@ pcx_content_type: configuration
 title: Upstash
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers } from "~/components";
 
 [Upstash](https://upstash.com/) is a serverless database with Redis\* and Kafka API. Upstash also offers QStash, a task queue/scheduler designed for the serverless.

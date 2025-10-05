@@ -6,6 +6,17 @@ head:
     content: Python packages supported in Cloudflare Workers
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render } from "~/components";
 
 [Pywrangler](https://github.com/cloudflare/workers-py?tab=readme-ov-file#pywrangler) is a CLI tool for managing packages and Python Workers.
@@ -14,18 +25,21 @@ your worker bundle on deployment.
 
 To get started, create a pyproject.toml file with the following contents:
 
-```toml
-[project]
-name = "YourProjectName"
-version = "0.1.0"
-description = "Add your description here"
-requires-python = ">=3.12"
-dependencies = [
-    "fastapi"
-]
-
-[dependency-groups]
-dev = ["workers-py"]
+```yaml
+---
+$type: Worker
+$id: worker
+project:
+  name: YourProjectName
+  version: 0.1.0
+  description: Add your description here
+  requires-python: ">=3.12"
+  dependencies:
+    - fastapi
+dependency-groups:
+  dev:
+    - workers-py
+---
 ```
 
 The above will allow your worker to depend on the [FastAPI](https://fastapi.tiangolo.com/) package.

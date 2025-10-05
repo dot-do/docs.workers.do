@@ -6,6 +6,17 @@ sidebar:
   order: 4
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, WranglerConfig } from "~/components";
 
 <Render file="workers_sites" product="workers" />
@@ -37,19 +48,21 @@ Example of a [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
-```toml
-name = "docs-site-blah"
-
-[site]
-bucket = "./public"
-
-[env.production]
-name = "docs-site"
-route = "https://example.com/docs*"
-
-[env.staging]
-name = "docs-site-staging"
-route = "https://staging.example.com/docs*"
+```yaml
+---
+$type: Worker
+$id: docs-site-blah
+name: docs-site-blah
+site:
+  bucket: ./public
+env:
+  production:
+    name: docs-site
+    route: https://example.com/docs*
+  staging:
+    name: docs-site-staging
+    route: https://staging.example.com/docs*
+---
 ```
 
 </WranglerConfig>
@@ -74,10 +87,15 @@ If you want to include only a certain set of files or directories in your `bucke
 
 <WranglerConfig>
 
-```toml
-[site]
-bucket = "./public"
-include = ["included_dir"] # must be an array.
+```yaml
+---
+$type: Worker
+$id: worker
+site:
+  bucket: ./public
+  include:
+    - included_dir
+---
 ```
 
 </WranglerConfig>
@@ -90,10 +108,15 @@ If you want to exclude files or directories in your `bucket`, you can add an `ex
 
 <WranglerConfig>
 
-```toml
-[site]
-bucket = "./public"
-exclude = ["excluded_dir"] # must be an array.
+```yaml
+---
+$type: Worker
+$id: worker
+site:
+  bucket: ./public
+  exclude:
+    - excluded_dir
+---
 ```
 
 </WranglerConfig>

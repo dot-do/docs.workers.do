@@ -5,6 +5,17 @@ head: []
 description: Enable your Worker to be executed on a schedule.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, WranglerConfig, TabItem, Tabs, DashButton } from "~/components";
 
 ## Background
@@ -87,13 +98,16 @@ Refer to the example below for a Cron Triggers configuration:
 
 <WranglerConfig>
 
-```toml
-[triggers]
-# Schedule cron triggers:
-# - At every 3rd minute
-# - At 15:00 (UTC) on first day of the month
-# - At 23:59 (UTC) on the last weekday of the month
-crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
+```yaml
+---
+$type: Worker
+$id: worker
+triggers:
+  crons:
+    - "*/3 * * * *"
+    - 0 15 1 * *
+    - 59 23 LW * *
+---
 ```
 
 </WranglerConfig>
@@ -102,9 +116,16 @@ You also can set a different Cron Trigger for each [environment](/workers/wrangl
 
 <WranglerConfig>
 
-```toml
-[env.dev.triggers]
-crons = ["0 * * * *"]
+```yaml
+---
+$type: Worker
+$id: worker
+env:
+  dev:
+    triggers:
+      crons:
+        - 0 * * * *
+---
 ```
 
 </WranglerConfig>
@@ -239,10 +260,13 @@ When deploying a Worker with Wrangler any previous Cron Triggers are replaced wi
 
 <WranglerConfig>
 
-```toml
-[triggers]
-# Remove all cron triggers:
-crons = [ ]
+```yaml
+---
+$type: Worker
+$id: worker
+triggers:
+  crons: []
+---
 ```
 
 </WranglerConfig>

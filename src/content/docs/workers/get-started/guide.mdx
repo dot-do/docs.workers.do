@@ -8,6 +8,17 @@ head:
     content: Get started - CLI
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Details, Render, PackageManagers } from "~/components";
 
 Set up and deploy your first Worker with Wrangler, the Cloudflare Developer Platform CLI.
@@ -61,7 +72,7 @@ In your project directory, C3 will have generated the following:
 In addition to creating new projects from C3 templates, C3 also supports creating new projects from existing Git repositories. To create a new project from an existing Git repository, open your terminal and run:
 
 ```sh
-npm create cloudflare@latest -- --template <SOURCE>
+mdxe create worker.mdx -- --template <SOURCE>
 ```
 
 `<SOURCE>` may be any of the following:
@@ -90,7 +101,7 @@ C3 installs [Wrangler](/workers/wrangler/install-and-update/), the Workers comma
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to preview your Worker locally during development.
 
 ```sh
-npx wrangler dev
+pnpm --filter mdxe exec mdxe run worker.mdx --dev
 ```
 
 If you have never used Wrangler before, it will open your web browser so you can login to your Cloudflare account.
@@ -182,7 +193,7 @@ If the output for your Worker does not change, make sure that:
 Deploy your Worker via Wrangler to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/).
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.

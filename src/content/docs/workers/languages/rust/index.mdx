@@ -11,6 +11,17 @@ head:
 description: Write Workers in 100% Rust using the [`workers-rs` crate](https://github.com/cloudflare/workers-rs)
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 Cloudflare Workers provides support for Rust via the [`workers-rs` crate](https://github.com/cloudflare/workers-rs), which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/runtime-apis/bindings/) to developer platform products, such as [Workers KV](/kv/concepts/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
@@ -54,7 +65,7 @@ Your project will be created in a new directory that you named, in which you wil
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command to start a local server for developing your Worker. This will allow you to test your Worker in development.
 
 ```sh
-npx wrangler dev
+pnpm --filter mdxe exec mdxe run worker.mdx --dev
 ```
 
 If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
@@ -135,7 +146,7 @@ Implements convenient [routing API](https://docs.rs/worker/latest/worker/struct.
 With your project configured, you can now deploy your Worker, to a `*.workers.dev` subdomain, or a [Custom Domain](/workers/configuration/routing/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the deployment process to set one up.
 
 ```sh
-npx wrangler deploy
+pnpm --filter mdxe exec mdxe run worker.mdx --deploy
 ```
 
 Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
@@ -214,11 +225,16 @@ To run the resulting Wasm binary on Workers, `workers-rs` includes a build tool 
 
 Unoptimized Rust Wasm binaries can be large and may exceed Worker bundle size limits or experience long startup times. The template project pre-configures several useful size optimizations in your `Cargo.toml` file:
 
-```toml
-[profile.release]
-lto = true
-strip = true
-codegen-units = 1
+```yaml
+---
+$type: Worker
+$id: worker
+profile:
+  release:
+    lto: true
+    strip: true
+    codegen-units: 1
+---
 ```
 
 Finally, `worker-bundle` automatically invokes [`wasm-opt`](https://github.com/brson/wasm-opt-rs) to further optimize binary size before upload.

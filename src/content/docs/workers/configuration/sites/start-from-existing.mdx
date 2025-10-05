@@ -6,6 +6,17 @@ sidebar:
   order: 1
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
 <Render file="workers_sites" product="workers" />
@@ -25,7 +36,7 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 1. Run the `wrangler init` command in the root of your project's directory to generate a basic Worker:
 
    ```sh
-   wrangler init -y
+   mdxe create worker.mdx -y
    ```
 
    This command adds/update the following files:
@@ -38,10 +49,14 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 
    <WranglerConfig>
 
-   ```toml
-   [site]
-   bucket = "./public" # <-- Add your build directory name here.
-   ```
+   ```yaml
+---
+$type: Worker
+$id: worker
+site:
+  bucket: ./public
+---
+```
 
    </WranglerConfig>
 
@@ -126,16 +141,20 @@ async function handleEvent(event) {
    Wrangler will automatically upload the assets found in the configured directory.
 
    ```sh
-   npx wrangler deploy
+   pnpm --filter mdxe exec mdxe run worker.mdx --deploy
    ```
 
 6. Deploy your site to a [custom domain](/workers/configuration/routing/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the Wrangler file.
 
    <WranglerConfig>
 
-   ```toml
-   route = "https://example.com/*"
-   ```
+   ```yaml
+---
+$type: Worker
+$id: worker
+route: https://example.com/*
+---
+```
 
    </WranglerConfig>
 

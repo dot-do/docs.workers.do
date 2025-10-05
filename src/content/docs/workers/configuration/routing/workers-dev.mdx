@@ -3,6 +3,17 @@ pcx_content_type: concept
 title: workers.dev
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, DashButton } from "~/components";
 
 Cloudflare Workers accounts come with a `workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `workers.dev` subdomain allows you getting started quickly by deploying Workers without first onboarding your custom domain to Cloudflare.
@@ -58,8 +69,12 @@ To disable the `workers.dev` route for a Worker, include the following in your W
 
 <WranglerConfig>
 
-```toml
-workers_dev = false
+```yaml
+---
+$type: Worker
+$id: worker
+workers_dev: false
+---
 ```
 
 </WranglerConfig>

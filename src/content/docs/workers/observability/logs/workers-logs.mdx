@@ -7,6 +7,17 @@ sidebar:
   order: 2
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { TabItem, Tabs, Steps, Render, WranglerConfig, DashButton } from "~/components";
 
 Workers Logs lets you automatically collect, store, filter, and analyze logging data emitted from Cloudflare Workers. Data is written to your Cloudflare Account, and you can query it in the dashboard for each of your Workers. All newly created Workers will come with the observability setting enabled by default.
@@ -27,11 +38,15 @@ You must add the observability setting for your Worker to write logs to Workers 
 
 <WranglerConfig>
 
-    ```toml
-    [observability]
-    enabled = true
-    head_sampling_rate = 1 # optional. default = 1.
-    ```
+    ```yaml
+---
+$type: Worker
+$id: worker
+observability:
+  enabled: true
+  head_sampling_rate: 1
+---
+```
 
 </WranglerConfig>
 
@@ -43,11 +58,17 @@ You must add the observability setting for your Worker to write logs to Workers 
 
     <WranglerConfig>
 
-    ```toml
-    [env.staging.observability]
-    enabled = true
-    head_sampling_rate = 1 # optional
-    ```
+    ```yaml
+---
+$type: Worker
+$id: worker
+env:
+  staging:
+    observability:
+      enabled: true
+      head_sampling_rate: 1
+---
+```
 
     </WranglerConfig>
 
@@ -91,9 +112,14 @@ Invocation logs can be disabled in wrangler by adding the `invocation_logs = fal
 
 <WranglerConfig>
 
-```toml
-[observability.logs]
-invocation_logs = false
+```yaml
+---
+$type: Worker
+$id: worker
+observability:
+  logs:
+    invocation_logs: false
+---
 ```
 
 </WranglerConfig>
@@ -173,10 +199,14 @@ To enable head-based sampling, set `head_sampling_rate` within the observability
 
 <WranglerConfig>
 
-```toml
-[observability]
-enabled = true
-head_sampling_rate = 0.01 # 1% sampling rate
+```yaml
+---
+$type: Worker
+$id: worker
+observability:
+  enabled: true
+  head_sampling_rate: 0.01
+---
 ```
 
 </WranglerConfig>

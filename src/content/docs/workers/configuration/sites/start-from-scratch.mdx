@@ -6,6 +6,17 @@ sidebar:
   order: 2
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, WranglerConfig } from "~/components";
 
 <Render file="workers_sites" product="workers" />
@@ -28,13 +39,13 @@ This guide shows how to quickly start a new Workers Sites project from scratch.
 4. You can preview your site by running the [`wrangler dev`](/workers/wrangler/commands/#dev) command:
 
    ```sh
-   wrangler dev
+   mdxe run worker.mdx --dev
    ```
 
 5. Deploy your site to Cloudflare:
 
    ```sh
-   npx wrangler deploy
+   pnpm --filter mdxe exec mdxe run worker.mdx --deploy
    ```
 
 ## Project layout
@@ -53,9 +64,13 @@ The template project contains the following files and directories:
 
   <WranglerConfig>
 
-  ```toml
-  name = "my-site"
-  ```
+  ```yaml
+---
+$type: Worker
+$id: my-site
+name: my-site
+---
+```
 
   </WranglerConfig>
 
@@ -63,9 +78,13 @@ The template project contains the following files and directories:
 
   <WranglerConfig>
 
-  ```toml
-  compatibility_date = "yyyy-mm-dd"
-  ```
+  ```yaml
+---
+$type: Worker
+$id: worker
+compatibility_date: yyyy-mm-dd
+---
+```
 
   </WranglerConfig>
 
@@ -73,9 +92,13 @@ The template project contains the following files and directories:
 
   <WranglerConfig>
 
-  ```toml
-  route = "https://example.com/*"
-  ```
+  ```yaml
+---
+$type: Worker
+$id: worker
+route: https://example.com/*
+---
+```
 
   </WranglerConfig>
 

@@ -6,6 +6,17 @@ head: []
 description: Opt into a specific version of the Workers runtime for your Workers project.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 Cloudflare regularly updates the Workers runtime. These updates apply to all Workers globally and should never cause a Worker that is already deployed to stop functioning. Sometimes, though, some changes may be backwards-incompatible. In particular, there might be bugs in the runtime API that existing Workers may inadvertently depend upon. Cloudflare implements bug fixes that new Workers can opt into while existing Workers will continue to see the buggy behavior to prevent breaking deployed Workers.
@@ -29,9 +40,12 @@ The compatibility date can be set in a Worker's [Wrangler configuration file](/w
 
 <WranglerConfig>
 
-```toml
-# Opt into backwards-incompatible changes through April 5, 2022.
-compatibility_date = "2022-04-05"
+```yaml
+---
+$type: Worker
+$id: worker
+compatibility_date: 2022-04-05
+---
 ```
 
 </WranglerConfig>

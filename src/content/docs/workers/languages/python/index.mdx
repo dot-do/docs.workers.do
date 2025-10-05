@@ -11,6 +11,17 @@ head:
 description: Write Workers in 100% Python
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 Cloudflare Workers provides first-class support for Python, including support for:
@@ -128,14 +139,18 @@ For example, let us try setting and using an environment variable in a Python Wo
 
 <WranglerConfig>
 
-```toml
-name = "hello-python-worker"
-main = "src/entry.py"
-compatibility_flags = ["python_workers"]
-compatibility_date = "2024-03-20"
-
-[vars]
-API_HOST = "example.com"
+```yaml
+---
+$type: Worker
+$id: hello-python-worker
+name: hello-python-worker
+main: src/entry.py
+compatibility_flags:
+  - python_workers
+compatibility_date: 2024-03-20
+vars:
+  API_HOST: example.com
+---
 ```
 
 </WranglerConfig>

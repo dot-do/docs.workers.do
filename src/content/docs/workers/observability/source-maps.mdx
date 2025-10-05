@@ -6,6 +6,17 @@ description: Adding source maps and generating stack traces for Workers.
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, WranglerConfig } from "~/components";
 import { FileTree } from "@astrojs/starlight/components";
 
@@ -17,8 +28,12 @@ To enable source maps, add the following to your Worker's [Wrangler configuratio
 
 <WranglerConfig>
 
-```toml
-upload_source_maps = true
+```yaml
+---
+$type: Worker
+$id: worker
+upload_source_maps: true
+---
 ```
 
 </WranglerConfig>

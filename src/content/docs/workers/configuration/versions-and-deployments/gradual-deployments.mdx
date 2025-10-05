@@ -5,6 +5,17 @@ head: []
 description: Incrementally deploy code changes to your Workers with gradual deployments.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Example, DashButton } from "~/components";
 
 Gradual Deployments give you the ability to incrementally deploy new [versions](/workers/configuration/versions-and-deployments/#versions) of Workers by splitting traffic across versions.
@@ -39,7 +50,7 @@ Minimum required Wrangler version: 3.40.0. Versions before 3.73.0 require you to
 Create a new `"Hello World"` Worker using the [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) and deploy it.
 
 ```sh
-npm create cloudflare@latest <NAME> -- --type=hello-world
+mdxe create worker.mdx <NAME> -- --type=hello-world
 ```
 
 Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your application. This is the first version of your Worker.

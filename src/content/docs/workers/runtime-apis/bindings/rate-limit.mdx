@@ -4,6 +4,17 @@ title: Rate Limiting
 description: Define rate limits and interact with them directly from your Cloudflare Worker
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { TabItem, Tabs, WranglerConfig } from "~/components"
 
 The Rate Limiting API lets you define rate limits and write code around them in your Worker.
@@ -27,19 +38,18 @@ First, add a [binding](/workers/runtime-apis/bindings) to your Worker that gives
 
 <WranglerConfig>
 
-```toml
-main = "src/index.js"
-
-[[ratelimits]]
-name = "MY_RATE_LIMITER"
-# An identifier you define, that is unique to your Cloudflare account.
-# Must be an integer.
-namespace_id = "1001"
-
-# Limit: the number of tokens allowed within a given period in a single
-# Cloudflare location
-# Period: the duration of the period, in seconds. Must be either 10 or 60
-simple = { limit = 100, period = 60 }
+```yaml
+---
+$type: Worker
+$id: worker
+main: src/index.js
+ratelimits:
+  - name: MY_RATE_LIMITER
+    namespace_id: "1001"
+    simple:
+      limit: 100
+      period: 60
+---
 ```
 
 </WranglerConfig>
@@ -99,20 +109,23 @@ For example, here is how you can define two rate limiting configurations for fre
 
 <WranglerConfig>
 
-```toml
-main = "src/index.js"
-
-# Free user rate limiting
-[[ratelimits]]
-name = "FREE_USER_RATE_LIMITER"
-namespace_id = "1001"
-simple = { limit = 100, period = 60 }
-
-# Paid user rate limiting
-[[ratelimits]]
-name = "PAID_USER_RATE_LIMITER"
-namespace_id = "1002"
-simple = { limit = 1000, period = 60 }
+```yaml
+---
+$type: Worker
+$id: worker
+main: src/index.js
+ratelimits:
+  - name: FREE_USER_RATE_LIMITER
+    namespace_id: "1001"
+    simple:
+      limit: 100
+      period: 60
+  - name: PAID_USER_RATE_LIMITER
+    namespace_id: "1002"
+    simple:
+      limit: 1000
+      period: 60
+---
 ```
 
 </WranglerConfig>
@@ -129,13 +142,17 @@ For example, to apply a rate limit of 1500 requests per minute, you would define
 
 <WranglerConfig>
 
-```toml
-[[ratelimits]]
-name = "MY_RATE_LIMITER"
-namespace_id = "1001"
-
-# 1500 requests - calls to limit() increment this
-simple = { limit = 1500, period = 60 }
+```yaml
+---
+$type: Worker
+$id: worker
+ratelimits:
+  - name: MY_RATE_LIMITER
+    namespace_id: "1001"
+    simple:
+      limit: 1500
+      period: 60
+---
 ```
 
 </WranglerConfig>

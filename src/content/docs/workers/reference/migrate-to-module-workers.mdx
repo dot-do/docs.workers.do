@@ -6,6 +6,17 @@ description: Write your Worker code in ES modules syntax for an optimized experi
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 This guide will show you how to migrate your Workers from the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) format to the [ES modules](https://blog.cloudflare.com/workers-javascript-modules/) format.
@@ -76,10 +87,14 @@ To understand bindings, refer the following `TODO` KV namespace binding example.
 
 <WranglerConfig>
 
-```toml
-kv_namespaces = [
-  { binding = "TODO", id = "<ID>" }
-]
+```yaml
+---
+$type: Worker
+$id: worker
+kv_namespaces:
+  - binding: TODO
+    id: <ID>
+---
 ```
 
 </WranglerConfig>
@@ -152,14 +167,14 @@ Review the following example environment variable configuration in the [Wrangler
 
 <WranglerConfig>
 
-```toml
-name = "my-worker-dev"
-
-# Define top-level environment variables
-# under the `[vars]` block using
-# the `key = "value"` format
-[vars]
-API_ACCOUNT_ID = "<EXAMPLE-ACCOUNT-ID>"
+```yaml
+---
+$type: Worker
+$id: my-worker-dev
+name: my-worker-dev
+vars:
+  API_ACCOUNT_ID: <EXAMPLE-ACCOUNT-ID>
+---
 ```
 
 </WranglerConfig>

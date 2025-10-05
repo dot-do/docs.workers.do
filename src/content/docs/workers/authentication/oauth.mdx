@@ -1,0 +1,460 @@
+---
+title: Automatic OAuth Authentication
+pcx_content_type: concept
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: OAuth - Automatic User Authentication
+---
+
+# Automatic OAuth Authentication
+
+The .do platform provides **automatic OAuth 2.1 authentication** for all workers. No setup required, no configuration needed - just access `$.user` and it works.
+
+## Overview
+
+Every HTTP request to a .do worker automatically includes user authentication context via OAuth 2.1 through oauth.do:
+
+```typescript
+export default {
+  async fetch(request, $) {
+    // User is automatically authenticated
+    if (!$.user) {
+      // Redirect to login
+      return Response.redirect('https://oauth.do/login?redirect=' + request.url)
+    }
+
+    // User info is available
+    const { id, email, name, picture, roles, tenantId } = $.user
+
+    return Response.json({
+      message: `Hello, ${name}!`,
+      userId: id,
+      tenant: tenantId
+    })
+  }
+}
+```
+
+**No configuration needed:**
+- No OAuth client setup
+- No API keys
+- No redirect URLs
+- No token management
+- No session storage
+
+## How It Works
+
+```
+┌──────────┐                  ┌─────────────┐              ┌──────────────┐
+│          │  1. Request      │             │  2. Verify   │              │
+│  Browser │ ───────────────> │ Your Worker │ ───────────> │  oauth.do    │
+│          │                  │             │              │  (WorkOS)    │
+└──────────┘                  └─────────────┘              └──────────────┘
+     ↑                               │                             │
+     │                               │ 3. User context             │
+     │                               ↓                             │
+     │                        ┌─────────────┐                     │
+     │  4. Response           │             │                     │
+     └───────────────────────│  $.user     │                     │
+                              │  populated  │                     │
+                              └─────────────┘                     │
+                                     ↑                             │
+                                     │                             │
+                                     └─────────────────────────────┘
+```
+
+1. User makes request to your worker
+2. .do platform validates OAuth token (if present)
+3. User context is automatically populated in `$.user`
+4. Your worker accesses user info and returns response
+
+## User Object
+
+The `$.user` object provides complete user information:
+
+```typescript
+interface User {
+  // Basic info
+  id: string              // Unique user ID
+  email: string           // Email address
+  name: string            // Full name
+  picture?: string        // Avatar URL
+
+  // Authentication
+  provider: string        // OAuth provider (google, github, microsoft)
+  providerId: string      // Provider's user ID
+
+  // Authorization
+  roles: string[]         // User roles (admin, user, guest)
+  tenantId: string        // Multi-tenant isolation
+
+  // Metadata
+  createdAt: Date         // Account creation
+  lastSeenAt: Date        // Last activity
+  metadata: Record<string, any>  // Custom fields
+}
+```
+
+### Example Usage
+
+```typescript
+export default {
+  async fetch(request, $) {
+    const user = $.user
+
+    // Check authentication
+    if (!user) {
+      return new Response('Please log in', { status: 401 })
+    }
+
+    // Access user info
+    console.log('User ID:', user.id)
+    console.log('Email:', user.email)
+    console.log('Name:', user.name)
+    console.log('Picture:', user.picture)
+
+    // Check roles
+    if (user.roles.includes('admin')) {
+      // Admin-only logic
+    }
+
+    // Multi-tenant isolation
+    const items = await $.db.query({
+      sql: 'SELECT * FROM items WHERE tenant_id = ?',
+      params: [user.tenantId]
+    })
+
+    return Response.json({ user, items })
+  }
+}
+```
+
+## Login Flow
+
+### Redirect to Login
+
+```typescript
+// Redirect unauthenticated users to login
+if (!$.user) {
+  const loginUrl = new URL('https://oauth.do/login')
+  loginUrl.searchParams.set('redirect', request.url)
+  return Response.redirect(loginUrl.toString())
+}
+```
+
+### Custom Login Page
+
+```typescript
+// Return custom login page
+if (!$.user) {
+  return new Response(`
+    <!DOCTYPE html>
+    <html>
+      <head><title>Login</title></head>
+      <body>
+        <h1>Please log in</h1>
+        <a href="https://oauth.do/login?redirect=${encodeURIComponent(request.url)}">
+          <button>Login with Google</button>
+        </a>
+        <a href="https://oauth.do/login/github?redirect=${encodeURIComponent(request.url)}">
+          <button>Login with GitHub</button>
+        </a>
+      </body>
+    </html>
+  `, {
+    headers: { 'Content-Type': 'text/html' }
+  })
+}
+```
+
+## Role-Based Access Control
+
+### Check Roles
+
+```typescript
+export default {
+  async fetch(request, $) {
+    if (!$.user) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+
+    // Check for specific role
+    if (!$.user.roles.includes('admin')) {
+      return new Response('Forbidden - Admin only', { status: 403 })
+    }
+
+    // Admin-only endpoint
+    return Response.json({ message: 'Admin access granted' })
+  }
+}
+```
+
+### Helper Functions
+
+```typescript
+// Check if user has role
+function hasRole(user: User, role: string): boolean {
+  return user.roles.includes(role)
+}
+
+// Check if user has any of the roles
+function hasAnyRole(user: User, roles: string[]): boolean {
+  return roles.some(role => user.roles.includes(role))
+}
+
+// Check if user has all roles
+function hasAllRoles(user: User, roles: string[]): boolean {
+  return roles.every(role => user.roles.includes(role))
+}
+
+// Usage
+export default {
+  async fetch(request, $) {
+    if (!hasRole($.user, 'admin')) {
+      return new Response('Forbidden', { status: 403 })
+    }
+
+    if (hasAnyRole($.user, ['admin', 'moderator'])) {
+      // Admin or moderator logic
+    }
+
+    return Response.json({ success: true })
+  }
+}
+```
+
+## Multi-Tenant Isolation
+
+Every user belongs to a tenant, enabling SaaS-style multi-tenancy:
+
+```typescript
+export default {
+  async fetch(request, $) {
+    if (!$.user) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+
+    // Automatically scope queries to user's tenant
+    const tenantId = $.user.tenantId
+
+    // All queries are tenant-scoped
+    const items = await $.db.query({
+      sql: 'SELECT * FROM items WHERE tenant_id = ?',
+      params: [tenantId]
+    })
+
+    const counts = await $.db.queryOne({
+      sql: 'SELECT COUNT(*) as total FROM items WHERE tenant_id = ?',
+      params: [tenantId]
+    })
+
+    // Inserts include tenant
+    await $.db.execute({
+      sql: 'INSERT INTO items (name, tenant_id) VALUES (?, ?)',
+      params: ['New Item', tenantId]
+    })
+
+    return Response.json({ items, counts })
+  }
+}
+```
+
+### Tenant Admin
+
+```typescript
+// Check if user is admin of their tenant
+if ($.user.roles.includes('tenant-admin')) {
+  // Can manage tenant settings
+  const tenant = await $.db.queryOne({
+    sql: 'SELECT * FROM tenants WHERE id = ?',
+    params: [$.user.tenantId]
+  })
+
+  // Update tenant settings
+  await $.db.execute({
+    sql: 'UPDATE tenants SET settings = ? WHERE id = ?',
+    params: [JSON.stringify(settings), $.user.tenantId]
+  })
+}
+```
+
+## OAuth Providers
+
+The .do platform supports multiple OAuth providers out of the box:
+
+### Google OAuth
+
+```typescript
+// Login URL for Google
+const googleLogin = 'https://oauth.do/login/google?redirect=' + request.url
+
+// User info includes Google ID
+if ($.user?.provider === 'google') {
+  console.log('Google user:', $.user.providerId)
+}
+```
+
+### GitHub OAuth
+
+```typescript
+// Login URL for GitHub
+const githubLogin = 'https://oauth.do/login/github?redirect=' + request.url
+
+// User info includes GitHub ID
+if ($.user?.provider === 'github') {
+  console.log('GitHub user:', $.user.providerId)
+}
+```
+
+### Microsoft OAuth
+
+```typescript
+// Login URL for Microsoft/Azure AD
+const microsoftLogin = 'https://oauth.do/login/microsoft?redirect=' + request.url
+
+// User info includes Microsoft ID
+if ($.user?.provider === 'microsoft') {
+  console.log('Microsoft user:', $.user.providerId)
+}
+```
+
+## Token Management
+
+**You don't need to manage tokens!** The platform handles:
+
+- Token generation
+- Token storage
+- Token refresh
+- Token expiration
+- Token revocation
+
+Tokens are:
+- **HTTP-only cookies** (protected from XSS)
+- **Secure** (HTTPS only)
+- **SameSite=Lax** (CSRF protection)
+- **Automatically refreshed** (seamless UX)
+
+## Advanced: Custom Claims
+
+Add custom data to user context:
+
+```typescript
+// Set custom user metadata
+await $.db.execute({
+  sql: 'UPDATE users SET metadata = ? WHERE id = ?',
+  params: [
+    JSON.stringify({
+      subscription: 'pro',
+      credits: 1000,
+      preferences: { theme: 'dark' }
+    }),
+    $.user.id
+  ]
+})
+
+// Access custom metadata
+const metadata = $.user.metadata
+console.log('Subscription:', metadata.subscription)
+console.log('Credits:', metadata.credits)
+```
+
+## Webhooks & Background Jobs
+
+OAuth context is available in all worker contexts:
+
+```typescript
+// Scheduled tasks have user context when triggered
+$.on('scheduled', async (event) => {
+  // Process for all users
+  const users = await $.db.query({
+    sql: 'SELECT * FROM users'
+  })
+
+  for (const user of users) {
+    // Perform user-specific task
+  }
+})
+
+// Queue handlers have user context from the enqueued message
+$.on('queue', async (batch) => {
+  for (const message of batch.messages) {
+    const userId = message.body.userId
+
+    // Process for specific user
+    const user = await $.db.queryOne({
+      sql: 'SELECT * FROM users WHERE id = ?',
+      params: [userId]
+    })
+
+    // User-specific processing
+  }
+})
+```
+
+## Security Best Practices
+
+### 1. Always Check Authentication
+
+```typescript
+// ✅ Good - Check user exists
+if (!$.user) {
+  return new Response('Unauthorized', { status: 401 })
+}
+
+// ❌ Bad - Assume user exists
+const name = $.user.name // TypeError if null
+```
+
+### 2. Validate Roles
+
+```typescript
+// ✅ Good - Check role before sensitive operations
+if (!$.user.roles.includes('admin')) {
+  return new Response('Forbidden', { status: 403 })
+}
+
+// ❌ Bad - Assume user has role
+await deleteAllUsers() // Dangerous!
+```
+
+### 3. Scope to Tenant
+
+```typescript
+// ✅ Good - Always include tenant_id in queries
+const items = await $.db.query({
+  sql: 'SELECT * FROM items WHERE tenant_id = ?',
+  params: [$.user.tenantId]
+})
+
+// ❌ Bad - Expose all tenants' data
+const items = await $.db.query({
+  sql: 'SELECT * FROM items' // Leaks data!
+})
+```
+
+## Comparison with Manual OAuth
+
+| Feature | Manual OAuth | .do Platform |
+|---------|--------------|--------------|
+| Setup Time | Hours | 0 seconds |
+| Code Required | 100+ lines | 0 lines |
+| Token Management | Manual | Automatic |
+| Refresh Tokens | You handle | Automatic |
+| Security | Your responsibility | Built-in |
+| Multi-Provider | Implement each | All included |
+| Cost | Variable | Free |
+
+## Next Steps
+
+- [.do Runtime Guide](/workers/runtime/do-runtime) - Learn about `$` primitives
+- [Database Guide](/workers/databases/postgresql) - Tenant-scoped queries
+- [Examples](/workers/examples/authentication) - See complete auth examples
+- [API Reference](/workers/runtime-apis/user) - Complete User API
+
+## Resources
+
+- [WorkOS Documentation](https://workos.com/docs) - Underlying OAuth provider
+- [OAuth 2.1 Spec](https://oauth.net/2.1/) - OAuth standard
+- [Security Best Practices](/workers/security/oauth) - Secure authentication

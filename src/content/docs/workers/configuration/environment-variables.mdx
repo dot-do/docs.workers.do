@@ -5,6 +5,17 @@ head: []
 description: You can add environment variables, which are a type of binding, to attach text strings or JSON values to your Worker.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, TabItem, Tabs, WranglerConfig, DashButton } from "~/components";
 
 ## Background
@@ -56,18 +67,21 @@ The example below sets up two environments, `staging` and `production`, with dif
 
 <WranglerConfig>
 
-```toml
-name = "my-worker-dev"
-
-# top level environment
-[vars]
-API_HOST = "api.example.com"
-
-[env.staging.vars]
-API_HOST = "staging.example.com"
-
-[env.production.vars]
-API_HOST = "production.example.com"
+```yaml
+---
+$type: Worker
+$id: my-worker-dev
+name: my-worker-dev
+vars:
+  API_HOST: api.example.com
+env:
+  staging:
+    vars:
+      API_HOST: staging.example.com
+  production:
+    vars:
+      API_HOST: production.example.com
+---
 ```
 
 </WranglerConfig>

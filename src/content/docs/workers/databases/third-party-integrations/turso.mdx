@@ -3,6 +3,17 @@ pcx_content_type: configuration
 title: Turso
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers } from "~/components";
 
 [Turso](https://turso.tech/) is an edge-hosted, distributed database based on [libSQL](https://libsql.org/), an open-source fork of SQLite. Turso was designed to minimize query latency for applications where queries comes from anywhere in the world.

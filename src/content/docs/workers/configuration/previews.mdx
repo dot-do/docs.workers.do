@@ -8,6 +8,17 @@ sidebar:
 description: Preview URLs allow you to preview new versions of your project without deploying it to production.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, WranglerConfig, DashButton } from "~/components";
 
 # Overview
@@ -142,16 +153,24 @@ To toggle Preview URLs for a Worker, include any of the following in your Worker
 
 <WranglerConfig>
 
-```toml
-preview_urls = true
+```yaml
+---
+$type: Worker
+$id: worker
+preview_urls: true
+---
 ```
 
 </WranglerConfig>
 
 <WranglerConfig>
 
-```toml
-preview_urls = false
+```yaml
+---
+$type: Worker
+$id: worker
+preview_urls: false
+---
 ```
 
 </WranglerConfig>

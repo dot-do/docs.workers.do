@@ -6,6 +6,17 @@ head: []
 description: Opt into a specific features of the Workers runtime for your Workers project.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { CompatibilityFlags, WranglerConfig, Render } from "~/components";
 
 Compatibility flags enable specific features. They can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
@@ -24,11 +35,14 @@ This example enables the specific flag `formdata_parser_supports_files`, which i
 
 <WranglerConfig>
 
-```toml
-# Opt into backwards-incompatible changes through September 14, 2021.
-compatibility_date = "2021-09-14"
-# Also opt into an upcoming fix to the FormData API.
-compatibility_flags = [ "formdata_parser_supports_files" ]
+```yaml
+---
+$type: Worker
+$id: worker
+compatibility_date: 2021-09-14
+compatibility_flags:
+  - formdata_parser_supports_files
+---
 ```
 
 </WranglerConfig>

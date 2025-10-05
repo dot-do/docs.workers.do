@@ -12,6 +12,17 @@ sidebar:
 description: Set a Cron Trigger for your Worker.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 If you want to get started quickly, click on the button below.
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/cron-trigger)
@@ -100,13 +111,15 @@ If you are deploying with Wrangler, set the cron syntax (once per hour as shown 
 
 <WranglerConfig>
 
-```toml
-name = "worker"
-
-# ...
-
-[triggers]
-crons = ["0 * * * *"]
+```yaml
+---
+$type: Worker
+$id: worker
+name: worker
+triggers:
+  crons:
+    - 0 * * * *
+---
 ```
 
 </WranglerConfig>
@@ -115,9 +128,16 @@ You also can set a different Cron Trigger for each [environment](/workers/wrangl
 
 <WranglerConfig>
 
-```toml
-[env.dev.triggers]
-crons = ["0 * * * *"]
+```yaml
+---
+$type: Worker
+$id: worker
+env:
+  dev:
+    triggers:
+      crons:
+        - 0 * * * *
+---
 ```
 
 </WranglerConfig>
@@ -129,7 +149,7 @@ The recommended way of testing Cron Triggers is using Wrangler.
 Cron Triggers can be tested using Wrangler by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` (or `/cdn-cgi/handler/scheduled` for Python Workers) route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
-npx wrangler dev --test-scheduled
+pnpm --filter mdxe exec mdxe run worker.mdx --dev --test-scheduled
 
 curl "http://localhost:8787/__scheduled?cron=0+*+*+*+*"
 

@@ -3,6 +3,17 @@ pcx_content_type: concept
 title: Routes
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, DashButton, Steps } from "~/components";
 
 ## Background
@@ -62,16 +73,16 @@ To configure a route using your [Wrangler configuration file](/workers/wrangler/
 
 <WranglerConfig>
 
-```toml
-[[routes]]
-pattern = "subdomain.example.com/*"
-zone_name = "example.com"
-
-# or
-
-[[routes]]
-pattern = "subdomain.example.com/*"
-zone_id = "<YOUR_ZONE_ID>"
+```yaml
+---
+$type: Worker
+$id: worker
+routes:
+  - pattern: subdomain.example.com/*
+    zone_name: example.com
+  - pattern: subdomain.example.com/*
+    zone_id: <YOUR_ZONE_ID>
+---
 ```
 
 </WranglerConfig>
@@ -92,14 +103,16 @@ To add multiple routes:
 
 <WranglerConfig>
 
-```toml
-[[routes]]
-pattern = "subdomain.example.com/*"
-zone_name = "example.com"
-
-[[routes]]
-pattern = "subdomain-two.example.com/example"
-zone_id = "<YOUR_ZONE_ID>"
+```yaml
+---
+$type: Worker
+$id: worker
+routes:
+  - pattern: subdomain.example.com/*
+    zone_name: example.com
+  - pattern: subdomain-two.example.com/example
+    zone_id: <YOUR_ZONE_ID>
+---
 ```
 
 </WranglerConfig>

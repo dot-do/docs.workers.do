@@ -6,6 +6,17 @@ meta:
   description: Learn how to profile Memory usage to avoid out-of-memory errors and optimize your Worker
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 Understanding Worker memory usage can help you optimize performance, avoid Out of Memory (OOM) errors
 when hitting [Worker memory limits](/workers/platform/limits/#memory), and fix memory leaks.
 

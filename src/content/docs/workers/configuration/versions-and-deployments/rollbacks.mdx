@@ -4,6 +4,17 @@ title: Rollbacks
 head: []
 description: Revert to an older version of your Worker.
 ---
+
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
 import { DashButton } from "~/components";
 
 You can roll back to a previously deployed [version](/workers/configuration/versions-and-deployments/#versions) of your Worker using [Wrangler](/workers/wrangler/commands/#rollback) or the Cloudflare dashboard. Rolling back to a previous version of your Worker will immediately create a new [deployment](/workers/configuration/versions-and-deployments/#deployments) with the version specified and become the active deployment across all your deployed routes and domains.

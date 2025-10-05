@@ -6,6 +6,17 @@ meta:
   description: Overview of interactive DevTools used to debug a variety of situations
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 ## Using DevTools
 
 When running your Worker locally using the [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) (`wrangler dev`) or using [Vite](https://vite.dev/) with the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/), you automatically have access to [Cloudflare's implementation](https://github.com/cloudflare/workers-sdk/tree/main/packages/chrome-devtools-patches) of [Chrome DevTools](https://developer.chrome.com/docs/devtools/overview).

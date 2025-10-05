@@ -6,6 +6,17 @@ sidebar:
   order: 3
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
 <Render file="workers_sites" product="workers" />
@@ -22,10 +33,14 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
 
    <WranglerConfig>
 
-   ```toml
-   [site]
-   bucket = "./public" # Add the directory with your static assets!
-   ```
+   ```yaml
+---
+$type: Worker
+$id: worker
+site:
+  bucket: ./public
+---
+```
 
    </WranglerConfig>
 
@@ -100,5 +115,5 @@ For more information on the configurable options of `getAssetFromKV()` refer to 
    Wrangler will automatically upload the assets found in the configured directory.
 
    ```sh
-   npx wrangler deploy
+   pnpm --filter mdxe exec mdxe run worker.mdx --deploy
    ```

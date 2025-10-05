@@ -7,6 +7,17 @@ tags: ["full-stack"]
 description: Create an Next.js application and deploy it to Cloudflare Workers with Workers Assets.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import {
 	Description,
 	Details,
@@ -123,15 +134,20 @@ You can convert an existing Next.js application to run on Cloudflare
     In your project root, create a [Wrangler configuration file](/workers/wrangler/configuration/) with the following content:
 
         		<WranglerConfig>
-        		```toml
-        			main = ".open-next/worker.js"
-        			name = "my-app"
-        			compatibility_date = "2025-03-25"
-        			compatibility_flags = ["nodejs_compat"]
-        			[assets]
-        			directory = ".open-next/assets"
-        			binding = "ASSETS"
-        		```
+        		```yaml
+---
+$type: Worker
+$id: my-app
+main: .open-next/worker.js
+name: my-app
+compatibility_date: 2025-03-25
+compatibility_flags:
+  - nodejs_compat
+assets:
+  directory: .open-next/assets
+  binding: ASSETS
+---
+```
         	</WranglerConfig>
 
     :::note

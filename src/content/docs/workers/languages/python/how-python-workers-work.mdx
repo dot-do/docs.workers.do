@@ -9,6 +9,17 @@ head:
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, WranglerConfig } from "~/components"
 
 Workers written in Python are executed by [Pyodide](https://pyodide.org/en/stable/index.html). Pyodide is a port of [CPython](https://github.com/python) (the reference implementation of Python — commonly referred to as just "Python") to WebAssembly.
@@ -29,10 +40,14 @@ class Default(WorkerEntrypoint):
 
 <WranglerConfig>
 
-```toml
-name = "hello-world-python-worker"
-main = "src/entry.py"
-compatibility_date = "2024-04-01"
+```yaml
+---
+$type: Worker
+$id: hello-world-python-worker
+name: hello-world-python-worker
+main: src/entry.py
+compatibility_date: 2024-04-01
+---
 ```
 
 </WranglerConfig>

@@ -11,6 +11,17 @@ sidebar:
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 A Tail Worker receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. Tail Workers can process logs for alerts, debugging, or analytics.
@@ -89,8 +100,13 @@ The following Worker code is an example of what the `events` object may look lik
 
 <WranglerConfig>
 
-```toml
-tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]
+```yaml
+---
+$type: Worker
+$id: worker
+tail_consumers:
+  - service: <TAIL_WORKER_NAME>
+---
 ```
 
 </WranglerConfig>

@@ -10,6 +10,17 @@ description: Facilitate Worker-to-Worker communication.
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig } from "~/components";
 
 ## About Service bindings
@@ -38,10 +49,14 @@ For example, if you want Worker A to be able to call Worker B — you'd add the 
 
 <WranglerConfig>
 
-```toml
-services = [
-  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
-]
+```yaml
+---
+$type: Worker
+$id: worker
+services:
+  - binding: <BINDING_NAME>
+    service: <WORKER_NAME>
+---
 ```
 
 </WranglerConfig>
@@ -64,9 +79,13 @@ First, create the Worker that you want to communicate with. Let's call this "Wor
 
 <WranglerConfig>
 
-```toml
-name = "worker_b"
-main = "./src/workerB.js"
+```yaml
+---
+$type: Worker
+$id: worker_b
+name: worker_b
+main: ./src/workerB.js
+---
 ```
 
 </WranglerConfig>
@@ -88,12 +107,16 @@ Next, create the Worker that will call Worker B. Let's call this "Worker A". Wor
 
 <WranglerConfig>
 
-```toml
-name = "worker_a"
-main = "./src/workerA.js"
-services = [
-  { binding = "WORKER_B", service = "worker_b" }
-]
+```yaml
+---
+$type: Worker
+$id: worker_a
+name: worker_a
+main: ./src/workerA.js
+services:
+  - binding: WORKER_B
+    service: worker_b
+---
 ```
 
 </WranglerConfig>
@@ -122,7 +145,7 @@ For more about the lifecycle of calling a Worker over a Service Binding via RPC,
 Local development is supported for Service bindings. For each Worker, open a new terminal and use [`wrangler dev`](/workers/wrangler/commands/#dev) in the relevant directory. When running `wrangler dev`, service bindings will show as `connected`/`not connected` depending on whether Wrangler can find a running `wrangler dev` session for that Worker. For example:
 
 ```sh
-$ wrangler dev
+$ mdxe run worker.mdx --dev
 ...
 Your worker has access to the following bindings:
 - Services:

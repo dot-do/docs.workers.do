@@ -4,6 +4,17 @@ title: Neon
 description: Connect Workers to a Neon Postgres database.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, PackageManagers, Tabs, TabItem } from "~/components";
 
 [Neon](https://neon.tech/) is a fully managed serverless PostgreSQL. It separates storage and compute to offer modern developer features, such as serverless, branching, and bottomless storage.

@@ -9,6 +9,17 @@ sidebar:
 
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { WranglerConfig, DashButton } from "~/components";
 
 [Cloudflare Logpush](/logs/logpush/) supports the ability to send [Workers Trace Event Logs](/logs/logpush/logpush-job/datasets/account/workers_trace_events/) to a [supported destination](/logs/logpush/logpush-job/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/workers/platform/pricing/#workers-trace-events-logpush).
@@ -83,16 +94,19 @@ Enable logging on your Worker by adding a new property, `logpush = true`, to you
 
 <WranglerConfig>
 
-```toml
-# Top-level configuration
-
-name = "my-worker"
-main = "src/index.js"
-compatibility_date = "2022-07-12"
-
-workers_dev = false
-logpush = true
-route = { pattern = "example.org/*", zone_name = "example.org" }
+```yaml
+---
+$type: Worker
+$id: my-worker
+name: my-worker
+main: src/index.js
+compatibility_date: 2022-07-12
+workers_dev: false
+logpush: true
+route:
+  pattern: example.org/*
+  zone_name: example.org
+---
 ```
 
 </WranglerConfig>

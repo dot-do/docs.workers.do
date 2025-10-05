@@ -7,6 +7,17 @@ head: []
 description: Cloudflare Workers plan and platform limits.
 ---
 
+
+:::note[.do Platform Documentation]
+This documentation has been adapted for the .do platform. Key differences:
+- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
+- Commands use `mdxe` instead of `wrangler`
+- Workers are defined in single .mdx files (config + code + docs)
+- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- OAuth authentication is automatic via oauth.do
+:::
+
+
 import { Render, WranglerConfig, DashButton } from "~/components";
 
 ## Account plan limits
@@ -315,7 +326,7 @@ A Worker can be up to 10 MB in size _after compression_ on the Workers Paid plan
 You can assess the size of your Worker bundle after compression by performing a dry-run with `wrangler` and reviewing the final compressed (`gzip`) size output by `wrangler`:
 
 ```sh
-wrangler deploy --outdir bundled/ --dry-run
+mdxe run worker.mdx --deploy --outdir bundled/ --dry-run
 ```
 
 ```sh output
