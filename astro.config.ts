@@ -60,7 +60,7 @@ const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://developers.cloudflare.com",
+	site: "https://docs.workers.do",
 	markdown: {
 		smartypants: false,
 		remarkPlugins: [remarkValidateImages],
@@ -86,11 +86,11 @@ export default defineConfig({
 		contentIntellisense: true,
 	},
 	server: {
-		port: 1111,
+		port: 8788,
 	},
 	integrations: [
 		starlight({
-			title: "Cloudflare Docs",
+			title: ".do Workers Platform",
 			logo: {
 				src: "./src/assets/logo.svg",
 			},
@@ -99,18 +99,13 @@ export default defineConfig({
 				{
 					label: "GitHub",
 					icon: "github",
-					href: "https://github.com/cloudflare/cloudflare-docs",
+					href: "https://github.com/dot-do/docs.workers.do",
 				},
-				{ label: "X.com", icon: "x.com", href: "https://x.com/cloudflare" },
-				{
-					label: "YouTube",
-					icon: "youtube",
-					href: "https://www.youtube.com/cloudflare",
-				},
+				{ label: "X.com", icon: "x.com", href: "https://x.com/dotdotdo" },
 			],
 			editLink: {
 				baseUrl:
-					"https://github.com/cloudflare/cloudflare-docs/edit/production/",
+					"https://github.com/dot-do/docs.workers.do/edit/production/",
 			},
 			components: {
 				Banner: "./src/components/overrides/Banner.astro",
