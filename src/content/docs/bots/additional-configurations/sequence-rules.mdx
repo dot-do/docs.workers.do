@@ -37,10 +37,12 @@ You can [create a sequence custom rule via the Cloudflare dashboard](#create-a-s
 ### Enable sequence rules
 
 <Steps>
+
 1. [Create an API token](/fundamentals/api/get-started/create-token/) if you do not already have one. The API token must include the _Zone_ > _Fraud Detection_ > _Edit_ permission.
 2. [Get the zone ID](/fundamentals/account/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence rules.
 3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your sequence rules using API Shield's Endpoint Management and make note of the short ID. 
 4. Enable the sequence cookie by adding your API token and zone ID to the following API call.
+
 </Steps>
 
 :::note
@@ -71,10 +73,12 @@ Disabling sequence rules will stop the rules fields from being populated. If you
 To disable sequence rules:
 
 <Steps>
+
 1. [Create an API token](/fundamentals/api/get-started/create-token/) if you do not already have one. The API token must include the _Zone_ > _Fraud Detection_ > _Edit_ permission.
 2. [Get the zone ID](/fundamentals/account/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence rules.
 3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your sequence rules using API Shield's Endpoint Management and make note of the short ID.
 4. Disable the sequence cookie using your API token, zone ID, and by setting `enabled` to `false` on the following API call.
+
 </Steps>
 
 :::note

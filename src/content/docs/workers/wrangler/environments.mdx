@@ -17,25 +17,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import { WranglerConfig, Render, Steps } from "~/components";
@@ -47,38 +29,41 @@ When you create an environment, Cloudflare effectively creates a new Worker with
 Review the following environments flow:
 
 <Steps>
+
 1. Create a Worker, named `my-worker` for example.
+
 2. Create an environment, for example `dev`, in the Worker's [Wrangler configuration file](/workers/wrangler/configuration/), by adding a `[env.<ENV_NAME>]` section.
 
     ```json
     {
-    	"name": "my-worker",
-    	"env": {
-    		"<ENV_NAME>": {
-    			// environment-specific configuration goes here
-    		}
-    	}
+        "name": "my-worker",
+        "env": {
+            "<ENV_NAME>": {
+                // environment-specific configuration goes here
+            }
+        }
     }
     ```
 
-3.  You can configure the `dev` environment with different values to the top-level environment. Refer [here](/workers/wrangler/configuration/#environments) for how different options are inherited - or not inherited - between environments.
+3. You can configure the `dev` environment with different values to the top-level environment. Refer [here](/workers/wrangler/configuration/#environments) for how different options are inherited - or not inherited - between environments.
+
     For example, to set a different route for a Worker in the `dev` environment:
 
     ```yaml
----
-$type: Worker
-$id: your-worker
-name: your-worker
-route: example.com
-env:
-  dev:
-    route: dev.example.com
----
-```
+    ---
+    $type: Worker
+    $id: your-worker
+    name: your-worker
+    route: example.com
+    env:
+      dev:
+        route: dev.example.com
+    ---
+    ```
 
-4.  Environments are used with the `--env` or `-e` flag on Wrangler commands. For example, you can develop the Worker in the `dev` environment by running `npx wrangler dev -e=dev`, and deploy it with `npx wrangler deploy -e=dev`.
+4. Environments are used with the `--env` or `-e` flag on Wrangler commands. For example, you can develop the Worker in the `dev` environment by running `npx wrangler dev -e=dev`, and deploy it with `npx wrangler deploy -e=dev`.
 
-        <Render file="vite-environments" product="workers" />
+    <Render file="vite-environments" product="workers" />
 
 </Steps>
 

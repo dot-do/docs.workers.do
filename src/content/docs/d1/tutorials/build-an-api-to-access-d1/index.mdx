@@ -23,25 +23,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import { Render, PackageManagers, Steps, Details, WranglerConfig } from "~/components";
@@ -78,18 +60,19 @@ D1 uses parameterized queries. This prevents SQL injection. To make your API mor
 Create a new Worker to create and deploy your API.
 
 <Steps>
+
 1. Create a Worker named `d1-http` by running:
 
     <PackageManagers type="create" pkg="cloudflare@latest" args={"d1-http"} />
 
     <Render
-    	file="c3-post-run-steps"
-    	product="workers"
-    	params={{
-    	category: "hello-world",
-    	type: "Worker only",
-    	lang: "TypeScript",
-    	}}
+        file="c3-post-run-steps"
+        product="workers"
+        params={{
+        category: "hello-world",
+        type: "Worker only",
+        lang: "TypeScript",
+        }}
     />
 
 2.  Change into your new project directory to start developing:
@@ -105,6 +88,7 @@ Create a new Worker to create and deploy your API.
 In this tutorial, you will use [Hono](https://github.com/honojs/hono), an Express.js-style framework, to build the API.
 
 <Steps>
+
 1. To use Hono in this project, install it using `npm`:
 
     <PackageManagers type="add" pkg="hono" frame="none" />
@@ -116,6 +100,7 @@ In this tutorial, you will use [Hono](https://github.com/honojs/hono), an Expres
 You need an API key to make authenticated calls to the API. To ensure that the API key is secure, add it as a [secret](/workers/configuration/secrets).
 
 <Steps>
+
 1. For local development, create a `.dev.vars` file in the root directory of `d1-http`.
 2. Add your API key in the file as follows.
 
@@ -144,6 +129,7 @@ To initialize the application, you need to import the required packages, initial
 - [Pretty JSON](https://hono.dev/docs/middleware/builtin/pretty-json): Enables "JSON pretty print" for JSON response bodies.
 
 <Steps>
+
 1. Replace the contents of the `src/index.ts` file with the code below.
 
     ```ts title="src/index.ts"
@@ -153,14 +139,14 @@ To initialize the application, you need to import the required packages, initial
     import { prettyJSON } from "hono/pretty-json";
 
     type Bindings = {
-    	API_KEY: string;
+        API_KEY: string;
     };
 
     const app = new Hono<{ Bindings: Bindings }>();
 
     app.use("*", prettyJSON(), logger(), async (c, next) => {
-    	const auth = bearerAuth({ token: c.env.API_KEY });
-    	return auth(c, next);
+        const auth = bearerAuth({ token: c.env.API_KEY });
+        return auth(c, next);
     });
     ```
 
@@ -169,6 +155,7 @@ To initialize the application, you need to import the required packages, initial
 ## 5. Add API endpoints
 
 <Steps>
+
 1. Add the following snippet into your `src/index.ts`.
 
     ```ts title="src/index.ts"
@@ -176,15 +163,15 @@ To initialize the application, you need to import the required packages, initial
     // Paste this code at the end of the src/index.ts file
 
     app.post("/api/all", async (c) => {
-    	return c.text("/api/all endpoint");
+        return c.text("/api/all endpoint");
     });
 
     app.post("/api/exec", async (c) => {
-    	return c.text("/api/exec endpoint");
+        return c.text("/api/exec endpoint");
     });
 
     app.post("/api/batch", async (c) => {
-    	return c.text("/api/batch endpoint");
+        return c.text("/api/batch endpoint");
     });
 
     export default app;
@@ -251,6 +238,7 @@ Make a note of the displayed `database_name` and `database_id`. You will use thi
 ## 7. Add a binding
 
 <Steps>
+
 1. From your `d1-http` folder, open the Wrangler file, Wrangler's configuration file.
 2. Add the following binding in the file. Make sure that the `database_name` and the `database_id` are correct.
 
@@ -269,8 +257,8 @@ d1_databases:
 
     ```ts ins={2}
     type Bindings = {
-    	DB: D1Database;
-    	API_KEY: string;
+        DB: D1Database;
+        API_KEY: string;
     };
     ```
 
@@ -290,11 +278,11 @@ To create a table in your newly created database:
     ```sql title="schema.sql"
     DROP TABLE IF EXISTS posts;
     CREATE TABLE IF NOT EXISTS posts (
-    	id integer PRIMARY KEY AUTOINCREMENT,
-    	author text NOT NULL,
-    	title text NOT NULL,
-    	body text NOT NULL,
-    	post_slug text NOT NULL
+        id integer PRIMARY KEY AUTOINCREMENT,
+        author text NOT NULL,
+        title text NOT NULL,
+        body text NOT NULL,
+        post_slug text NOT NULL
     );
     INSERT INTO posts (author, title, body, post_slug) VALUES ('Harshil', 'D1 HTTP API', 'Learn to create an API to query your D1 database.','d1-http-api');
     ```
@@ -322,6 +310,7 @@ The table will be created in the local instance of the database. If you want to 
 Your application can now access the D1 database. In this step, you will update the API endpoints to query the database and return the result.
 
 <Steps>
+
 1. In your `src/index.ts` file, update the code as follow.
 
     ```ts title="src/index.ts" ins={10-21,31-37,47-62} del={9,30,46}
@@ -333,19 +322,19 @@ Your application can now access the D1 database. In this step, you will update t
     */
 
     app.post('/api/all', async (c) => {
-    		return c.text("/api/all endpoint");
-    	try {
-    		let { query, params } = await c.req.json();
-    		let stmt = c.env.DB.prepare(query);
-    		if (params) {
-    			stmt = stmt.bind(params);
-    		}
+            return c.text("/api/all endpoint");
+        try {
+            let { query, params } = await c.req.json();
+            let stmt = c.env.DB.prepare(query);
+            if (params) {
+                stmt = stmt.bind(params);
+            }
 
-    		const result = await stmt.run();
-    		return c.json(result);
-    	} catch (err) {
-    		return c.json({ error: `Failed to run query: ${err}` }, 500);
-    	}
+            const result = await stmt.run();
+            return c.json(result);
+        } catch (err) {
+            return c.json({ error: `Failed to run query: ${err}` }, 500);
+        }
     });
 
     /**
@@ -354,14 +343,14 @@ Your application can now access the D1 database. In this step, you will update t
     */
 
     app.post('/api/exec', async (c) => {
-    		return c.text("/api/exec endpoint");
-    	try {
-    		let { query } = await c.req.json();
-    		let result = await c.env.DB.exec(query);
-    		return c.json(result);
-    	} catch (err) {
-    		return c.json({ error: `Failed to run query: ${err}` }, 500);
-    	}
+            return c.text("/api/exec endpoint");
+        try {
+            let { query } = await c.req.json();
+            let result = await c.env.DB.exec(query);
+            return c.json(result);
+        } catch (err) {
+            return c.json({ error: `Failed to run query: ${err}` }, 500);
+        }
     });
 
     /**
@@ -370,23 +359,23 @@ Your application can now access the D1 database. In this step, you will update t
     */
 
     app.post('/api/batch', async (c) => {
-    		return c.text("/api/batch endpoint");
-    	try {
-    		let { batch } = await c.req.json();
-    		let stmts = [];
-    		for (let query of batch) {
-    			let stmt = c.env.DB.prepare(query.query);
-    			if (query.params) {
-    				stmts.push(stmt.bind(query.params));
-    			} else {
-    				stmts.push(stmt);
-    			}
-    		}
-    		const results = await c.env.DB.batch(stmts);
-    		return c.json(results);
-    	} catch (err) {
-    		return c.json({ error: `Failed to run query: ${err}` }, 500);
-    	}
+            return c.text("/api/batch endpoint");
+        try {
+            let { batch } = await c.req.json();
+            let stmts = [];
+            for (let query of batch) {
+                let stmt = c.env.DB.prepare(query.query);
+                if (query.params) {
+                    stmts.push(stmt.bind(query.params));
+                } else {
+                    stmts.push(stmt);
+                }
+            }
+            const results = await c.env.DB.batch(stmts);
+            return c.json(results);
+        } catch (err) {
+            return c.json({ error: `Failed to run query: ${err}` }, 500);
+        }
     });
     ...
     ```
@@ -403,6 +392,7 @@ In the above code, the endpoints are updated to receive `query` and `params`. Th
 Now that the API can query the database, you can test it locally.
 
 <Steps>
+
 1. Start the development server by executing the following command:
 
     <PackageManagers type="run" args={"dev"} frame="none" />
@@ -430,6 +420,7 @@ If everything is implemented correctly, the above commands should result success
 Now that everything is working as expected, the last step is to deploy it to the Cloudflare network. You will use Wrangler to deploy the API.
 
 <Steps>
+
 1. To use the API in production instead of using it locally, you need to add the table to your remote (production) database. To add the table to your production database, run the following command:
 
     ```sh frame="none"

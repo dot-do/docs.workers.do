@@ -22,25 +22,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import { Render, Steps, PackageManagers, DashButton } from "~/components";
@@ -74,6 +56,7 @@ To create the table, follow these steps:
 1. In the Cloudflare dashboard, go to the **D1** page.
 
    <DashButton url="/?to=/:account/workers/d1" />
+
 2. Select **Create database**.
 3. Name your database. For this tutorial, name your D1 database `d1-import-tutorial`.
 4. (Optional) Provide a location hint. Location hint is an optional parameter you can provide to indicate your desired geographical location for your database. Refer to [Provide a location hint](/d1/configuration/data-location/#provide-a-location-hint) for more information.
@@ -132,8 +115,8 @@ To create the table, follow these steps:
    const filename = crypto.randomUUID(); // create a random filename
    const uploadSize = 500;
    const headers = {
-   	"Content-Type": "application/json",
-   	Authorization: `Bearer ${D1_API_KEY}`,
+       "Content-Type": "application/json",
+       Authorization: `Bearer ${D1_API_KEY}`,
    };
    ```
 
@@ -159,9 +142,9 @@ This tutorial generates example data to demonstrate the import process.
 
    // Generate Fake data
    const data = Array.from({ length: uploadSize }, () => ({
-   	id: Math.floor(Math.random() * 1000000),
-   	text: faker.lorem.paragraph(),
-   	date_added: new Date().toISOString().slice(0, 19).replace("T", " "),
+       id: Math.floor(Math.random() * 1000000),
+       text: faker.lorem.paragraph(),
+       date_added: new Date().toISOString().slice(0, 19).replace("T", " "),
    }));
    ```
 
@@ -175,25 +158,25 @@ This tutorial generates example data to demonstrate the import process.
 
    ```js title="index.js"
    function makeSqlInsert(data, tableName, skipCols = []) {
-   	const columns = Object.keys(data[0]).join(",");
-   	const values = data
-   		.map((row) => {
-   			return (
-   				"(" +
-   				Object.values(row)
-   					.map((val) => {
-   						if (skipCols.includes(val) || val === null || val === "") {
-   							return "NULL";
-   						}
-   						return `'${String(val).replace(/'/g, "").replace(/"/g, "'")}'`;
-   					})
-   					.join(",") +
-   				")"
-   			);
-   		})
-   		.join(",");
+       const columns = Object.keys(data[0]).join(",");
+       const values = data
+           .map((row) => {
+               return (
+                   "(" +
+                   Object.values(row)
+                       .map((val) => {
+                           if (skipCols.includes(val) || val === null || val === "") {
+                               return "NULL";
+                           }
+                           return `'${String(val).replace(/'/g, "").replace(/"/g, "'")}'`;
+                       })
+                       .join(",") +
+                   ")"
+               );
+           })
+           .join(",");
 
-   	return `INSERT INTO ${tableName} (${columns}) VALUES ${values};`;
+       return `INSERT INTO ${tableName} (${columns}) VALUES ${values};`;
    }
    ```
 
@@ -214,58 +197,58 @@ The import process consists of four steps:
 
    ```js title="index.js"
    async function uploadToD1() {
-   	// 1. Init upload
-   	const hashStr = crypto.createHash("md5").update(sqlInsert).digest("hex");
+       // 1. Init upload
+       const hashStr = crypto.createHash("md5").update(sqlInsert).digest("hex");
 
-   	try {
-   		const initResponse = await fetch(D1_URL, {
-   			method: "POST",
-   			headers,
-   			body: JSON.stringify({
-   				action: "init",
-   				etag: hashStr,
-   			}),
-   		});
+       try {
+           const initResponse = await fetch(D1_URL, {
+               method: "POST",
+               headers,
+               body: JSON.stringify({
+                   action: "init",
+                   etag: hashStr,
+               }),
+           });
 
-   		const uploadData = await initResponse.json();
-   		const uploadUrl = uploadData.result.upload_url;
-   		const filename = uploadData.result.filename;
+           const uploadData = await initResponse.json();
+           const uploadUrl = uploadData.result.upload_url;
+           const filename = uploadData.result.filename;
 
-   		// 2. Upload to R2
-   		const r2Response = await fetch(uploadUrl, {
-   			method: "PUT",
-   			body: sqlInsert,
-   		});
+           // 2. Upload to R2
+           const r2Response = await fetch(uploadUrl, {
+               method: "PUT",
+               body: sqlInsert,
+           });
 
-   		const r2Etag = r2Response.headers.get("ETag").replace(/"/g, "");
+           const r2Etag = r2Response.headers.get("ETag").replace(/"/g, "");
 
-   		// Verify etag
-   		if (r2Etag !== hashStr) {
-   			throw new Error("ETag mismatch");
-   		}
+           // Verify etag
+           if (r2Etag !== hashStr) {
+               throw new Error("ETag mismatch");
+           }
 
-   		// 3. Start ingestion
-   		const ingestResponse = await fetch(D1_URL, {
-   			method: "POST",
-   			headers,
-   			body: JSON.stringify({
-   				action: "ingest",
-   				etag: hashStr,
-   				filename,
-   			}),
-   		});
+           // 3. Start ingestion
+           const ingestResponse = await fetch(D1_URL, {
+               method: "POST",
+               headers,
+               body: JSON.stringify({
+                   action: "ingest",
+                   etag: hashStr,
+                   filename,
+               }),
+           });
 
-   		const ingestData = await ingestResponse.json();
-   		console.log("Ingestion Response:", ingestData);
+           const ingestData = await ingestResponse.json();
+           console.log("Ingestion Response:", ingestData);
 
-   		// 4. Polling
-   		await pollImport(ingestData.result.at_bookmark);
+           // 4. Polling
+           await pollImport(ingestData.result.at_bookmark);
 
-   		return "Import completed successfully";
-   	} catch (e) {
-   		console.error("Error:", e);
-   		return "Import failed";
-   	}
+           return "Import completed successfully";
+       } catch (e) {
+           console.error("Error:", e);
+           return "Import failed";
+       }
    }
    ```
 
@@ -282,32 +265,32 @@ The import process consists of four steps:
 
    ```js title="index.js"
    async function pollImport(bookmark) {
-   	const payload = {
-   		action: "poll",
-   		current_bookmark: bookmark,
-   	};
+       const payload = {
+           action: "poll",
+           current_bookmark: bookmark,
+       };
 
-   	while (true) {
-   		const pollResponse = await fetch(D1_URL, {
-   			method: "POST",
-   			headers,
-   			body: JSON.stringify(payload),
-   		});
+       while (true) {
+           const pollResponse = await fetch(D1_URL, {
+               method: "POST",
+               headers,
+               body: JSON.stringify(payload),
+           });
 
-   		const result = await pollResponse.json();
-   		console.log("Poll Response:", result.result);
+           const result = await pollResponse.json();
+           console.log("Poll Response:", result.result);
 
-   		const { success, error } = result.result;
+           const { success, error } = result.result;
 
-   		if (
-   			success ||
-   			(!success && error === "Not currently importing anything.")
-   		) {
-   			break;
-   		}
+           if (
+               success ||
+               (!success && error === "Not currently importing anything.")
+           ) {
+               break;
+           }
 
-   		await new Promise((resolve) => setTimeout(resolve, 1000));
-   	}
+           await new Promise((resolve) => setTimeout(resolve, 1000));
+       }
    }
    ```
 
@@ -320,8 +303,8 @@ The import process consists of four steps:
 
    ```js title="index.js"
    async function runImport() {
-   	const result = await uploadToD1();
-   	console.log(result);
+       const result = await uploadToD1();
+       console.log(result);
    }
 
    runImport();
@@ -348,130 +331,130 @@ In the previous steps, you have created functions to execute various processes i
    const D1_URL = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/d1/database/${DATABASE_ID}/import`;
    const uploadSize = 500;
    const headers = {
-   	"Content-Type": "application/json",
-   	Authorization: `Bearer ${D1_API_KEY}`,
+       "Content-Type": "application/json",
+       Authorization: `Bearer ${D1_API_KEY}`,
    };
 
    // Generate Fake data
    const data = Array.from({ length: uploadSize }, () => ({
-   	id: Math.floor(Math.random() * 1000000),
-   	text: faker.lorem.paragraph(),
-   	date_added: new Date().toISOString().slice(0, 19).replace("T", " "),
+       id: Math.floor(Math.random() * 1000000),
+       text: faker.lorem.paragraph(),
+       date_added: new Date().toISOString().slice(0, 19).replace("T", " "),
    }));
 
    // Make SQL insert statements
    function makeSqlInsert(data, tableName, skipCols = []) {
-   	const columns = Object.keys(data[0]).join(",");
-   	const values = data
-   		.map((row) => {
-   			return (
-   				"(" +
-   				Object.values(row)
-   					.map((val) => {
-   						if (skipCols.includes(val) || val === null || val === "") {
-   							return "NULL";
-   						}
-   						return `'${String(val).replace(/'/g, "").replace(/"/g, "'")}'`;
-   					})
-   					.join(",") +
-   				")"
-   			);
-   		})
-   		.join(",");
+       const columns = Object.keys(data[0]).join(",");
+       const values = data
+           .map((row) => {
+               return (
+                   "(" +
+                   Object.values(row)
+                       .map((val) => {
+                           if (skipCols.includes(val) || val === null || val === "") {
+                               return "NULL";
+                           }
+                           return `'${String(val).replace(/'/g, "").replace(/"/g, "'")}'`;
+                       })
+                       .join(",") +
+                   ")"
+               );
+           })
+           .join(",");
 
-   	return `INSERT INTO ${tableName} (${columns}) VALUES ${values};`;
+       return `INSERT INTO ${tableName} (${columns}) VALUES ${values};`;
    }
 
    const sqlInsert = makeSqlInsert(data, TARGET_TABLE);
 
    async function pollImport(bookmark) {
-   	const payload = {
-   		action: "poll",
-   		current_bookmark: bookmark,
-   	};
+       const payload = {
+           action: "poll",
+           current_bookmark: bookmark,
+       };
 
-   	while (true) {
-   		const pollResponse = await fetch(D1_URL, {
-   			method: "POST",
-   			headers,
-   			body: JSON.stringify(payload),
-   		});
+       while (true) {
+           const pollResponse = await fetch(D1_URL, {
+               method: "POST",
+               headers,
+               body: JSON.stringify(payload),
+           });
 
-   		const result = await pollResponse.json();
-   		console.log("Poll Response:", result.result);
+           const result = await pollResponse.json();
+           console.log("Poll Response:", result.result);
 
-   		const { success, error } = result.result;
+           const { success, error } = result.result;
 
-   		if (
-   			success ||
-   			(!success && error === "Not currently importing anything.")
-   		) {
-   			break;
-   		}
+           if (
+               success ||
+               (!success && error === "Not currently importing anything.")
+           ) {
+               break;
+           }
 
-   		await new Promise((resolve) => setTimeout(resolve, 1000));
-   	}
+           await new Promise((resolve) => setTimeout(resolve, 1000));
+       }
    }
 
    // Upload to D1
    async function uploadToD1() {
-   	// 1. Init upload
-   	const hashStr = crypto.createHash("md5").update(sqlInsert).digest("hex");
+       // 1. Init upload
+       const hashStr = crypto.createHash("md5").update(sqlInsert).digest("hex");
 
-   	try {
-   		const initResponse = await fetch(D1_URL, {
-   			method: "POST",
-   			headers,
-   			body: JSON.stringify({
-   				action: "init",
-   				etag: hashStr,
-   			}),
-   		});
+       try {
+           const initResponse = await fetch(D1_URL, {
+               method: "POST",
+               headers,
+               body: JSON.stringify({
+                   action: "init",
+                   etag: hashStr,
+               }),
+           });
 
-   		const uploadData = await initResponse.json();
-   		const uploadUrl = uploadData.result.upload_url;
-   		const filename = uploadData.result.filename;
+           const uploadData = await initResponse.json();
+           const uploadUrl = uploadData.result.upload_url;
+           const filename = uploadData.result.filename;
 
-   		// 2. Upload to R2
-   		const r2Response = await fetch(uploadUrl, {
-   			method: "PUT",
-   			body: sqlInsert,
-   		});
+           // 2. Upload to R2
+           const r2Response = await fetch(uploadUrl, {
+               method: "PUT",
+               body: sqlInsert,
+           });
 
-   		const r2Etag = r2Response.headers.get("ETag").replace(/"/g, "");
+           const r2Etag = r2Response.headers.get("ETag").replace(/"/g, "");
 
-   		// Verify etag
-   		if (r2Etag !== hashStr) {
-   			throw new Error("ETag mismatch");
-   		}
+           // Verify etag
+           if (r2Etag !== hashStr) {
+               throw new Error("ETag mismatch");
+           }
 
-   		// 3. Start ingestion
-   		const ingestResponse = await fetch(D1_URL, {
-   			method: "POST",
-   			headers,
-   			body: JSON.stringify({
-   				action: "ingest",
-   				etag: hashStr,
-   				filename,
-   			}),
-   		});
+           // 3. Start ingestion
+           const ingestResponse = await fetch(D1_URL, {
+               method: "POST",
+               headers,
+               body: JSON.stringify({
+                   action: "ingest",
+                   etag: hashStr,
+                   filename,
+               }),
+           });
 
-   		const ingestData = await ingestResponse.json();
-   		console.log("Ingestion Response:", ingestData);
+           const ingestData = await ingestResponse.json();
+           console.log("Ingestion Response:", ingestData);
 
-   		// 4. Polling
-   		await pollImport(ingestData.result.at_bookmark);
+           // 4. Polling
+           await pollImport(ingestData.result.at_bookmark);
 
-   		return "Import completed successfully";
-   	} catch (e) {
-   		console.error("Error:", e);
-   		return "Import failed";
-   	}
+           return "Import completed successfully";
+       } catch (e) {
+           console.error("Error:", e);
+           return "Import failed";
+       }
    }
 
    async function runImport() {
-   	const result = await uploadToD1();
-   	console.log(result);
+       const result = await uploadToD1();
+       console.log(result);
    }
 
    runImport();

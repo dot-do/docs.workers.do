@@ -19,25 +19,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import {
@@ -67,17 +49,18 @@ This guide will instruct you through:
 <TabItem label='Wrangler CLI'>
 
 <Steps>
+
 1. If not already logged in, run:
 
-	```
-	npx wrangler login
-	```
+    ```
+    npx wrangler login
+    ```
 
 2. Create an R2 bucket:
 
-	```
-	npx wrangler r2 bucket create pipelines-tutorial
-	```
+    ```
+    npx wrangler r2 bucket create pipelines-tutorial
+    ```
 
 </Steps>
 
@@ -85,6 +68,7 @@ This guide will instruct you through:
 <TabItem label='Dashboard'>
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
    <DashButton url="/?to=/:account/r2/overview" />
 
@@ -93,6 +77,7 @@ This guide will instruct you through:
 3. Enter the bucket name: pipelines-tutorial
 
 4. Select **Create bucket**.
+
 </Steps>
 </TabItem>
 </Tabs>
@@ -114,6 +99,7 @@ When you run this command, take note of the "Warehouse" and "Catalog URI". You w
 <TabItem label='Dashboard'>
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
    <DashButton url="/?to=/:account/r2/overview" />
 
@@ -122,6 +108,7 @@ When you run this command, take note of the "Warehouse" and "Catalog URI". You w
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
 
 4. Once enabled, note the **Catalog URI** and **Warehouse name**.
+
 </Steps>
 </TabItem>
 </Tabs>
@@ -131,6 +118,7 @@ When you run this command, take note of the "Warehouse" and "Catalog URI". You w
 Pipelines must authenticate to R2 Data Catalog with an [R2 API token](/r2/api/tokens/) that has catalog and R2 permissions.
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
    <DashButton url="/?to=/:account/r2/overview" />
 
@@ -225,6 +213,7 @@ After setup completes, note the HTTP endpoint URL displayed in the final output.
 <TabItem label='Dashboard'>
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to **Pipelines** > **Pipelines**.
    <DashButton url="/?to=/:account/pipelines" />
 
@@ -288,6 +277,7 @@ After setup completes, note the HTTP endpoint URL displayed in the final output.
    - Select **Create Pipeline**
 
 8. After pipeline creation, note the **Stream ID** for the next step.
+
 </Steps>
 
 </TabItem>
@@ -326,6 +316,7 @@ Replace `{stream-id}` with your actual stream endpoint from the pipeline setup.
 ## 6. Validate data in your bucket
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
 2. Select your bucket: `pipelines-tutorial`.
@@ -333,6 +324,7 @@ Replace `{stream-id}` with your actual stream endpoint from the pipeline setup.
 3. You should see Iceberg metadata files and data files created by your pipeline. Note: If you aren't seeing any files in your bucket, try waiting a couple of minutes and trying again.
 
 4. The data is organized in the Apache Iceberg format with metadata tracking table versions.
+
 </Steps>
 
 ## 7. Query your data using R2 SQL

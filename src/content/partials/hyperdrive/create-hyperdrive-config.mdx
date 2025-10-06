@@ -8,29 +8,7 @@ This documentation has been adapted for the .do platform. Key differences:
 - Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
 - Commands use `mdxe` instead of `wrangler`
 - Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
-
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
-
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
+- The `$` runtime provides built-in primitives: ai, api, db, on, send, every
 - OAuth authentication is automatic via oauth.do
 :::
 
@@ -59,42 +37,49 @@ Most database providers will provide a connection string you can directly copy-a
 To create a Hyperdrive configuration with the Cloudflare dashboard:
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **Hyperdrive** page.
 
    <DashButton url="/?to=/:account/workers/hyperdrive" />
+
 2. Select **Create Configuration**.
 3. Fill out the form, including the connection string.
 4. Select **Create**.
+
 </Steps>
 
 </TabItem>
 <TabItem label="Wrangler CLI">
 
 To create a Hyperdrive configuration with the [Wrangler CLI](/workers/wrangler/install-and-update/):
+
 <Steps>
+
 1. Open your terminal and run the following command. Replace `<NAME_OF_HYPERDRIVE_CONFIG>` with a name for your Hyperdrive configuration and paste the connection string provided from your database host, or replace `user`, `password`, `HOSTNAME_OR_IP_ADDRESS`, `port`, and `database_name` placeholders with those specific to your database:
 
-	```sh
-	npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
-	```
+    ```sh
+    npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+    ```
 
 2. This command outputs a binding for the [Wrangler configuration file](/workers/wrangler/configuration/):
 
-	```yaml
----
-$type: Worker
-$id: hyperdrive-example
-name: hyperdrive-example
-main: src/index.ts
-compatibility_date: 2024-08-21
-compatibility_flags:
-  - nodejs_compat
-hyperdrive:
-  - binding: HYPERDRIVE
-    id: "id-of-the-created-hyperdrive-configuration"
----
-```
+    ```yaml
+    ---
+    $type: Worker
+    $id: hyperdrive-example
+    name: hyperdrive-example
+    main: src/index.ts
+    compatibility_date: 2024-08-21
+    compatibility_flags:
+      - nodejs_compat
+    hyperdrive:
+      - binding: HYPERDRIVE
+        id: "id-of-the-created-hyperdrive-configuration"
+    ---
+    ```
+
 </Steps>
+
 </TabItem>
 
 </Tabs>

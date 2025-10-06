@@ -19,25 +19,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import { Render, Steps } from "~/components";
@@ -54,6 +36,7 @@ You can connect Hyperdrive to any existing Fly database by:
 4. Obtain the connection string, which is used to connect the database to Hyperdrive.
 
 <Steps>
+
 1. Run the following command to [allocate a public IP address](https://fly.io/docs/postgres/connecting/connecting-external/#allocate-an-ip-address).
 
     ```txt

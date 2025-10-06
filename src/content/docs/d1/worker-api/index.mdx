@@ -17,25 +17,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import { DirectoryListing, Details, Steps } from "~/components";
@@ -185,25 +167,28 @@ export default {
 ### 3. Deploy the Worker
 
 <Steps>
+
 1. Navigate to your tutorial directory you created by following step 1.
 2. Run `npx wrangler deploy`.
-	```sh
-	pnpm --filter mdxe exec mdxe run worker.mdx --deploy
-	```
-	```sh output
-	⛅️ wrangler 3.112.0
-	--------------------
+    ```sh
+    pnpm --filter mdxe exec mdxe run worker.mdx --deploy
+    ```
+    ```sh output
+    ⛅️ wrangler 3.112.0
+    --------------------
 
-	Total Upload: 1.90 KiB / gzip: 0.59 KiB
-	Your worker has access to the following bindings:
-	- D1 Databases:
-		- DB: DATABASE_NAME (<DATABASE_ID>)
-	Uploaded WORKER_NAME (7.01 sec)
-	Deployed WORKER_NAME triggers (1.25 sec)
-		https://jun-d1-rr.d1-sandbox.workers.dev
-	Current Version ID: VERSION_ID
-	```
+    Total Upload: 1.90 KiB / gzip: 0.59 KiB
+    Your worker has access to the following bindings:
+    - D1 Databases:
+        - DB: DATABASE_NAME (<DATABASE_ID>)
+    Uploaded WORKER_NAME (7.01 sec)
+    Deployed WORKER_NAME triggers (1.25 sec)
+        https://jun-d1-rr.d1-sandbox.workers.dev
+    Current Version ID: VERSION_ID
+    ```
+
 3. Open a browser at the specified address.
+
 </Steps>
 
 ### 4. Test the APIs

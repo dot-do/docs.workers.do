@@ -15,6 +15,7 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
 ## Client-side integration
 
 <Steps>
+
   1. Update the client-side integration by inserting the Turnstile script snippet in your HTML's `<head>` element:
 
       ```html title="Turnstile script snippet"
@@ -32,6 +33,7 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
           sitekey: "1x00000000000000000000AA"
       })
       ```
+
 </Steps>
 
 :::note
@@ -45,6 +47,7 @@ Turnstile supports:
 ## Server-side integration
 
 <Steps>
+
   1. Update the server-side integration by replacing the Siteverify URL. 
     
       Replace: `https://hcaptcha.com/siteverify` with the following:
@@ -57,4 +60,5 @@ Turnstile supports:
       ```txt
       cf-turnstile-response
       ```
+
 </Steps>

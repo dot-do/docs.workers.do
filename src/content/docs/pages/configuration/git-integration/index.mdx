@@ -53,6 +53,7 @@ This can be useful for managing repository access or troubleshooting installatio
 If you are using a Git-integrated project and do not want to trigger deployments every time you push a commit, you can use [branch control](/pages/configuration/branch-build-controls/) to disable/pause builds:
 
 <Steps>
+
 1. Go to **Workers & Pages** in the Cloudflare dashboard.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
@@ -60,6 +61,7 @@ If you are using a Git-integrated project and do not want to trigger deployments
 2. Select your Pages project.
 3. Navigate to **Build** > edit **Branch control** > turn off **Enable automatic production branch deployments**.
 4. You can also change your Preview branch to **None (Disable automatic branch deployments)** to pause automatic preview deployments.
+
 </Steps>
 
 Then, you can use Wrangler to deploy directly to your Pages project and make changes to your Git repository without automatically triggering a build.

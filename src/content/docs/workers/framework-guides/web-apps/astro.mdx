@@ -19,36 +19,9 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
-
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import {
@@ -89,11 +62,12 @@ Astro is also framework-agnostic, and supports every major UI framework, includi
 ## Deploy a new Astro project on Workers
 
 <Steps>
+
 1. **Create a new project with the create-cloudflare CLI (C3).**
     <PackageManagers
-    	type="create"
-    	pkg="cloudflare@latest"
-    	args="my-astro-app --framework=astro"
+        type="create"
+        pkg="cloudflare@latest"
+        args="my-astro-app --framework=astro"
     />
 
      <Details header="What's happening behind the scenes?">
@@ -113,7 +87,8 @@ Astro is also framework-agnostic, and supports every major UI framework, includi
 
         <PackageManagers type="run" args="deploy" />
 
-  </Steps>
+  
+</Steps>
 
 ## Deploy an existing Astro project on Workers
 
@@ -122,32 +97,33 @@ Astro is also framework-agnostic, and supports every major UI framework, includi
 If your Astro project is entirely pre-rendered, follow these steps:
 
 <Steps>
+
 1.  **Add a Wrangler configuration file**
 
     In your project root, create a Wrangler configuration file with the following content:
 
     ```json
     {
-    	"name": "my-astro-app",
-    	"compatibility_date": "$today",
-    	"assets": {
-    		"directory": "./dist"
-    	}
+        "name": "my-astro-app",
+        "compatibility_date": "$today",
+        "assets": {
+            "directory": "./dist"
+        }
     }
     ```
     <Details header="What's this configuration doing?">
-    	The key part of this config is the `assets` field, which tells Wrangler where to find your static assets. In this case, we're telling Wrangler to look in the `./dist` directory. If your assets are in a different directory, update the `directory` value accordingly.
-    		Read about other [asset configuration options](/workers/wrangler/configuration/#assets).
+        The key part of this config is the `assets` field, which tells Wrangler where to find your static assets. In this case, we're telling Wrangler to look in the `./dist` directory. If your assets are in a different directory, update the `directory` value accordingly.
+            Read about other [asset configuration options](/workers/wrangler/configuration/#assets).
 
-    			Also note how there's no `main` field in this config - this is because you're only serving static assets, so no Worker code is needed for on demand rendering/SSR.
+                Also note how there's no `main` field in this config - this is because you're only serving static assets, so no Worker code is needed for on demand rendering/SSR.
     </Details>
 
 2.  **Build and deploy your project**
 
-        		You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
+                You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
 
-        		<PackageManagers type="exec" pkg="astro" args="build" />
-        		<PackageManagers type="exec" pkg="wrangler@latest" args="deploy" />
+                <PackageManagers type="exec" pkg="astro" args="build" />
+                <PackageManagers type="exec" pkg="wrangler@latest" args="deploy" />
 
 </Steps>
 
@@ -156,16 +132,17 @@ If your Astro project is entirely pre-rendered, follow these steps:
 If your Astro project uses [on demand rendering (also known as SSR)](https://docs.astro.build/en/guides/on-demand-rendering/), follow these steps:
 
 <Steps>
-1. **Install the Astro Cloudflare adapter**
-		<PackageManagers
-			type="exec"
-			pkg="astro"
-			args="add cloudflare"
-		/>
 
-    	<Details header="What's happening behind the scenes?">
-    		This command installs the Cloudflare adapter and makes the appropriate changes to your `astro.config.mjs` file in one step. By default, this sets the build output configuration to `output: 'server'`, which server renders all your pages by default. If there are certain pages that *don't* need on demand rendering/SSR, for example static pages like a privacy policy, you should set `export const prerender = true` for that page or route to pre-render it. You can read more about the adapter configuration options [in the Astro docs](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#options).
-    	</Details>
+1. **Install the Astro Cloudflare adapter**
+        <PackageManagers
+            type="exec"
+            pkg="astro"
+            args="add cloudflare"
+        />
+
+        <Details header="What's happening behind the scenes?">
+            This command installs the Cloudflare adapter and makes the appropriate changes to your `astro.config.mjs` file in one step. By default, this sets the build output configuration to `output: 'server'`, which server renders all your pages by default. If there are certain pages that *don't* need on demand rendering/SSR, for example static pages like a privacy policy, you should set `export const prerender = true` for that page or route to pre-render it. You can read more about the adapter configuration options [in the Astro docs](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#options).
+        </Details>
 
 2.  **Add a `.assetsignore` file**
     Create a `.assetsignore` file in your `public/` folder, and add the following lines to it:
@@ -181,34 +158,34 @@ If your Astro project uses [on demand rendering (also known as SSR)](https://doc
 
         ```json
         {
-        	"name": "my-astro-app",
-        	"main": "./dist/_worker.js/index.js",
-        	// Update to today's date
-        	"compatibility_date": "2025-03-25",
-        	"compatibility_flags": ["nodejs_compat"],
-        	"assets": {
-        		"binding": "ASSETS",
-        		"directory": "./dist"
-        	},
-        	"observability": {
-        		"enabled": true
-        	}
+            "name": "my-astro-app",
+            "main": "./dist/_worker.js/index.js",
+            // Update to today's date
+            "compatibility_date": "2025-03-25",
+            "compatibility_flags": ["nodejs_compat"],
+            "assets": {
+                "binding": "ASSETS",
+                "directory": "./dist"
+            },
+            "observability": {
+                "enabled": true
+            }
         }
         ```
         <Details header="What's this configuration doing?">
-        	The key parts of this config are:
-        	- `main` points to the entry point of your Worker script. This is generated by the Astro adapter, and is what powers your server-rendered pages.
-        	- `assets.directory` tells Wrangler where to find your static assets. In this case, we're telling Wrangler to look in the `./dist` directory. If your assets are in a different directory, update the `directory` value accordingly.
+            The key parts of this config are:
+            - `main` points to the entry point of your Worker script. This is generated by the Astro adapter, and is what powers your server-rendered pages.
+            - `assets.directory` tells Wrangler where to find your static assets. In this case, we're telling Wrangler to look in the `./dist` directory. If your assets are in a different directory, update the `directory` value accordingly.
 
-        	Read more about [Wrangler configuration options](/workers/wrangler/configuration/) and [asset configuration options](/workers/wrangler/configuration/#assets).
+            Read more about [Wrangler configuration options](/workers/wrangler/configuration/) and [asset configuration options](/workers/wrangler/configuration/#assets).
         </Details>
 
 4.  **Build and deploy your project**
 
-        		You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
+                You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
 
-        		<PackageManagers type="exec" pkg="astro" args="build" />
-        		<PackageManagers type="exec" pkg="wrangler@latest" args="deploy" />
+                <PackageManagers type="exec" pkg="astro" args="build" />
+                <PackageManagers type="exec" pkg="wrangler@latest" args="deploy" />
 
 </Steps>
 

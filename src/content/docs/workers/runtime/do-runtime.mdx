@@ -20,25 +20,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 # The .do Runtime
@@ -60,16 +42,49 @@ export default {
       model: 'claude-3-5-sonnet-20241022'
     })
 
-    await $.send.email({
+    // ⚡ CapnWeb: Queue operation without await
+    $.send.email({
       to: user.email,
       subject: 'Welcome back!',
       body: response
     })
+    // Email queued and sent automatically - no waiting!
 
     return new Response(response)
   }
 }
 ```
+
+## ⚡ CapnWeb: Zero-Latency RPC
+
+**CRITICAL:** The `$` runtime uses **CapnWeb** which queues operations automatically. **Only `await` when you need to read the result!**
+
+```typescript
+// ❌ SLOW: Unnecessary awaits (3 round-trips = ~300ms)
+await $.db.users.insert({ name: 'Alice' })
+await $.db.users.insert({ name: 'Bob' })
+await $.send.email({ to: 'alice@example.com', subject: 'Welcome!' })
+
+// ✅ FAST: Queue operations (single RPC batch = ~100ms)
+$.db.users.insert({ name: 'Alice' })      // Queued
+$.db.users.insert({ name: 'Bob' })        // Queued
+$.send.email({ to: 'alice@example.com', subject: 'Welcome!' })  // Queued
+// All three sent as one batch!
+
+// Only await when you need to READ results
+const users = await $.db.users.find({ active: true })
+const text = await $.ai.generateText({ prompt: 'Hello' })
+```
+
+**Performance Impact:**
+- Without CapnWeb: 3 operations = 3 round-trips = ~300ms
+- With CapnWeb: 3 operations = 1 batch = ~100ms (3x faster!)
+
+**Key Benefits:**
+- 🚀 **Zero latency** - Operations return instantly (queued locally)
+- 📦 **Automatic batching** - Multiple calls = single RPC
+- 🔄 **Streaming results** - Get data as soon as available
+- ⚡ **Pipeline efficiency** - No round-trip overhead
 
 ## Runtime Primitives
 
@@ -230,9 +245,11 @@ $.on('user.created', async (user) => {
 
 Send emails, push notifications, WebSocket messages, and more.
 
+**⚡ CapnWeb:** Send operations queue automatically - no `await` needed!
+
 ```typescript
-// Email
-await $.send.email({
+// Email (queued - no await!)
+$.send.email({
   to: 'user@example.com',
   from: 'noreply@yourapp.com',
   subject: 'Welcome!',
@@ -240,39 +257,41 @@ await $.send.email({
   text: 'Hello!'
 })
 
-// Email with template
-await $.send.email({
+// Email with template (queued)
+$.send.email({
   to: user.email,
   template: 'welcome',
   data: { name: user.name }
 })
 
-// Bulk email
-await $.send.emails([
+// Bulk email (queued)
+$.send.emails([
   { to: 'alice@example.com', subject: 'Hi Alice' },
   { to: 'bob@example.com', subject: 'Hi Bob' }
 ])
 
-// WebSocket message
-await $.send.websocket({
+// WebSocket message (queued)
+$.send.websocket({
   connection: ws,
   message: { type: 'update', data: newData }
 })
 
-// Server-Sent Events
-await $.send.sse({
+// Server-Sent Events (queued)
+$.send.sse({
   channel: 'notifications',
   event: 'message',
   data: { text: 'New notification!' }
 })
 
-// Push notification
-await $.send.push({
+// Push notification (queued)
+$.send.push({
   subscription: userSubscription,
   title: 'New message',
   body: 'You have a new message',
   icon: '/icon.png'
 })
+
+// All six operations queued and sent as one batch - instant!
 ```
 
 ### `$.every` - Scheduled Tasks
@@ -408,7 +427,22 @@ export default {
 
 ## Best Practices
 
-**1. Use the $ runtime for everything:**
+**1. Only await when reading results (CapnWeb):**
+```typescript
+// ✅ Good - Queue write operations
+$.db.users.insert({ name: 'Alice' })
+$.send.email({ to: 'alice@example.com', subject: 'Welcome!' })
+
+// ✅ Good - Await read operations
+const users = await $.db.query('SELECT * FROM users')
+const text = await $.ai.generateText({ prompt: 'Hello' })
+
+// ❌ Avoid - Unnecessary awaits for writes
+await $.db.users.insert({ name: 'Alice' })
+await $.send.email({ to: 'alice@example.com', subject: 'Welcome!' })
+```
+
+**2. Use the $ runtime for everything:**
 ```typescript
 // ✅ Good - Use $ primitives
 const data = await $.db.query('SELECT ...')
@@ -417,18 +451,18 @@ const data = await $.db.query('SELECT ...')
 const response = await fetch('https://api.example.com/data')
 ```
 
-**2. Handle errors gracefully:**
+**3. Handle errors gracefully:**
 ```typescript
 // ✅ Good - Catch and handle
 try {
-  await $.send.email({ ... })
+  $.send.email({ ... })  // Note: No await needed
 } catch (error) {
   console.error('Email failed:', error)
   // Fallback logic
 }
 ```
 
-**3. Leverage automatic auth:**
+**4. Leverage automatic auth:**
 ```typescript
 // ✅ Good - Use $.user
 if (!$.user) {

@@ -7,6 +7,7 @@ import { Steps, Tabs, TabItem, DashButton } from "~/components"
 <Tabs syncKey="dashNewNav"> 
    <TabItem label="Old dashboard">
       <Steps>
+
          1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
          2. Go to **Security** > **API Shield**.
          3. Select **Settings**.
@@ -19,10 +20,12 @@ import { Steps, Tabs, TabItem, DashButton } from "~/components"
             :::
          6. Enter the name of the session identifier.
          7. Select **Save**.
-      </Steps>
+      
+</Steps>
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
+
          1. In the Cloudflare dashboard, go to the **Security Settings** page.
 
             <DashButton url="/?to=/:account/:zone/security/settings" />
@@ -37,7 +40,8 @@ import { Steps, Tabs, TabItem, DashButton } from "~/components"
             :::
          6. Enter the name of the session identifier.
          7. Select **Save**.
-      </Steps>
+      
+</Steps>
    </TabItem>
 </Tabs>
 

@@ -17,36 +17,9 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
-
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import {
@@ -83,31 +56,32 @@ Docusaurus is designed to be easy to use and customizable, making it a popular c
 ## Deploy a new Docusaurus project on Workers
 
 <Steps>
+
 1. **Create a new project with the create-cloudflare CLI (C3).**
-	 <PackageManagers
-	 	type="create"
-	 	pkg="cloudflare@latest"
-	 	args={"my-docusaurus-app -- --framework=docusaurus --platform=workers"}
-	 />
+     <PackageManagers
+         type="create"
+         pkg="cloudflare@latest"
+         args={"my-docusaurus-app -- --framework=docusaurus --platform=workers"}
+     />
 
-	 <Details header="What's happening behind the scenes?">
-	 When you run this command, C3 creates a new project directory, initiates [Docusaurus' official setup tool](https://docusaurus.io/docs/installation), and configures the project for Cloudflare. It then offers the option to instantly deploy your application to Cloudflare.
+     <Details header="What's happening behind the scenes?">
+     When you run this command, C3 creates a new project directory, initiates [Docusaurus' official setup tool](https://docusaurus.io/docs/installation), and configures the project for Cloudflare. It then offers the option to instantly deploy your application to Cloudflare.
 
-	 </Details>
+     </Details>
 
 2.  **Develop locally.**
 
-		After creating your project, run the following command in your project directory to start a local development server.
+        After creating your project, run the following command in your project directory to start a local development server.
 
-		<PackageManagers type="run" args={"dev"} />
+        <PackageManagers type="run" args={"dev"} />
 
 3. **Deploy your project.**
 
-		Your project can be deployed to a [*.workers.dev subdomain](/workers/configuration/routing/workers-dev/) or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your local machine or any CI/CD system, (including [Workers Builds](/workers/ci-cd/#workers-builds/)).
+        Your project can be deployed to a [*.workers.dev subdomain](/workers/configuration/routing/workers-dev/) or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your local machine or any CI/CD system, (including [Workers Builds](/workers/ci-cd/#workers-builds/)).
 
-		Use the following command to build and deploy your project. If you're using a CI service, be sure to update your "deploy command" accordingly.
+        Use the following command to build and deploy your project. If you're using a CI service, be sure to update your "deploy command" accordingly.
 
-		<PackageManagers type="run" args={"deploy"} />
+        <PackageManagers type="run" args={"deploy"} />
 
 </Steps>
 
@@ -119,33 +93,34 @@ If your Docusaurus project is entirely pre-rendered (which it usually is), follo
 
 
 <Steps>
+
 1.  **Add a Wrangler configuration file.**
 
     In your project root, create a Wrangler configuration file with the following content:
 
     ```json
-		{
-			"name": "my-docusaurus-app",
-			// Update to today's date
-			"compatibility_date": "2025-03-25",
-			"assets": {
-				"directory": "./build"
-			}
-		}
+        {
+            "name": "my-docusaurus-app",
+            // Update to today's date
+            "compatibility_date": "2025-03-25",
+            "assets": {
+                "directory": "./build"
+            }
+        }
     ```
     <Details header="What's this configuration doing?">
-    	The key part of this config is the `assets` field, which tells Wrangler where to find your static assets. In this case, we're telling Wrangler to look in the `./build` directory. If your assets are in a different directory, update the `directory` value accordingly.
-    		Refer to other [asset configuration options](/workers/static-assets/routing/).
+        The key part of this config is the `assets` field, which tells Wrangler where to find your static assets. In this case, we're telling Wrangler to look in the `./build` directory. If your assets are in a different directory, update the `directory` value accordingly.
+            Refer to other [asset configuration options](/workers/static-assets/routing/).
 
-    			Also note how there's no `main` field in this config - this is because you're only serving static assets, so no Worker code is needed for on demand rendering/SSR.
+                Also note how there's no `main` field in this config - this is because you're only serving static assets, so no Worker code is needed for on demand rendering/SSR.
     </Details>
 
 2.  **Build and deploy your project.**
 
-        		You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
+                You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
 
-        		<PackageManagers type="exec" pkg="docusaurus" args="build" />
-        		<PackageManagers type="exec" pkg="wrangler@latest" args="deploy" />
+                <PackageManagers type="exec" pkg="docusaurus" args="build" />
+                <PackageManagers type="exec" pkg="wrangler@latest" args="deploy" />
 
 </Steps>
 

@@ -19,25 +19,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import { TabItem, Tabs, Render, Steps, Details } from "~/components";
@@ -104,6 +86,7 @@ The Cloudflare dashboard can automatically create and configure the underlying [
 Create a Hyperdrive configuration in the Cloudflare dashboard to automatically configure Hyperdrive to connect to your Cloudflare Tunnel.
 
 <Steps>
+
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/hyperdrive), navigate to **Storage & Databases > Hyperdrive** and click **Create configuration**.
 2. Select **Private database**.
 3. In the **Networking details** section, select the tunnel you are connecting to.
@@ -111,6 +94,7 @@ Create a Hyperdrive configuration in the Cloudflare dashboard to automatically c
 5. In the **Access Service Authentication Token** section, select **Create new (automatic)**.
 6. In the **Access Application** section, select **Create new (automatic)**.
 7. In the **Database connection details** section, enter the database **name**, **user**, and **password**.
+
 </Steps>
 </Details>
 
@@ -120,6 +104,7 @@ Create a Hyperdrive configuration in the Cloudflare dashboard to automatically c
 The service token will be used to restrict requests to the tunnel, and is needed for the next step.
 
 <Steps>
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service auth** > **Service Tokens**.
 
 2. Select **Create Service Token**.
@@ -135,6 +120,7 @@ The service token will be used to restrict requests to the tunnel, and is needed
    :::caution
    This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must regenerate the service token.
    :::
+
 </Steps>
 
 ### 2.2. (Manual) Create an Access application to secure the tunnel
@@ -142,6 +128,7 @@ The service token will be used to restrict requests to the tunnel, and is needed
 [Cloudflare Access](/cloudflare-one/policies/access/) will be used to verify that requests to the tunnel originate from Hyperdrive using the service token created above.
 
 <Steps>
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Select **Add an application**.
@@ -175,6 +162,7 @@ The service token will be used to restrict requests to the tunnel, and is needed
 16. Select **Next**.
 
 17. Save the application.
+
 </Steps>
 
 ### 2.3. (Manual) Create a Hyperdrive configuration

@@ -43,14 +43,17 @@ Detection tags are available in Security Analytics, but not in the Security Even
 <Tabs syncKey="dashNewNav"> 
 	<TabItem label="Old dashboard">
 		<Steps>
+
       1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
       2. Go to **Security** > **Bots**, apply filters and select **Create custom rule** to create a [custom rule](/waf/custom-rules/create-dashboard/) based on those filters. Alternatively, if you already created a custom rule, go to **Security** > **WAF** > **Custom rules** and edit the expression of an existing custom rule.
       3. Use the `cf.bot_management.detection_ids` field in the rule expression.
       4. Select **Save**.
-    </Steps>
+    
+</Steps>
   </TabItem> 
   <TabItem label="New dashboard" icon="rocket">
 		<Steps>
+
       1. In the Cloudflare dashboard, go to the **Security Analytics** page.
 
           <DashButton url="/?to=/:account/:zone/security/analytics" />
@@ -61,7 +64,8 @@ Detection tags are available in Security Analytics, but not in the Security Even
           <DashButton url="/?to=/:account/:zone/security/security-rules" />
       3. Use the `cf.bot_management.detection_ids` field in the rule expression.
       4. Select **Deploy**.
-      </Steps>
+      
+</Steps>
 	</TabItem> 
 </Tabs>
 
@@ -109,22 +113,26 @@ To access account takeover detections:
 <Tabs syncKey="dashNewNav"> 
 	<TabItem label="Old dashboard">
 		<Steps>
+
       1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
       2. Go to **Security** > **WAF**.
       3. Under **Custom Rules**, select **Create rule**.
       4. Fill out the form using **Bot Detection IDs** along with other necessary information.
       5. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
-    </Steps>
+    
+</Steps>
   </TabItem> 
   <TabItem label="New dashboard" icon="rocket">
 		<Steps>
+
       1. In the Cloudflare dashboard, go to the **Security rules** page.
 
           <DashButton url="/?to=/:account/:zone/security/security-rules" />
       2. Select **Create rule** and choose **Custom rule**.
       3. Fill out the form using **Bot Detection IDs** along with other necessary information.
       4. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
-      </Steps>
+      
+</Steps>
 	</TabItem> 
 </Tabs>
 
@@ -142,22 +150,26 @@ To use rate limiting rules with account takeover detections:
 <Tabs syncKey="dashNewNav"> 
 	<TabItem label="Old dashboard">
 		<Steps>
+
       1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
       2. Go to **Security** > **WAF**.
       3. Under **Rate limiting rules**, select **Create rule**.
       4. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
       5. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
-    </Steps>
+    
+</Steps>
   </TabItem> 
   <TabItem label="New dashboard" icon="rocket">
 		<Steps>
+
       1. In the Cloudflare dashboard, go to the **Security rules** page.
 
           <DashButton url="/?to=/:account/:zone/security/security-rules" />
       2. Select **Create rule** and choose **Rate limiting rule**.
       3. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
       4. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
-    </Steps>
+    
+</Steps>
   </TabItem> 
 </Tabs>
 
@@ -181,6 +193,7 @@ You can create or edit existing Logpush jobs to include the new Bot Detection ID
 <Tabs>
   <TabItem label="Dashboard">
     <Steps>
+
       1. In the Cloudflare dashboard, go to the **Logpush** page.
 
           <DashButton url="/?to=/:account/logs" />
@@ -190,7 +203,8 @@ You can create or edit existing Logpush jobs to include the new Bot Detection ID
       5. Select **BotDetectionIDs** under the General data field category.
       6. Prove the ownership.
       7. Select **Save**.
-    </Steps>
+    
+</Steps>
   </TabItem>
   <TabItem label="API">
     [Update your logpush job](/logs/logpush/logpush-job/log-output-options/) by adding `BotDetectionIDs` to the  `output_options:`  parameters.

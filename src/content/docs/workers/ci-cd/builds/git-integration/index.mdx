@@ -18,36 +18,9 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
-
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import { DashButton, Steps } from "~/components";
@@ -82,6 +55,7 @@ For details on providing access to organization accounts, see [GitHub organizati
 To manage your Git installation:
 
 <Steps>
+
 1. Go to the **Workers & Pages** page in the Cloudflare dashboard.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
@@ -89,6 +63,7 @@ To manage your Git installation:
 2. Select your Worker.
 3. Go to **Settings** > **Builds**.
 4. Under **Git Repository**, select **Manage**.
+
 </Steps>
 
 This can be useful for managing repository access or troubleshooting installation issues by reinstalling. For more details, see the [GitHub](/workers/ci-cd/builds/git-integration/github-integration) and [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration) guides for how to manage your installation.

@@ -10,20 +10,24 @@ import { Markdown, Tabs, TabItem, Steps, DashButton } from "~/components"
 <Tabs syncKey="dashNewNav">
     <TabItem label="Old dashboard">
         <Steps>
+
             1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and {props.one}.
             2. Go to **Security** > **DDoS**.
             3. Next to the DDoS override you wish to delete, select **Delete**.
             4. Select **Delete** to confirm the operation.
-        </Steps>
+        
+</Steps>
     </TabItem>
     <TabItem label="New dashboard" icon="rocket">
         <Steps>
+
         1. In the Cloudflare dashboard, go to the **Security rules** page.
 
             <DashButton url="/?to=/:account/:zone/security/security-rules" />
         2. Go to the **DDoS protection** tab.
         3. Select the override.
         4. Select **Delete deployment**.
-        </Steps>
+        
+</Steps>
     </TabItem>
 </Tabs>

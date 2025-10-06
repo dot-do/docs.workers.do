@@ -8,6 +8,7 @@ import { Steps, Tabs, TabItem, DashButton } from "~/components"
 <Tabs syncKey="dashNewNav">
     <TabItem label="Old dashboard">
         <Steps>
+
             1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
             2. Go to **Security** > **WAF** > **Custom rules**.
             3. To create a new empty rule, select **Create rule**.
@@ -24,10 +25,12 @@ import { Steps, Tabs, TabItem, DashButton } from "~/components"
             11. (Optional) If you selected the *Block* action, you can configure a custom response.
             12. Under **Place at**, select the order of when the rule will fire.
             13. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
-        </Steps>
+        
+</Steps>
     </TabItem>
     <TabItem label="New dashboard" icon="rocket">
         <Steps>
+
             1. In the Cloudflare dashboard, go to the **Security rules** page.
 
                 <DashButton url="/?to=/:account/:zone/security/security-rules" />
@@ -47,7 +50,8 @@ import { Steps, Tabs, TabItem, DashButton } from "~/components"
             12. (Optional) If you selected the *Block* action, you can configure a custom response.
             13. Under **Place at**, select the order of when the rule will fire.
             14. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
-        </Steps>
+        
+</Steps>
             :::note
             The fields in the custom rule are populated as a grouped sequence based on the values that you entered on Builder.
             :::

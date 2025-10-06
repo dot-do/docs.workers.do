@@ -20,25 +20,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import { Render, TabItem, Tabs, Steps } from "~/components";
@@ -95,23 +77,28 @@ Hyperdrive's origin connection limit should be lower than the Prisma Postgres co
 
 <TabItem label={"Dashboard"}>
 <Steps>
+
 1. From the [Cloudflare Hyperdrive dashboard](https://dash.cloudflare.com/?to=/:account/workers/hyperdrive), select your newly created Hyperdrive configuration.
 2. Go to **Settings**.
 3. In **Origin connection limit**, select **Edit Settings**, and set your maximum connections to a number that is lower than your Prisma connection limit.
+
 </Steps>
 </TabItem>
 <TabItem label={"Wrangler CLI"}>
 <Steps>
-1. Edit your existing Hyperdrive configuration with the `--origin-connection-limit` parameter:
-	```bash
-	npx wrangler hyperdrive update <HYPERDRIVE_ID> --origin-connection-limit=10
-	```
 
-	Replace `<HYPERDRIVE_ID>` with your Hyperdrive configuration ID and set the connection limit to a number that is less than your Prisma connection limit.
+1. Edit your existing Hyperdrive configuration with the `--origin-connection-limit` parameter:
+    ```bash
+    npx wrangler hyperdrive update <HYPERDRIVE_ID> --origin-connection-limit=10
+    ```
+
+    Replace `<HYPERDRIVE_ID>` with your Hyperdrive configuration ID and set the connection limit to a number that is less than your Prisma connection limit.
+
 2. Verify the configuration change:
-	```bash
-	npx wrangler hyperdrive get <HYPERDRIVE_ID>
-	```
+    ```bash
+    npx wrangler hyperdrive get <HYPERDRIVE_ID>
+    ```
+
 </Steps>
 </TabItem>
 </Tabs>

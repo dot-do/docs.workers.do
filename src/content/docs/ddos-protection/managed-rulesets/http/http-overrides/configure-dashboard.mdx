@@ -30,19 +30,23 @@ If you cannot deploy any additional overrides, consider editing an existing over
 
     {/* prettier-ignore */}
     	<Steps>
-    		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
-    		2. Go to **Security** > **DDoS**.
-    		3. Next to **HTTP DDoS attack protection**, select **Deploy a DDoS override**.
-    	</Steps>
+
+            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+            2. Go to **Security** > **DDoS**.
+            3. Next to **HTTP DDoS attack protection**, select **Deploy a DDoS override**.
+        
+</Steps>
     </TabItem>
     <TabItem label="New dashboard" icon="rocket">
     	<Steps>
-    		1. In the [Cloudflare dashboard, go to the **Security rules** page.
+
+            1. In the [Cloudflare dashboard, go to the **Security rules** page.
 
                 <DashButton url="/?to=/:account/:zone/security/security-rules" />
-    		2. Go to the **DDoS protection** tab.
-    		3. On **HTTP DDoS attack protection**, select **Create override**.
-    	</Steps>
+            2. Go to the **DDoS protection** tab.
+            3. On **HTTP DDoS attack protection**, select **Create override**.
+        
+</Steps>
     </TabItem>
 
 </Tabs>
@@ -51,10 +55,12 @@ If you cannot deploy any additional overrides, consider editing an existing over
 
 {/* prettier-ignore */}
 <Steps>
+
 1. Enter a descriptive name for the override in **Override name**.
 2. If you are an Enterprise customer with the Advanced DDoS Protection subscription:
     1. Under **Override scope**, review the scope of the override — by default, all incoming requests for the current zone.
     2. If necessary, select **Edit scope** and configure the [custom filter expression](/ddos-protection/managed-rulesets/http/http-overrides/override-expressions/) that will determine the override scope.
+
 3. Depending on what you wish to override, refer to the following sections (you can perform both configurations on the same override):
     <Details header="Configure all the rules in the ruleset (ruleset override)">
     4. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.

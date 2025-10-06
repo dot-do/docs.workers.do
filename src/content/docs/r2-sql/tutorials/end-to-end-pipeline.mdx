@@ -21,25 +21,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import {
@@ -77,6 +59,7 @@ You will need API tokens to interact with Cloudflare services.
 
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **API tokens** page.
 
    <DashButton url="/?to=/:account/api-tokens" />
@@ -130,6 +113,7 @@ Create an R2 bucket:
 <TabItem label='Dashboard'>
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
@@ -139,6 +123,7 @@ Create an R2 bucket:
 3. Enter the bucket name: `fraud-pipeline`
 
 4. Select **Create bucket**.
+
 </Steps>
 </TabItem>
 </Tabs>
@@ -158,6 +143,7 @@ When you run this command, take note of the "Warehouse" and "Catalog URI". You w
 <TabItem label='Dashboard'>
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
@@ -167,6 +153,7 @@ When you run this command, take note of the "Warehouse" and "Catalog URI". You w
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
 
 4. Once enabled, note the **Catalog URI** and **Warehouse name**.
+
 </Steps>
 </TabItem>
 </Tabs>
@@ -195,6 +182,7 @@ npx wrangler r2 bucket catalog compaction enable fraud-pipeline --token $WRANGLE
 <TabItem label='Dashboard'>
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
@@ -204,6 +192,7 @@ npx wrangler r2 bucket catalog compaction enable fraud-pipeline --token $WRANGLE
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, click on edit icon, and select **Enable**.
 
 4. You can choose a target file size or leave the default. Click save.
+
 </Steps>
 </TabItem>
 </Tabs>
@@ -315,6 +304,7 @@ npx wrangler pipelines create raw_events_pipeline \
 </TabItem>
 <TabItem label='Dashboard'>
 <Steps>
+
 1. In the Cloudflare dashboard, go to **Pipelines** > **Pipelines**.
 
    <DashButton url="/?to=/:account/pipelines" />
@@ -367,6 +357,7 @@ npx wrangler pipelines create raw_events_pipeline \
    - Select **Create Pipeline**
 
 8. After pipeline creation, note the **Stream ID** for the next step.
+
 </Steps>
 
 </TabItem>

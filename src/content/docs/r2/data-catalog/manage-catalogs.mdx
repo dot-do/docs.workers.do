@@ -18,25 +18,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import {
@@ -65,12 +47,15 @@ Enabling the catalog on a bucket turns on the REST catalog interface and provide
 <TabItem label='Dashboard'>
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
+
 2. Select the bucket you want to enable as a data catalog.
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
 4. Once enabled, note the **Catalog URI** and **Warehouse name**.
+
 </Steps>
 
 </TabItem>
@@ -93,11 +78,14 @@ When you disable the catalog on a bucket, it immediately stops serving requests 
 <Tabs syncKey='CLIvDash'>
 <TabItem label='Dashboard'>
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
+
 2. Select the bucket where you want to disable the data catalog.
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Disable**.
+
 </Steps>
 
 </TabItem>
@@ -116,14 +104,17 @@ Compaction improves query performance by combining the many small files created 
 <TabItem label='Dashboard'>
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
+
 2. Select the bucket you want to enable compaction on.
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and click on the **Edit** icon next to the compaction card.
 4. Enable compaction and optionally set a target file size. The default is 128 MB.
 5. (Optional) Provide a Cloudflare API token for compaction to access and rewrite files in your bucket.
 6. Select **Save**.
+
 </Steps>
 
 </TabItem>
@@ -151,13 +142,16 @@ Disabling compaction will prevent the process from running for all tables manage
 <TabItem label='Dashboard'>
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
+
 2. Select the bucket you want to enable compaction on.
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and click on the **edit** icon next to the compaction card.
 4. Disable compaction.
 5. Select **Save**.
+
 </Steps>
 
 </TabItem>

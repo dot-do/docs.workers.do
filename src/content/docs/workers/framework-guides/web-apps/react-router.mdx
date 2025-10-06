@@ -19,36 +19,9 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
-
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import {
@@ -89,9 +62,9 @@ It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide 
 1.  **Create a new project with the create-cloudflare CLI (C3)**
 
     <PackageManagers
-    	type="create"
-    	pkg="cloudflare@latest"
-    	args="my-react-router-app --framework=react-router"
+        type="create"
+        pkg="cloudflare@latest"
+        args="my-react-router-app --framework=react-router"
     />
 
     <Details header="How is this project set up?">
@@ -100,23 +73,23 @@ It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide 
 
         <FileTree>
         - my-react-router-app
-        		- app
-        				- routes
-        						- ...
-        				- entry.server.ts
-        				- root.tsx
-        				- routes.ts
-        	- workers
-        			- app.ts
-        	- react-router.config.ts
-        	- vite.config.ts
-        	- wrangler.jsonc
+                - app
+                        - routes
+                                - ...
+                        - entry.server.ts
+                        - root.tsx
+                        - routes.ts
+            - workers
+                    - app.ts
+            - react-router.config.ts
+            - vite.config.ts
+            - wrangler.jsonc
         </FileTree>
 
         `react-router.config.ts` is your [React Router config file](https://reactrouter.com/explanation/special-files#react-routerconfigts).
         In this file:
-        	- `ssr` is set to `true`, meaning that your application will use server-side rendering.
-        	- `future.unstable_viteEnvironmentApi` is set to `true` to enable compatibility with the [Cloudflare Vite plugin](/workers/vite-plugin/).
+            - `ssr` is set to `true`, meaning that your application will use server-side rendering.
+            - `future.unstable_viteEnvironmentApi` is set to `true` to enable compatibility with the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 
         `vite.config.ts` is your [Vite config file](https://vite.dev/config/).
@@ -125,10 +98,10 @@ It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide 
 
         `wrangler.jsonc` is your [Worker config file](/workers/wrangler/configuration/).
         In this file:
-        		- `main` points to `./workers/app.ts`.
-        				This is the entry file for your Worker.
-        					The default export includes a [`fetch` handler](/workers/runtime-apis/fetch/), which delegates the request to React Router.
-        		- If you want to add [bindings](/workers/runtime-apis/bindings/) to resources on Cloudflare's developer platform, you configure them here.
+                - `main` points to `./workers/app.ts`.
+                        This is the entry file for your Worker.
+                            The default export includes a [`fetch` handler](/workers/runtime-apis/fetch/), which delegates the request to React Router.
+                - If you want to add [bindings](/workers/runtime-apis/bindings/) to resources on Cloudflare's developer platform, you configure them here.
 
     </Details>
 
@@ -139,8 +112,8 @@ It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide 
         <PackageManagers type="run" args="dev" />
 
         <Details header="What's happening in local development?">
-        		This project uses React Router in combination with the [Cloudflare Vite plugin](/workers/vite-plugin/).
-        		This means that your application runs in the Cloudflare Workers runtime, just like in production, and enables access to local emulations of bindings.
+                This project uses React Router in combination with the [Cloudflare Vite plugin](/workers/vite-plugin/).
+                This means that your application runs in the Cloudflare Workers runtime, just like in production, and enables access to local emulations of bindings.
         </Details>
 
 3.  **Deploy your project**

@@ -17,25 +17,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import {
@@ -73,18 +55,19 @@ The most common migration performed is a new class migration, which informs the 
 To apply a Create migration:
 
 <Steps>
+
 1. Add the following lines to your `wrangler.toml / wrangler.json` file:
 
     ```yaml
----
-$type: Worker
-$id: worker
-migrations:
-  - tag: "v1"
-    new_sqlite_classes:
-      - <NewDurableObjectClass>
----
-```
+    ---
+    $type: Worker
+    $id: worker
+    migrations:
+      - tag: "v1"
+        new_sqlite_classes:
+          - "NewDurableObjectClass"
+    ---
+    ```
     The Create migration contains:
 
     - A `tag` to identify the migration.
@@ -146,20 +129,21 @@ Running a Delete migration will delete all Durable Objects associated with the d
 To apply a Delete migration:
 
 <Steps>
+
 1. Remove the binding for the class you wish to delete from the `wrangler.toml / wrangler.json` file.
 2. Remove references for the class you wish to delete from your Worker code.
 3. Add the following lines to your `wrangler.toml / wrangler.json` file.
 
     ```yaml
----
-$type: Worker
-$id: worker
-migrations:
-  - tag: "v2"
-    deleted_classes:
-      - <ClassToDelete>
----
-```
+    ---
+    $type: Worker
+    $id: worker
+    migrations:
+      - tag: "v2"
+        deleted_classes:
+          - "ClassToDelete"
+    ---
+    ```
     The Delete migration contains:
 
     - A `tag` to identify the migration.
@@ -191,30 +175,33 @@ Rename migrations are used to transfer stored Durable Objects between two Durabl
 To apply a Rename migration:
 
 <Steps>
+
 1. Update the previous class name to the new class name by editing your `wrangler.toml / wrangler.json` file in the following way:
 
-	```yaml
----
-$type: Worker
-$id: worker
-durable_objects:
-  bindings:
-    - name: "MY_DURABLE_OBJECT"
-      class_name: "UpdatedDurableObject"
-migrations:
-  - tag: "v3"
-    renamed_classes:
-      - from: "OldDurableObject"
-        to: "UpdatedDurableObject"
----
-```
+    ```yaml
+    ---
+    $type: Worker
+    $id: worker
+    durable_objects:
+      bindings:
+        - name: "MY_DURABLE_OBJECT"
+          class_name: "UpdatedDurableObject"
+    migrations:
+      - tag: "v3"
+        renamed_classes:
+          - from: "OldDurableObject"
+            to: "UpdatedDurableObject"
+    ---
+    ```
 
-	The Rename migration contains:
-	- A `tag` to identify the migration.
-	- The `renamed_classes` array, which contains objects with `from` and `to` properties.
-		- `from` property is the old Durable Object class name.
-		- `to` property is the renamed Durable Object class name.
+    The Rename migration contains:
+    - A `tag` to identify the migration.
+    - The `renamed_classes` array, which contains objects with `from` and `to` properties.
+        - `from` property is the old Durable Object class name.
+        - `to` property is the renamed Durable Object class name.
+
 2. Reference the new Durable Object class name in your Worker code.
+
 3. Deploy the Worker.
 
 </Steps>
@@ -254,32 +241,35 @@ Do not run a [Create migration](#create-migration) for the destination class bef
 To apply a Transfer migration:
 
 <Steps>
+
 1. Edit your `wrangler.toml / wrangler.json` file in the following way:
 
     ```yaml
----
-$type: Worker
-$id: worker
-durable_objects:
-  bindings:
-    - name: "MY_DURABLE_OBJECT"
-      class_name: "DestinationDurableObjectClass"
-migrations:
-  - tag: "v4"
-    transferred_classes:
-      - from: "SourceDurableObjectClass"
-        from_script: "SourceWorkerScript"
-        to: "DestinationDurableObjectClass"
----
-```
+    ---
+    $type: Worker
+    $id: worker
+    durable_objects:
+      bindings:
+        - name: "MY_DURABLE_OBJECT"
+          class_name: "DestinationDurableObjectClass"
+    migrations:
+      - tag: "v4"
+        transferred_classes:
+          - from: "SourceDurableObjectClass"
+            from_script: "SourceWorkerScript"
+            to: "DestinationDurableObjectClass"
+    ---
+    ```
+
     The Transfer migration contains:
     - A `tag` to identify the migration.
     - The `transferred_class` array, which contains objects with `from`, `from_script`, and `to` properties.
-      - `from` property is the name of the source Durable Object class.
-      - `from_script` property is the name of the source Worker script.
-      - `to` property is the name of the destination Durable Object class.
+        - `from` property is the name of the source Durable Object class.
+        - `from_script` property is the name of the source Worker script.
+        - `to` property is the name of the destination Durable Object class.
 
 2. Ensure you reference the name of the new, destination Durable Object class in your Worker code.
+
 3. Deploy the Worker.
 
 </Steps>

@@ -18,25 +18,7 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import {
@@ -58,15 +40,17 @@ Creating a subscription allows your queue to receive messages when events occur 
 ### Dashboard
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **Queues** page.
 
-	 <DashButton url="/?to=/:account/workers/queues" />
+     <DashButton url="/?to=/:account/workers/queues" />
 
 2. Select the queue you want to add a subscription to.
 3. Switch to the **Subscriptions** tab.
 4. Select **Subscribe to events**.
 5. Name your subscription, and select the desired source and events.
 6. Select **Subscribe**.
+
 </Steps>
 
 ### Wrangler CLI
@@ -86,12 +70,14 @@ You can view all subscriptions configured for a queue to see what events it is c
 ### Dashboard
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **Queues** page.
 
-	 <DashButton url="/?to=/:account/workers/queues" />
+     <DashButton url="/?to=/:account/workers/queues" />
 
 2. Select the queue you want to view subscriptions for.
 3. Switch to the **Subscriptions** tab.
+
 </Steps>
 
 ### Wrangler CLI
@@ -109,14 +95,16 @@ When you delete a subscription, your queue will stop receiving messages for thos
 ### Dashboard
 
 <Steps>
+
 1. In the Cloudflare dashboard, go to the **Queues** page.
 
-	 <DashButton url="/?to=/:account/workers/queues" />
+     <DashButton url="/?to=/:account/workers/queues" />
 
 2. Select the queue containing the subscription you want to delete.
 3. Switch to the **Subscriptions** tab.
 4. Select **...** for the subscription you want to delete.
 5. Select **Delete subscription**.
+
 </Steps>
 
 ### Wrangler CLI

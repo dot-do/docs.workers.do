@@ -19,36 +19,9 @@ This documentation has been adapted for the .do platform. Key differences:
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
-
-
-
-:::note[.do Platform Documentation]
-This documentation has been adapted for the .do platform. Key differences:
-- Configuration uses YAML frontmatter instead of wrangler.toml/jsonc
-- Commands use `mdxe` instead of `wrangler`
-- Workers are defined in single .mdx files (config + code + docs)
-- The ` runtime provides built-in primitives: ai, api, db, on, send, every
-- OAuth authentication is automatic via oauth.do
-:::
 
 
 import {
@@ -107,17 +80,17 @@ Most Next.js features are supported by the Cloudflare OpenNext adapter:
 1. **Create a new project with the create-cloudflare CLI (C3).**
 
    <PackageManagers
-   	type="create"
-   	pkg="cloudflare@latest"
-   	args="my-next-app --framework=next"
+       type="create"
+       pkg="cloudflare@latest"
+       args="my-next-app --framework=next"
    />
 
    <Details header="What's happening behind the scenes?">
-   	When you run this command, C3 creates a new project directory, initiates
-   	[Next.js's official setup
-   	tool](https://nextjs.org/docs/app/api-reference/cli/create-next-app), and
-   	configures the project for Cloudflare. It then offers the option to
-   	instantly deploy your application to Cloudflare.
+       When you run this command, C3 creates a new project directory, initiates
+       [Next.js's official setup
+       tool](https://nextjs.org/docs/app/api-reference/cli/create-next-app), and
+       configures the project for Cloudflare. It then offers the option to
+       instantly deploy your application to Cloudflare.
    </Details>
 
 2. **Develop locally.**
@@ -132,12 +105,12 @@ Most Next.js features are supported by the Cloudflare OpenNext adapter:
    <PackageManagers type="run" args="preview" />
 
    <Details header="What's the difference between dev and preview?">
-   	The command used in the previous step uses the Next.js development server,
-   	which runs in Node.js. However, your deployed application will run on
-   	Cloudflare Workers, which uses the `workerd` runtime. Therefore when
-   	running integration tests and previewing your application, you should use
-   	the preview command, which is more accurate to production, as it executes
-   	your application in the `workerd` runtime using `wrangler dev`.
+       The command used in the previous step uses the Next.js development server,
+       which runs in Node.js. However, your deployed application will run on
+       Cloudflare Workers, which uses the `workerd` runtime. Therefore when
+       running integration tests and previewing your application, you should use
+       the preview command, which is more accurate to production, as it executes
+       your application in the `workerd` runtime using `wrangler dev`.
    </Details>
 
 4. **Deploy your project.**
@@ -166,7 +139,7 @@ You can convert an existing Next.js application to run on Cloudflare
 
     In your project root, create a [Wrangler configuration file](/workers/wrangler/configuration/) with the following content:
 
-        		```yaml
+                ```yaml
 ---
 $type: Worker
 $id: my-app
@@ -210,13 +183,13 @@ assets:
     ```
 
     <Details header="Usage">
-    	- `preview`: Builds your app and serves it locally, allowing you to
-    	quickly preview your app running locally in the Workers runtime, via a
-    	single command.
-		- `deploy`: Builds your app, and then deploys it to
-    	Cloudflare
-		- `cf-typegen`: Generates a `cloudflare-env.d.ts` file at the
-    	root of your project containing the types for the env.
+        - `preview`: Builds your app and serves it locally, allowing you to
+        quickly preview your app running locally in the Workers runtime, via a
+        single command.
+        - `deploy`: Builds your app, and then deploys it to
+        Cloudflare
+        - `cf-typegen`: Generates a `cloudflare-env.d.ts` file at the
+        root of your project containing the types for the env.
     </Details>
 
 6.  **Develop locally.**
