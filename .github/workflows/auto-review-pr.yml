@@ -1,0 +1,89 @@
+name: Auto-review PR
+
+on:
+  pull_request_review:
+    types: [submitted]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  auto-review:
+    # Only run on change requests or when PR is labeled for review
+    if: |
+      (github.event_name == 'pull_request_review' && github.event.review.state == 'changes_requested') ||
+      (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'needs-review'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "Claude Code"
+          git config --global user.email "claude-code[bot]@users.noreply.github.com"
+
+      - name: Run Claude Code Review
+        id: claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          additional_permissions: |
+            actions: read
+
+          # For PR reviews, include review feedback in the prompt
+          prompt: |
+            Please review this pull request and address any feedback.
+
+            ${{ github.event.review.body || '' }}
+
+            **PR Details:**
+            - Title: ${{ github.event.pull_request.title }}
+            - Description: ${{ github.event.pull_request.body }}
+            - Files changed: ${{ github.event.pull_request.changed_files }}
+
+          claude_args: ''
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git add .
+          git commit -m "Apply code review feedback for PR #${{ github.event.pull_request.number }}
+
+          Automated changes based on review feedback.
+
+          🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+          Co-Authored-By: Claude <noreply@anthropic.com>"
+
+      - name: Push changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git push origin "${{ github.event.pull_request.head.ref }}"
+
+      - name: Comment on PR
+        if: steps.changes.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr comment "${{ github.event.pull_request.number }}" --body "✅ I've addressed the review feedback and pushed updates to this PR.
+
+          **Review by:** @${{ github.event.review.user.login || 'automated' }}
+          **Workflow run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
